@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "471727203384",
+    "project_id": "pamabacklog-dev",
+    "storage_bucket": "pamabacklog-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471727203384:android:d8b03cab5cd09cc536f2cd",
+        "android_client_info": {
+          "package_name": "org.pixelin.PamaBacklog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471727203384-m20vthne1i9oeihl0bs5rl9pdrdaum7t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.pixelin.PamaBacklog",
+            "certificate_hash": "9b7c4d34514ee6ab51eb957efa1588391b6c3330"
+          }
+        },
+        {
+          "client_id": "471727203384-sn8nntilf58d6nt65h4d3ajshbu6vafl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5p7mv3_ceLyK3SXM8TZaJKvbUucIB_0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471727203384-sn8nntilf58d6nt65h4d3ajshbu6vafl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
