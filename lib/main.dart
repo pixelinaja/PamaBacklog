@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:PamaBacklog/Global/NotificationHelper/NotificationHelper.dart';
 import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:PamaBacklog/Router/Router.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -5,6 +8,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -40,24 +44,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   /// Initialize Firebase Messaging
   FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
-  /// Initialize FCM Background Message Handler
-  static Future<dynamic> backgroundMsgHandler(
-      Map<String, dynamic> message) async {
-    if (message.containsKey('data')) {
-      // Handle data message
-      final dynamic data = message['data'];
-      print("Data: $data");
-    }
-
-    if (message.containsKey('notification')) {
-      // Handle notification message
-      final dynamic notification = message['notification'];
-      print("Notification: $notification");
-    }
-
-    print(message);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -65,17 +51,34 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     /// Add Windget Binding Observer, to observe app's state.
     WidgetsBinding.instance.addObserver(this);
 
+    /// Initialize Flutter Local Notification
+    var initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettingsIOS = IOSInitializationSettings();
+    var initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+
+    /// Initialize Flutter Local Notification Plugin
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: NotificationHelper.onSelectNotification);
+
     /// Configure Firebase Messaging Depending on the Current App's State.
     firebaseMessaging.configure(
       /// App is open and user is active.
       onMessage: (Map<String, dynamic> message) async {
         print('onMessage called: $message');
-        Fluttertoast.showToast(
-            msg: message.toString(), toastLength: Toast.LENGTH_LONG);
-      },
 
-      /// Handle Background Message Data
-      onBackgroundMessage: backgroundMsgHandler,
+        /// Show Local Notification when App is Foreground
+        NotificationHelper.showNotification(
+          123,
+          message['notification']['title'],
+          message['notification']['body'],
+          json.encode(message['data']),
+          flutterLocalNotificationsPlugin,
+        );
+      },
 
       /// App is on the background but not closed.
       onResume: (Map<String, dynamic> message) async {
