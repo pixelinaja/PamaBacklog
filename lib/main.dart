@@ -1,17 +1,22 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:PamaBacklog/Global/NotificationHelper/NotificationHelper.dart';
 import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:PamaBacklog/Router/Router.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'Logic/Connectivity/cubit/connectivity_cubit.dart';
 
 Future<void> main() async {
   /// Call this function to make sure the app is initialized. Otherwise, we can't access native code
@@ -44,6 +49,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   /// Initialize Firebase Messaging
   FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
+  /// Initialize Connectivity Cubit for Identifying User's Connectivity State
+  final ConnectivityCubit connectivityCubit =
+      ConnectivityCubit(connectivity: Connectivity());
+
   @override
   void initState() {
     super.initState();
@@ -72,7 +81,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
         /// Show Local Notification when App is Foreground
         NotificationHelper.showNotification(
-          123,
+          Random().nextInt(100),
           message['notification']['title'],
           message['notification']['body'],
           json.encode(message['data']),
@@ -98,17 +107,20 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Pama Backlog',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiBlocProvider(
+      providers: [BlocProvider(create: (context) => connectivityCubit)],
+      child: MaterialApp(
+        title: 'Pama Backlog',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        navigatorObservers: <NavigatorObserver>[
+          FirebaseAnalyticsObserver(analytics: analytics)
+        ],
+        onGenerateRoute: _appRouter.generateRoute,
+        initialRoute: RouteName.splashScreen,
       ),
-      navigatorObservers: <NavigatorObserver>[
-        FirebaseAnalyticsObserver(analytics: analytics)
-      ],
-      onGenerateRoute: _appRouter.generateRoute,
-      initialRoute: RouteName.splashScreen,
     );
   }
 

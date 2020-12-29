@@ -25,7 +25,9 @@ dependencies:
     sdk: flutter
   cached_network_image: ^2.5.0
   cloud_firestore: ^0.14.4
+  connectivity_plus: ^0.7.1
   cupertino_icons: ^1.0.0
+  dio: ^3.0.10
   equatable: ^1.2.5
   firebase_analytics: ^6.3.0
   firebase_auth: ^0.18.4+1

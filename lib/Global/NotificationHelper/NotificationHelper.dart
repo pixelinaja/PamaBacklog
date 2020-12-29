@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -14,8 +15,8 @@ class NotificationHelper {
     String notificationContent,
     String payload,
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin, {
-    String channelId = 'Order_Foreground',
-    String channelTitle = 'Order Foreground',
+    String channelId = 'fcm_default_channel',
+    String channelTitle = 'Order',
     String channelDescription =
         'Notification Channel for Foreground Notification',
     Priority notificationPriority = Priority.high,
@@ -26,13 +27,18 @@ class NotificationHelper {
       channelTitle,
       channelDescription,
       playSound: true,
+      groupKey: "Order",
       channelShowBadge: true,
       enableVibration: true,
+      enableLights: true,
+      icon: '@mipmap/ic_launcher',
+      // TODO: Change this notification icon's color
+      color: Colors.blue,
       importance: notificationImportance,
       priority: notificationPriority,
     );
-    var iOSPlatformChannelSpecifics =
-        IOSNotificationDetails(presentSound: true);
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails(
+        presentSound: true, presentAlert: true, presentBadge: true);
     var platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
