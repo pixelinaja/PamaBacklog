@@ -7,6 +7,11 @@ abstract class SendNotificationEvent extends Equatable {
   List<Object> get props => [];
 }
 
+/// Send FCM Notification to the topic Subscriber
+///
+/// Example:
+///
+/// SendNotification(notificationTopic: FCMConstant.TOPIC_ORDER_CREATED, notificationMsg: NotificationMsgModel( body: "Order xxx-xxx telah dibuat oleh xxxx", orderId: "1xlslkdiwokdf", orderStatus: "open", title: "Order baru"),)
 class SendNotification extends SendNotificationEvent {
   final String notificationTopic;
   final NotificationMsgModel notificationMsg;

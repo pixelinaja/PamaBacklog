@@ -34,6 +34,7 @@ class FCMService implements FCMRepository {
         "title": msg.title,
         "body": msg.body,
         "android_channel_id": "fcm_default_channel",
+        "tag": "order",
       },
       "priority": "high",
       "data": {

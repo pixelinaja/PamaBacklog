@@ -9,6 +9,7 @@ import '../Screen/SplashScreen/SplashScreen.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
+  /// Send Notification Bloc
   final SendNotificationBloc _sendNotificationBloc =
       SendNotificationBloc(fcmRepository: FCMService());
 
