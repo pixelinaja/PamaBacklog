@@ -1,10 +1,13 @@
-import 'package:PamaBacklog/Global/FirestoreConstant/FCMConstant.dart';
-import 'package:PamaBacklog/Logic/Connectivity/cubit/connectivity_cubit.dart';
-import 'package:PamaBacklog/Logic/FCM/bloc/sendnotification_bloc.dart';
-import 'package:PamaBacklog/Model/NotificationMsgModel.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'dart:async';
+
+import 'package:PamaBacklog/Global/AssetsRelated/AssetsConstant.dart';
+import 'package:PamaBacklog/Logic/Auth/bloc/auth_bloc.dart';
+import 'package:PamaBacklog/Router/RouteName.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key key}) : super(key: key);
@@ -15,76 +18,55 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
-
-  final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+  StreamSubscription<User> user;
 
   @override
   void initState() {
     super.initState();
-    firebaseMessaging
-      ..subscribeToTopic(FCMConstant.TOPIC_ORDER_CREATED)
-      ..subscribeToTopic(FCMConstant.TOPIC_ORDER_GL_RESPONDED)
-      ..subscribeToTopic(FCMConstant.TOPIC_ORDER_ADMIN_RESPONDED);
+
+    /// Refresh the Screen after build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      user = FirebaseAuth.instance.authStateChanges().listen((event) {
+        return context.read<AuthBloc>().add(AuthUserStateChanged(user: event));
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldstate,
-      body: BlocListener<SendNotificationBloc, SendNotificationState>(
-        listener: (context, state) {
-          if (state is SendNotificationLoading) {
-            _scaffoldstate.currentState.removeCurrentSnackBar();
-            _scaffoldstate.currentState.showSnackBar(
-              SnackBar(
-                content: Text("Sending Notification"),
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        /// Navigate the user based on Bloc's State
+        if (state is AuthUserLoggedIn) {
+          Future.delayed(Duration(seconds: 2)).then((value) =>
+              Navigator.of(context).pushReplacementNamed(RouteName.homeScreen));
+        } else if (state is AuthUserUnknown) {
+          Future.delayed(Duration(seconds: 2)).then((value) =>
+              Navigator.of(context)
+                  .pushReplacementNamed(RouteName.loginScreen));
+        }
+      },
+      child: Scaffold(
+        key: _scaffoldstate,
+        body: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            return SafeArea(
+              child: Image.asset(
+                Assets.pesan_keselamatan_1,
+                fit: BoxFit.cover,
+                width: ScreenUtil().screenWidth,
+                height: ScreenUtil().screenHeight,
               ),
             );
-          } else if (state is SendNotificationSuccess) {
-            _scaffoldstate.currentState.removeCurrentSnackBar();
-            _scaffoldstate.currentState.showSnackBar(
-              SnackBar(
-                content: Text("Notification Sent"),
-              ),
-            );
-          } else if (state is SendNotificationFailed) {
-            _scaffoldstate.currentState.removeCurrentSnackBar();
-            _scaffoldstate.currentState.showSnackBar(
-              SnackBar(
-                content: Text(state.error),
-              ),
-            );
-          }
-        },
-        child: Container(
-          child: Center(
-            child: GestureDetector(
-              child: Text("Pama Backlog"),
-              onTap: () {
-                final internetState = context.read<ConnectivityCubit>().state;
-                if (internetState is InternetConnected) {
-                  context.read<SendNotificationBloc>().add(
-                        SendNotification(
-                          notificationTopic: FCMConstant.TOPIC_ORDER_CREATED,
-                          notificationMsg: NotificationMsgModel(
-                              body: "Order xxx-xxx telah dibuat oleh xxxx",
-                              orderId: "1xlslkdiwokdf",
-                              orderStatus: "open",
-                              title: "Order baru"),
-                        ),
-                      );
-                } else {
-                  _scaffoldstate.currentState.showSnackBar(
-                    SnackBar(
-                      content: Text("No Internet Connection"),
-                    ),
-                  );
-                }
-              },
-            ),
-          ),
+          },
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    user?.cancel();
+    super.dispose();
   }
 }
