@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:PamaBacklog/Service/AuthRepository.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -20,6 +21,7 @@ import 'Global/DesignSize/DesignSize.dart';
 import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:PamaBacklog/Router/Router.dart';
 
+import 'Logic/Auth/bloc/auth_bloc.dart';
 import 'Logic/Connectivity/cubit/connectivity_cubit.dart';
 
 /// Background message handler
@@ -97,6 +99,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final ConnectivityCubit connectivityCubit =
       ConnectivityCubit(connectivity: Connectivity());
 
+  /// Initialize Authentication Bloc
+  final AuthBloc authBloc = AuthBloc(authRepository: AuthService());
+
   /// Get Firebase Messaging object
   FirebaseMessaging get firebaseMessaging => widget.firebaseMessaging;
 
@@ -152,7 +157,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => connectivityCubit)],
+      providers: [
+        BlocProvider(create: (context) => connectivityCubit),
+        BlocProvider(create: (context) => authBloc),
+      ],
       child: ScreenUtilInit(
         allowFontScaling: true,
         designSize: Size(DesignSize.width, DesignSize.height),
