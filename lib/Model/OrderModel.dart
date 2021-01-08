@@ -15,6 +15,7 @@ class Order {
     this.approvalPengawas,
     this.tanggalEksekusi,
     this.noWr,
+    this.trouble,
   });
 
   Timestamp tanggal;
@@ -24,6 +25,7 @@ class Order {
   int approvalPengawas;
   Timestamp tanggalEksekusi;
   String noWr;
+  String trouble;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
         tanggal: json["tanggal"],
@@ -34,6 +36,7 @@ class Order {
         approvalPengawas: json["approval_pengawas"],
         tanggalEksekusi: json["tanggal_eksekusi"],
         noWr: json["no_wr"],
+        trouble: json["trouble"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -45,6 +48,7 @@ class Order {
         "approval_pengawas": approvalPengawas,
         "tanggal_eksekusi": tanggalEksekusi,
         "no_wr": noWr,
+        "trouble": trouble
       };
 }
 

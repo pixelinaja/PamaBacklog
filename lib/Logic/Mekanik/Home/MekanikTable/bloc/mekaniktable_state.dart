@@ -15,11 +15,12 @@ class MekanikTableLoading extends MekanikTableState {}
 /// Fetch is complete
 class MekanikTableCompleted extends MekanikTableState {
   final List<Order> orders;
+  final List<TableOrderModel> tableOrder;
 
-  MekanikTableCompleted({@required this.orders});
+  MekanikTableCompleted({@required this.orders, @required this.tableOrder});
 
   @override
-  List<Object> get props => [orders];
+  List<Object> get props => [orders, tableOrder];
 }
 
 /// Fetch is failed

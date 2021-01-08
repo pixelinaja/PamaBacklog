@@ -1,3 +1,5 @@
+import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
+import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -87,9 +89,15 @@ class MekanikHomeBG extends StatelessWidget {
                     child: BlocBuilder<MekanikTableSwitchCubit,
                         MekanikTableSwitchState>(builder: (context, state) {
                       return GestureDetector(
-                        onTap: () => context
-                            .read<MekanikTableSwitchCubit>()
-                            .switchToAll(),
+                        onTap: () {
+                          final originalTableOrder = (context
+                                  .read<MekanikTableBloc>()
+                                  .state as MekanikTableCompleted)
+                              .tableOrder;
+                          context
+                              .read<MekanikTableSwitchCubit>()
+                              .switchToAll(tableOrder: originalTableOrder);
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
@@ -118,9 +126,15 @@ class MekanikHomeBG extends StatelessWidget {
                     child: BlocBuilder<MekanikTableSwitchCubit,
                         MekanikTableSwitchState>(builder: (context, state) {
                       return GestureDetector(
-                        onTap: () => context
-                            .read<MekanikTableSwitchCubit>()
-                            .switchToOpen(),
+                        onTap: () {
+                          final originalTableOrder = (context
+                                  .read<MekanikTableBloc>()
+                                  .state as MekanikTableCompleted)
+                              .tableOrder;
+                          context
+                              .read<MekanikTableSwitchCubit>()
+                              .switchToOpen(tableOrder: originalTableOrder);
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(

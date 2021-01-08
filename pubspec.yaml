@@ -37,10 +37,12 @@ dependencies:
   flutter_bloc: ^6.1.1
   flutter_local_notifications: ^3.0.2
   flutter_screenutil: ^4.0.2+1
+  flutter_speed_dial: ^1.2.5
   flutter_svg_provider: ^0.1.8
   fluttertoast: ^7.1.6
   horizontal_data_table: ^2.0.0
   hydrated_bloc: ^6.1.0
+  intl: ^0.16.1
   package_info: ^0.4.3+2
   path_provider: ^1.6.24
   rxdart: ^0.25.0
