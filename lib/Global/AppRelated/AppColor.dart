@@ -11,4 +11,5 @@ class AppColor {
   static const Color partEstimated = Colors.orange;
   static const Color tableSearchBG = Color.fromRGBO(218, 100, 36, 1);
   static const Color mainFABColor = Color.fromRGBO(126, 115, 185, 1);
+  static const Color glHomeNumberColor = Color.fromRGBO(97, 56, 255, 1);
 }
