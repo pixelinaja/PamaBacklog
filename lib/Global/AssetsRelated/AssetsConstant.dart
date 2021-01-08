@@ -8,4 +8,5 @@ class Assets {
   static const String gl_icon = "assets/icons/gl_icon.png";
   static const String graph_icon = "assets/icons/graph_icon.png";
   static const String no_connection = "assets/no_connection_img.png";
+  static const String no_data = "assets/no_data.png";
 }

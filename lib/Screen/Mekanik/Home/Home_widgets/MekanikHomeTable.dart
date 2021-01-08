@@ -1,3 +1,4 @@
+import 'package:PamaBacklog/Global/AssetsRelated/AssetsConstant.dart';
 import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
 import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTableSwitch/cubit/listviewswitch_cubit.dart';
 import 'package:PamaBacklog/Screen/Mekanik/Home/Home_widgets/MekanikHomeTableChild.dart';
@@ -48,10 +49,25 @@ class MekanikHomeTable extends StatelessWidget {
               });
             } else {
               /// Return Empty Orders
-              return Center(
-                child: Text(
-                  "Belum ada Order",
-                  style: TextStyle(fontSize: 20.w, fontWeight: FontWeight.w600),
+              return Container(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        Assets.no_data,
+                        height: 200.h,
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      Text(
+                        "Belum ada Order",
+                        style: TextStyle(
+                            fontSize: 20.w, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }
