@@ -240,7 +240,7 @@ class MekanikHomeTableChild extends StatelessWidget {
         /// Tanggal Laporan
         Container(
           child: Text(
-            order.tanggal.toDate().parseDate(),
+            order.tanggal.toDate().parseDate(dateFormat: "dd-MM-yyyy"),
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14.ssp,
@@ -255,7 +255,7 @@ class MekanikHomeTableChild extends StatelessWidget {
         /// Tanggal Eksekusi
         Container(
           child: Text(
-            order.tanggal.toDate().parseDate(),
+            order.tanggal.toDate().parseDate(dateFormat: "dd-MM-yyyy"),
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14.ssp,
