@@ -18,13 +18,13 @@ class AppRouter {
       SendNotificationBloc(fcmRepository: FCMService());
 
   /// Mekanik Table Switch Cubit
-  static final MekanikTableSwitchCubit _mekanikTableSwitchCubit =
+  final MekanikTableSwitchCubit _mekanikTableSwitchCubit =
       MekanikTableSwitchCubit();
 
   /// Mekanik Table Bloc
   final MekanikTableBloc _mekanikTableBloc = MekanikTableBloc(
-      orderRepository: OrderService(),
-      mekanikTableSwitchCubit: _mekanikTableSwitchCubit);
+    orderRepository: OrderService(),
+  );
 
   /// Generate Screens Router
   Route<dynamic> generateRoute(RouteSettings settings) {

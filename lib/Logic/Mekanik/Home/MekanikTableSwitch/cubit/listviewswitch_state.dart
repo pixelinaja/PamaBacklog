@@ -7,6 +7,8 @@ abstract class MekanikTableSwitchState extends Equatable {
   List<Object> get props => [];
 }
 
+class MekanikTableSwitchInitial extends MekanikTableSwitchState {}
+
 /// Switch All State
 class MekanikTableSwitchAll extends MekanikTableSwitchState {
   final List<TableOrderModel> tableOrder;

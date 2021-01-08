@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 part 'listviewswitch_state.dart';
 
 class MekanikTableSwitchCubit extends Cubit<MekanikTableSwitchState> {
-  MekanikTableSwitchCubit() : super(MekanikTableSwitchAll());
+  MekanikTableSwitchCubit() : super(MekanikTableSwitchInitial());
 
   /// Switch to All Cubit Function
   void switchToAll({List<TableOrderModel> tableOrder}) {

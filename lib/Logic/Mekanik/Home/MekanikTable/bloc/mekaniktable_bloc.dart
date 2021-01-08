@@ -14,9 +14,7 @@ part 'mekaniktable_state.dart';
 
 class MekanikTableBloc extends Bloc<MekanikTableEvent, MekanikTableState> {
   final OrderRepository orderRepository;
-  final MekanikTableSwitchCubit mekanikTableSwitchCubit;
-  MekanikTableBloc({this.orderRepository, this.mekanikTableSwitchCubit})
-      : super(MekanikTableInitial());
+  MekanikTableBloc({this.orderRepository}) : super(MekanikTableInitial());
 
   @override
   Stream<MekanikTableState> mapEventToState(
@@ -49,8 +47,6 @@ class MekanikTableBloc extends Bloc<MekanikTableEvent, MekanikTableState> {
             tableOrder.add(temp);
           }
         }
-        mekanikTableSwitchCubit
-            .emit(MekanikTableSwitchAll().copyWith(tableOrder: tableOrder));
         yield MekanikTableCompleted(orders: orders, tableOrder: tableOrder);
       } on FirebaseException catch (e) {
         yield MekanikTableFailed(e.message);

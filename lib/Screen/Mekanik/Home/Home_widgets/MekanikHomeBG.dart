@@ -1,5 +1,4 @@
 import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
-import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -104,14 +103,16 @@ class MekanikHomeBG extends StatelessWidget {
                                 bottomLeft: Radius.circular(30),
                                 topLeft: Radius.circular(30),
                               ),
-                              color: (state is MekanikTableSwitchAll)
+                              color: (state is MekanikTableSwitchAll ||
+                                      state is MekanikTableSwitchInitial)
                                   ? AppColor.mekanikColor
                                   : null),
                           alignment: Alignment.center,
                           child: Text(
                             "All",
                             style: TextStyle(
-                              color: (state is MekanikTableSwitchAll)
+                              color: (state is MekanikTableSwitchAll ||
+                                      state is MekanikTableSwitchInitial)
                                   ? Colors.white
                                   : null,
                               fontWeight: FontWeight.bold,

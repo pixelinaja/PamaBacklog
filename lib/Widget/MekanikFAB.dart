@@ -14,8 +14,6 @@ class MekanikFAB extends StatelessWidget {
     return SpeedDial(
       animatedIcon: AnimatedIcons.menu_close,
       animatedIconTheme: IconThemeData(size: 22.w),
-      visible: true,
-      closeManually: false,
       curve: Curves.bounceIn,
       overlayColor: Colors.black,
       overlayOpacity: 0.0,
@@ -33,8 +31,8 @@ class MekanikFAB extends StatelessWidget {
             size: 28.ssp,
           ),
           backgroundColor: Colors.red,
-          onTap: () =>
-              Navigator.of(context).pushNamed(RouteName.mekanikAddBacklog),
+          onTap: () async => await Navigator.of(context)
+              .pushNamed(RouteName.mekanikAddBacklog),
         ),
         SpeedDialChild(
           child: Icon(
@@ -43,9 +41,10 @@ class MekanikFAB extends StatelessWidget {
             size: 28.ssp,
           ),
           backgroundColor: Colors.green,
-          onTap: () {
+          onTap: () async {
             context.read<AuthBloc>().add(AuthLogout());
-            Navigator.of(context).pushReplacementNamed(RouteName.loginScreen);
+            await Navigator.of(context)
+                .pushReplacementNamed(RouteName.loginScreen);
           },
         ),
       ],
