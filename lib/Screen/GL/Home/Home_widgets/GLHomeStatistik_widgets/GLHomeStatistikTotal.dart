@@ -1,5 +1,8 @@
 import 'package:PamaBacklog/Global/AppRelated/AppColor.dart';
+import 'package:PamaBacklog/Logic/Firestore/Orders/bloc/orders_bloc.dart';
+import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GLHomeStatistikTotal extends StatelessWidget {
@@ -7,50 +10,66 @@ class GLHomeStatistikTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      height: 100.h,
-      width: ScreenUtil().screenWidth,
-      child: Column(
-        children: [
-          Text(
-            "16",
-            style: TextStyle(
-              color: AppColor.glHomeNumberColor,
-              fontSize: 65.ssp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 30.w,
-                ),
-                Text(
-                  "Total Laporan Backlog",
+    return GestureDetector(
+      onTap: () => Navigator.of(context).pushNamed(RouteName.glLogLaporan),
+      child: Container(
+        alignment: Alignment.center,
+        height: 100.h,
+        width: ScreenUtil().screenWidth,
+        child: Column(
+          children: [
+            BlocBuilder<OrdersBloc, OrdersState>(builder: (context, state) {
+              if (state is OrdersFetched) {
+                return Text(
+                  state.orders.length.toString(),
                   style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 16.ssp,
-                    fontWeight: FontWeight.w600,
+                    color: AppColor.glHomeNumberColor,
+                    fontSize: 65.ssp,
+                    fontWeight: FontWeight.bold,
                   ),
-                ),
-                SizedBox(
-                  width: 20.w,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.black),
-                  child: Icon(
-                    Icons.navigate_next,
-                    color: Colors.white,
+                );
+              } else {
+                return Text(
+                  "?",
+                  style: TextStyle(
+                    color: AppColor.glHomeNumberColor,
+                    fontSize: 65.ssp,
+                    fontWeight: FontWeight.bold,
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                );
+              }
+            }),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 30.w,
+                  ),
+                  Text(
+                    "Total Laporan Backlog",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16.ssp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20.w,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.black),
+                    child: Icon(
+                      Icons.navigate_next,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

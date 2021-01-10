@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:PamaBacklog/Global/AppRelated/AppColor.dart';
 import 'package:PamaBacklog/Global/AssetsRelated/AssetsConstant.dart';
-import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTableSwitch/cubit/listviewswitch_cubit.dart';
+import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTableSwitch/cubit/mekaniktableswitch_cubit.dart';
 
 class MekanikHomeBG extends StatelessWidget {
   final Orientation orientation;

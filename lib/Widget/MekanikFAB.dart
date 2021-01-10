@@ -25,10 +25,12 @@ class MekanikFAB extends StatelessWidget {
       shape: CircleBorder(),
       children: [
         SpeedDialChild(
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-            size: 28.ssp,
+          child: Container(
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+              size: 20.w,
+            ),
           ),
           backgroundColor: Colors.red,
           onTap: () async => await Navigator.of(context)
@@ -38,7 +40,7 @@ class MekanikFAB extends StatelessWidget {
           child: Icon(
             Icons.logout,
             color: Colors.white,
-            size: 28.ssp,
+            size: 20.w,
           ),
           backgroundColor: Colors.green,
           onTap: () async {

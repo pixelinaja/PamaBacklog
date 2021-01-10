@@ -1,5 +1,9 @@
 import 'package:PamaBacklog/Global/AssetsRelated/AssetsConstant.dart';
+import 'package:PamaBacklog/Logic/Auth/bloc/auth_bloc.dart';
+import 'package:PamaBacklog/Logic/Firestore/Orders/bloc/orders_bloc.dart';
+import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:PamaBacklog/Global/Extension/AppExtensions.dart';
 
@@ -84,14 +88,17 @@ class GLHomeAppBar extends StatelessWidget {
       elevation: 8.0,
     ).then<void>((String itemSelected) {
       if (itemSelected == null) return;
+
+      /// Dashboard Selected
       if (itemSelected == "1") {
-        //code here
+        context.read<OrdersBloc>().add(OrdersFetch());
       } else if (itemSelected == "2") {
-        //code here
+        Navigator.of(context).pushNamed(RouteName.glLogLaporan);
       } else if (itemSelected == "3") {
-        //code here
+        Navigator.of(context).pushNamed(RouteName.glPerluPersetujuan);
       } else if (itemSelected == "4") {
-        //code here
+        context.read<AuthBloc>().add(AuthLogout());
+        Navigator.of(context).pushReplacementNamed(RouteName.loginScreen);
       } else {
         //code here
       }

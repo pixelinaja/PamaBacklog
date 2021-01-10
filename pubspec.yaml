@@ -40,6 +40,7 @@ dependencies:
   flutter_speed_dial: ^1.2.5
   flutter_svg_provider: ^0.1.8
   fluttertoast: ^7.1.6
+  grouped_list: ^3.7.1
   horizontal_data_table: ^2.0.0
   hydrated_bloc: ^6.1.0
   intl: ^0.16.1

@@ -1,6 +1,6 @@
 import 'package:PamaBacklog/Global/AssetsRelated/AssetsConstant.dart';
 import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
-import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTableSwitch/cubit/listviewswitch_cubit.dart';
+import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTableSwitch/cubit/mekaniktableswitch_cubit.dart';
 import 'package:PamaBacklog/Screen/Mekanik/Home/Home_widgets/MekanikHomeTableChild.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,7 +64,7 @@ class MekanikHomeTable extends StatelessWidget {
                       Text(
                         "Belum ada Order",
                         style: TextStyle(
-                            fontSize: 20.w, fontWeight: FontWeight.w600),
+                            fontSize: 20.ssp, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),

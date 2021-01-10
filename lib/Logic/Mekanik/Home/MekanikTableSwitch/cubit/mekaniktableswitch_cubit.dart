@@ -2,7 +2,7 @@ import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-part 'listviewswitch_state.dart';
+part 'mekaniktableswitch_state.dart';
 
 class MekanikTableSwitchCubit extends Cubit<MekanikTableSwitchState> {
   MekanikTableSwitchCubit() : super(MekanikTableSwitchInitial());

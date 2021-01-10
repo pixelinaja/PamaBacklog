@@ -1,4 +1,4 @@
-part of 'listviewswitch_cubit.dart';
+part of 'mekaniktableswitch_cubit.dart';
 
 abstract class MekanikTableSwitchState extends Equatable {
   const MekanikTableSwitchState();

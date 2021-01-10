@@ -1,6 +1,9 @@
 import 'package:PamaBacklog/Logic/FCM/bloc/sendnotification_bloc.dart';
+import 'package:PamaBacklog/Logic/Firestore/Orders/bloc/orders_bloc.dart';
 import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
-import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTableSwitch/cubit/listviewswitch_cubit.dart';
+import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTableSwitch/cubit/mekaniktableswitch_cubit.dart';
+import 'package:PamaBacklog/Screen/GL/Laporan/GLLaporan.dart';
+import 'package:PamaBacklog/Screen/GL/PerluPersetujuan/GLPerluPersetujuan.dart';
 import 'package:PamaBacklog/Screen/Mekanik/AddBacklog/MekanikAddBacklog.dart';
 import 'package:PamaBacklog/Service/FCMRepository.dart';
 import 'package:PamaBacklog/Service/OrderRepository.dart';
@@ -26,6 +29,9 @@ class AppRouter {
     orderRepository: OrderService(),
   );
 
+  /// Order fetch bloc
+  final OrdersBloc _ordersBloc = OrdersBloc();
+
   /// Generate Screens Router
   Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -50,6 +56,7 @@ class AppRouter {
             providers: [
               BlocProvider.value(value: _mekanikTableSwitchCubit),
               BlocProvider.value(value: _mekanikTableBloc),
+              BlocProvider(create: (context) => _ordersBloc),
             ],
             child: HomeScreen(),
           ),
@@ -62,6 +69,26 @@ class AppRouter {
               BlocProvider.value(value: _mekanikTableBloc),
             ],
             child: MekanikAddBacklog(),
+          ),
+          settings: settings,
+        );
+      case RouteName.glLogLaporan:
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: _ordersBloc),
+            ],
+            child: GLLaporan(),
+          ),
+          settings: settings,
+        );
+      case RouteName.glPerluPersetujuan:
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: _ordersBloc),
+            ],
+            child: GLPerluPersetujuan(),
           ),
           settings: settings,
         );
@@ -81,5 +108,6 @@ class AppRouter {
     _sendNotificationBloc.close();
     _mekanikTableSwitchCubit.close();
     _mekanikTableBloc.close();
+    _ordersBloc.close();
   }
 }
