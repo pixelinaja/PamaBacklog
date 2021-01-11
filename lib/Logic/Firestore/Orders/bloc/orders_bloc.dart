@@ -25,8 +25,12 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         List<Order> orders = await _orderRepository.getOrderData();
         List<Order> orderPerluPersetujuan =
             orders.where((element) => element.approvalPengawas == 0).toList();
+        List<Order> adminLaporan =
+            orders.where((element) => element.approvalPengawas == 1).toList();
         yield OrdersFetched(
-            orders: orders, orderPerluPersetujuan: orderPerluPersetujuan);
+            orders: orders,
+            orderPerluPersetujuan: orderPerluPersetujuan,
+            adminLaporan: adminLaporan);
       } on FirebaseException catch (e) {
         yield OrdersFailed(message: e.message);
       } on SocketException catch (e) {

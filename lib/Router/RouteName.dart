@@ -5,4 +5,7 @@ class RouteName {
   static const String mekanikAddBacklog = "Mekanik Add Backlog";
   static const String glLogLaporan = "GL Log Laporan";
   static const String glPerluPersetujuan = "GL Perlu Persetujuan";
+  static const String adminLogLaporan = "Admin Log Laporan";
+  static const String adminLaporanTerbuka = "Admin Laporan Terbuka";
+  static const String adminDataCN = "Admin Data CN";
 }

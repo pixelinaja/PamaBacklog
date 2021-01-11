@@ -24,17 +24,18 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
           );
         } else if (state is OrdersFetched) {
           return Container(
-            height: 400.h,
+            height: 385.h,
             padding: EdgeInsets.symmetric(horizontal: 45.w),
             child: GroupedListView<Order, String>(
               elements: state.orderPerluPersetujuan,
               groupBy: (element) => element.tanggal.toDate().year.toString(),
               groupComparator: (value1, value2) => value2.compareTo(value1),
               useStickyGroupSeparators: true,
+              padding: EdgeInsets.symmetric(vertical: 8.h),
               itemComparator: (element1, element2) =>
                   element2.tanggal.compareTo(element1.tanggal),
               groupHeaderBuilder: (element) => Container(
-                height: 30.h,
+                height: 35.h,
                 alignment: Alignment.centerLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

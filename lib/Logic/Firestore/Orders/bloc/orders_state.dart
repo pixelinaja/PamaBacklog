@@ -17,11 +17,16 @@ class OrdersLoading extends OrdersState {}
 class OrdersFetched extends OrdersState {
   final List<Order> orders;
   final List<Order> orderPerluPersetujuan;
+  final List<Order> adminLaporan;
 
-  OrdersFetched({this.orders, this.orderPerluPersetujuan});
+  OrdersFetched({
+    this.orders,
+    this.orderPerluPersetujuan,
+    this.adminLaporan,
+  });
 
   @override
-  List<Object> get props => [orders, orderPerluPersetujuan];
+  List<Object> get props => [orders, orderPerluPersetujuan, adminLaporan];
 }
 
 /// Order fetch is failed

@@ -28,24 +28,28 @@ class _GLHomeState extends State<GLHome> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: ScreenUtil().screenHeight,
-        width: ScreenUtil().screenWidth,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              GLHomeAppBar(),
-              SizedBox(height: 14.h),
-              GLHomeStatistik(),
-              SizedBox(height: 8.h),
-              GLHomePersetujuan(),
-              SizedBox(height: 14.h),
-              GLHomeOrderList(),
-            ],
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        return Scaffold(
+          body: Container(
+            height: ScreenUtil().screenHeight,
+            width: ScreenUtil().screenWidth,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  GLHomeAppBar(),
+                  SizedBox(height: 14.h),
+                  GLHomeStatistik(),
+                  SizedBox(height: 8.h),
+                  GLHomePersetujuan(),
+                  SizedBox(height: 14.h),
+                  GLHomeOrderList(),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

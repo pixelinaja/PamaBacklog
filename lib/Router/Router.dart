@@ -2,6 +2,9 @@ import 'package:PamaBacklog/Logic/FCM/bloc/sendnotification_bloc.dart';
 import 'package:PamaBacklog/Logic/Firestore/Orders/bloc/orders_bloc.dart';
 import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
 import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTableSwitch/cubit/mekaniktableswitch_cubit.dart';
+import 'package:PamaBacklog/Screen/Admin/DataCN/AdminDataCN.dart';
+import 'package:PamaBacklog/Screen/Admin/Laporan/LaporanTerbuka/AdminLaporanTerbuka.dart';
+import 'package:PamaBacklog/Screen/Admin/Laporan/LogLaporan/AdminLogLaporan.dart';
 import 'package:PamaBacklog/Screen/GL/Laporan/GLLaporan.dart';
 import 'package:PamaBacklog/Screen/GL/PerluPersetujuan/GLPerluPersetujuan.dart';
 import 'package:PamaBacklog/Screen/Mekanik/AddBacklog/MekanikAddBacklog.dart';
@@ -89,6 +92,36 @@ class AppRouter {
               BlocProvider.value(value: _ordersBloc),
             ],
             child: GLPerluPersetujuan(),
+          ),
+          settings: settings,
+        );
+      case RouteName.adminLogLaporan:
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: _ordersBloc),
+            ],
+            child: AdminLogLaporan(),
+          ),
+          settings: settings,
+        );
+      case RouteName.adminLaporanTerbuka:
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: _ordersBloc),
+            ],
+            child: AdminLaporanTerbuka(),
+          ),
+          settings: settings,
+        );
+      case RouteName.adminDataCN:
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: _ordersBloc),
+            ],
+            child: AdminDataCN(),
           ),
           settings: settings,
         );
