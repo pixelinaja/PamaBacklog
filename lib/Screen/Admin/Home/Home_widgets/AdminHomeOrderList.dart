@@ -51,12 +51,15 @@ class AdminHomeOrderList extends StatelessWidget {
                     ],
                   ),
                 ),
+
+                /// ListView Item
                 itemBuilder: (c, element) {
                   return Container(
                     child: Row(
                       children: [
                         Column(
                           children: [
+                            /// Tanggal
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 16.w),
                               height: 68.h,
@@ -88,12 +91,15 @@ class AdminHomeOrderList extends StatelessWidget {
                           ],
                         ),
                         SizedBox(width: 16.w),
+
+                        /// Kotak samping kana (CN Unit dan Nama Mekanik)
                         Container(
-                          height: 65.h,
+                          height: 68.h,
                           width: 200.w,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              /// Row CN Unit
                               Row(
                                 children: [
                                   Text(
@@ -116,6 +122,8 @@ class AdminHomeOrderList extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(height: 6.h),
+
+                              /// Row Nama Mekanik
                               Row(
                                 children: [
                                   Text(
@@ -137,9 +145,13 @@ class AdminHomeOrderList extends StatelessWidget {
                                   ),
                                 ],
                               ),
+
+                              /// Divider Hitam
                               Divider(
                                 color: Colors.black,
                               ),
+
+                              /// Approval Status
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),

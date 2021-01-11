@@ -34,6 +34,8 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
               padding: EdgeInsets.symmetric(vertical: 8.h),
               itemComparator: (element1, element2) =>
                   element2.tanggal.compareTo(element1.tanggal),
+
+              /// Header Tahun
               groupHeaderBuilder: (element) => Container(
                 height: 35.h,
                 alignment: Alignment.centerLeft,
@@ -54,15 +56,18 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
                   ],
                 ),
               ),
+
+              /// ListView Item
               itemBuilder: (c, element) {
                 return Container(
                   child: Row(
                     children: [
                       Column(
                         children: [
+                          /// Kotak Tanggal
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 8.w),
-                            height: 53.h,
+                            height: 55.h,
                             width: 50.w,
                             alignment: Alignment.centerLeft,
                             decoration: BoxDecoration(
@@ -91,12 +96,15 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
                         ],
                       ),
                       SizedBox(width: 16.w),
+
+                      /// Samping kanan. (CN Unit dan Nama Mekanik)
                       Container(
                         height: 50.h,
                         width: 200.w,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            /// Row CN Unit
                             Row(
                               children: [
                                 Text(
@@ -119,6 +127,8 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
                               ],
                             ),
                             SizedBox(height: 6.h),
+
+                            /// Row Nama Mekanik
                             Row(
                               children: [
                                 Text(
@@ -140,6 +150,8 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
                                 ),
                               ],
                             ),
+
+                            /// Divider Hitam
                             Divider(
                               color: Colors.black,
                             )
