@@ -4,7 +4,7 @@ import 'package:PamaBacklog/Global/AssetsRelated/AssetsConstant.dart';
 import 'package:PamaBacklog/Logic/Auth/bloc/auth_bloc.dart';
 import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,9 +20,18 @@ class _SplashScreenState extends State<SplashScreen> {
   final GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
   StreamSubscription<User> user;
 
+  Random rnd = new Random();
+  var arraySplash = [
+    Assets.pesan_keselamatan_1,
+    Assets.pesan_keselamatan_2,
+    Assets.pesan_keselamatan_3,
+    Assets.pesan_keselamatan_4
+  ];
+
   @override
   void initState() {
     super.initState();
+    // var element = arraySplash[rnd.nextInt(arraySplash.length)];
 
     /// Refresh the Screen after build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -38,10 +47,10 @@ class _SplashScreenState extends State<SplashScreen> {
       listener: (context, state) {
         /// Navigate the user based on Bloc's State
         if (state is AuthUserLoggedIn) {
-          Future.delayed(Duration(seconds: 2)).then((value) =>
+          Future.delayed(Duration(seconds: 5)).then((value) =>
               Navigator.of(context).pushReplacementNamed(RouteName.homeScreen));
         } else if (state is AuthUserUnknown) {
-          Future.delayed(Duration(seconds: 2)).then((value) =>
+          Future.delayed(Duration(seconds: 5)).then((value) =>
               Navigator.of(context)
                   .pushReplacementNamed(RouteName.loginScreen));
         }
@@ -52,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
           builder: (context, state) {
             return SafeArea(
               child: Image.asset(
-                Assets.pesan_keselamatan_1,
+                arraySplash[rnd.nextInt(arraySplash.length)],
                 fit: BoxFit.cover,
                 width: ScreenUtil().screenWidth,
                 height: ScreenUtil().screenHeight,

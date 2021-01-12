@@ -20,8 +20,10 @@ class HomeScreen extends StatelessWidget {
                 break;
               case "1":
                 return GLHome();
+                break;
               case "2":
                 return MekanikHome();
+                break;
               default:
                 return Container(
                   child: Center(
