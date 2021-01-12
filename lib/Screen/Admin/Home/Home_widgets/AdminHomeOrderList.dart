@@ -13,7 +13,7 @@ class AdminHomeOrderList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 385.h,
+      height: 384.h,
       child: BlocBuilder<OrdersBloc, OrdersState>(
         builder: (context, state) {
           if (state is OrdersLoading) {

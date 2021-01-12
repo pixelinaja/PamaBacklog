@@ -99,7 +99,7 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
 
                       /// Samping kanan. (CN Unit dan Nama Mekanik)
                       Container(
-                        height: 50.h,
+                        height: 55.h,
                         width: 200.w,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
