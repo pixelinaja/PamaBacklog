@@ -1,5 +1,3 @@
-import 'package:PamaBacklog/Global/AppRelated/AppColor.dart';
-import 'package:PamaBacklog/Global/AssetsRelated/AssetsConstant.dart';
 import 'package:PamaBacklog/Screen/GL/Home/Home_widgets/GLHomeStatistik_widgets/GLHomeStatistikGraphImage.dart';
 import 'package:PamaBacklog/Screen/GL/Home/Home_widgets/GLHomeStatistik_widgets/GLHomeStatistikTotal.dart';
 import 'package:flutter/material.dart';

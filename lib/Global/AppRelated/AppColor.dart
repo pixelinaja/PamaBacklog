@@ -12,4 +12,6 @@ class AppColor {
   static const Color tableSearchBG = Color.fromRGBO(218, 100, 36, 1);
   static const Color mainFABColor = Color.fromRGBO(126, 115, 185, 1);
   static const Color glHomeNumberColor = Color.fromRGBO(97, 56, 255, 1);
+  static const Color mekanikPartKosongBtnColor = Color.fromRGBO(167, 34, 34, 1);
+  static const Color mekanikCloseBtnColor = Color.fromRGBO(2, 138, 79, 1);
 }

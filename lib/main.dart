@@ -192,6 +192,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void dispose() {
     _appRouter.dispose();
     selectNotificationSubject.close();
+    authBloc.close();
     super.dispose();
   }
 }

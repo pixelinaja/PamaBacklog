@@ -29,6 +29,7 @@ class MekanikTableBloc extends Bloc<MekanikTableEvent, MekanikTableState> {
           for (var part in order.partNumber.values) {
             /// Populate and create a new table order model
             TableOrderModel temp = TableOrderModel(
+              docId: order.docId,
               approvalPengawas: order.approvalPengawas,
               cnNumber: order.cnNumber,
               deskripsi: part.deskripsi,

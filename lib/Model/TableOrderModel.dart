@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TableOrderModel {
+  String docId;
   Timestamp tanggal;
   String cnNumber;
   String trouble;
@@ -17,6 +18,7 @@ class TableOrderModel {
   String noWr;
 
   TableOrderModel({
+    this.docId,
     this.tanggal,
     this.cnNumber,
     this.trouble,
@@ -33,6 +35,7 @@ class TableOrderModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'docId': docId ?? "",
       'tanggal': tanggal,
       'cnNumber': cnNumber,
       'trouble': trouble,
@@ -52,6 +55,7 @@ class TableOrderModel {
     if (map == null) return null;
 
     return TableOrderModel(
+      docId: map['docId'] ?? "",
       tanggal: map['tanggal'],
       cnNumber: map['cnNumber'],
       trouble: map['trouble'],
@@ -73,6 +77,7 @@ class TableOrderModel {
       TableOrderModel.fromMap(json.decode(source));
 
   TableOrderModel copyWith({
+    String docId,
     Timestamp tanggal,
     String cnNumber,
     String trouble,
@@ -87,6 +92,7 @@ class TableOrderModel {
     String noWr,
   }) {
     return TableOrderModel(
+      docId: docId ?? this.docId,
       tanggal: tanggal ?? this.tanggal,
       cnNumber: cnNumber ?? this.cnNumber,
       trouble: trouble ?? this.trouble,

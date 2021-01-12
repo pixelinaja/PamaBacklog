@@ -20,7 +20,11 @@ class OrderService implements OrderRepository {
     QuerySnapshot snapshot =
         await _db.collection(FirestoreCollectionConstant.Orders).get();
 
-    return snapshot.docs.map((e) => Order.fromJson(e.data())).toList();
+    return snapshot.docs.map((e) {
+      var order = Order.fromJson(e.data());
+      order.docId = e.id;
+      return order;
+    }).toList();
   }
 
   @override

@@ -1,16 +1,20 @@
 import 'package:PamaBacklog/Global/AppRelated/AppColor.dart';
+import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
+import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:horizontal_data_table/horizontal_data_table.dart';
 import 'package:PamaBacklog/Model/OrderModel.dart';
 import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:PamaBacklog/Global/Extension/AppExtensions.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MekanikHomeTableChild extends StatelessWidget {
+  final HDTRefreshController _hdtRefreshController = HDTRefreshController();
   final List<Order> orders;
   final List<TableOrderModel> tableOrders;
   final Orientation orientation;
-  const MekanikHomeTableChild({
+  MekanikHomeTableChild({
     Key key,
     this.orders,
     this.tableOrders,
@@ -34,7 +38,14 @@ class MekanikHomeTableChild extends StatelessWidget {
       ),
       leftHandSideColBackgroundColor: ThemeData().scaffoldBackgroundColor,
       rightHandSideColBackgroundColor: ThemeData().scaffoldBackgroundColor,
-      enablePullToRefresh: false,
+      enablePullToRefresh: true,
+      refreshIndicatorHeight: 60.h,
+      onRefresh: () {
+        context.read<MekanikTableBloc>().add(MekanikTableFetchData());
+        _hdtRefreshController.refreshCompleted();
+      },
+      refreshIndicator: const WaterDropHeader(),
+      htdRefreshController: _hdtRefreshController,
     );
   }
 
@@ -95,8 +106,12 @@ class MekanikHomeTableChild extends StatelessWidget {
   Widget _generateFirstColumnRow(BuildContext context, int index) {
     final bool isPotrait = orientation == Orientation.portrait;
 
+    /// Search Button (Detail Button)
     return GestureDetector(
-      onTap: () => print(index),
+      onTap: () {
+        return Navigator.of(context).pushNamed(RouteName.mekanikDetailLaporan,
+            arguments: tableOrders[index]);
+      },
       child: Container(
         child: Container(
           decoration: BoxDecoration(
@@ -137,7 +152,7 @@ class MekanikHomeTableChild extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 12.ssp,
+                fontSize: isPotrait ? 12.ssp : null,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -153,7 +168,6 @@ class MekanikHomeTableChild extends StatelessWidget {
             "${order.cnNumber}",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 14.ssp,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -168,7 +182,6 @@ class MekanikHomeTableChild extends StatelessWidget {
             "${order.trouble}",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 14.ssp,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -183,7 +196,6 @@ class MekanikHomeTableChild extends StatelessWidget {
             "${order.number}",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 14.ssp,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -198,7 +210,6 @@ class MekanikHomeTableChild extends StatelessWidget {
             "${order.deskripsi}",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 14.ssp,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -213,7 +224,6 @@ class MekanikHomeTableChild extends StatelessWidget {
             "${order.qty}",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 14.ssp,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -228,7 +238,6 @@ class MekanikHomeTableChild extends StatelessWidget {
             "${order.namaMekanik}",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 14.ssp,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -243,7 +252,6 @@ class MekanikHomeTableChild extends StatelessWidget {
             order.tanggal.toDate().parseDate(dateFormat: "dd-MM-yyyy"),
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 14.ssp,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -258,7 +266,6 @@ class MekanikHomeTableChild extends StatelessWidget {
             order.tanggal.toDate().parseDate(dateFormat: "dd-MM-yyyy"),
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 14.ssp,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -283,7 +290,7 @@ class MekanikHomeTableChild extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 12.ssp,
+                fontSize: isPotrait ? 12.ssp : null,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -299,7 +306,6 @@ class MekanikHomeTableChild extends StatelessWidget {
             "${order.noWr}",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 14.ssp,
               fontWeight: FontWeight.bold,
             ),
           ),
