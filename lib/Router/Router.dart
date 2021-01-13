@@ -1,9 +1,8 @@
 import 'package:PamaBacklog/Logic/FCM/bloc/sendnotification_bloc.dart';
 import 'package:PamaBacklog/Logic/Firestore/Orders/bloc/orders_bloc.dart';
-import 'package:PamaBacklog/Logic/Mekanik/DetailLaporan/cubit/mekaniklaporanaction_cubit.dart';
 import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
 import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTableSwitch/cubit/mekaniktableswitch_cubit.dart';
-import 'package:PamaBacklog/Model/OrderModel.dart';
+import 'package:PamaBacklog/Logic/Mekanik/UpdateLaporan/bloc/MekanikUpdateLaporan_bloc.dart';
 import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:PamaBacklog/Screen/Admin/DataCN/AdminDataCN.dart';
 import 'package:PamaBacklog/Screen/Admin/Laporan/LaporanTerbuka/AdminLaporanTerbuka.dart';
@@ -39,9 +38,9 @@ class AppRouter {
   /// Order fetch bloc
   final OrdersBloc _ordersBloc = OrdersBloc();
 
-  /// Mekanik Laporan Action Cubit
-  final MekanikLaporanActionCubit _mekanikLaporanActionCubit =
-      MekanikLaporanActionCubit();
+  /// Mekanik Laporan Update Bloc
+  final MekanikUpdateLaporanBloc _mekanikUpdateLaporanBloc =
+      MekanikUpdateLaporanBloc();
 
   /// Generate Screens Router
   Route<dynamic> generateRoute(RouteSettings settings) {
@@ -65,9 +64,9 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
-              BlocProvider(create: (context) => _mekanikTableSwitchCubit),
-              BlocProvider(create: (context) => _mekanikTableBloc),
-              BlocProvider(create: (context) => _ordersBloc),
+              BlocProvider.value(value: _mekanikTableSwitchCubit),
+              BlocProvider.value(value: _mekanikTableBloc),
+              BlocProvider.value(value: _ordersBloc),
             ],
             child: HomeScreen(),
           ),
@@ -88,7 +87,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
-              BlocProvider(create: (context) => _mekanikLaporanActionCubit),
+              BlocProvider.value(value: _mekanikUpdateLaporanBloc),
               BlocProvider.value(value: _mekanikTableBloc),
             ],
             child: MekanikDetailLaporan(orderDetail: orderData),
@@ -162,6 +161,6 @@ class AppRouter {
     _mekanikTableSwitchCubit.close();
     _mekanikTableBloc.close();
     _ordersBloc.close();
-    _mekanikLaporanActionCubit.close();
+    _mekanikUpdateLaporanBloc.close();
   }
 }

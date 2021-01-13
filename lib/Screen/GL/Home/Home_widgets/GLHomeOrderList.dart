@@ -107,21 +107,32 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
                             /// Row CN Unit
                             Row(
                               children: [
-                                Text(
-                                  "C/N UNIT",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12.ssp,
+                                Expanded(
+                                  flex: 8,
+                                  child: Container(
+                                    child: Text(
+                                      "C/N UNIT",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.ssp,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 50.w,
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(),
                                 ),
-                                Text(
-                                  element.cnNumber,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12.ssp,
+                                Expanded(
+                                  flex: 8,
+                                  child: Container(
+                                    child: Text(
+                                      element.cnNumber,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.ssp,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -131,21 +142,29 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
                             /// Row Nama Mekanik
                             Row(
                               children: [
-                                Text(
-                                  "Nama Mekanik",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12.ssp,
+                                Expanded(
+                                  flex: 8,
+                                  child: Container(
+                                    child: Text(
+                                      element.namaMekanik,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.ssp,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 25.w,
-                                ),
-                                Text(
-                                  element.namaMekanik,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12.ssp,
+                                Expanded(flex: 1, child: Container()),
+                                Expanded(
+                                  flex: 8,
+                                  child: Container(
+                                    child: Text(
+                                      element.trouble,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.ssp,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],

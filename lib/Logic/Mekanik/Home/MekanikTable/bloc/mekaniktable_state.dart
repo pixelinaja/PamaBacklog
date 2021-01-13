@@ -21,6 +21,16 @@ class MekanikTableCompleted extends MekanikTableState {
 
   @override
   List<Object> get props => [orders, tableOrder];
+
+  MekanikTableCompleted copyWith({
+    List<Order> orders,
+    List<TableOrderModel> tableOrder,
+  }) {
+    return MekanikTableCompleted(
+      orders: orders ?? this.orders,
+      tableOrder: tableOrder ?? this.tableOrder,
+    );
+  }
 }
 
 /// Fetch is failed

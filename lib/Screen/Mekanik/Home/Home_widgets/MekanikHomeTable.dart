@@ -30,7 +30,7 @@ class MekanikHomeTable extends StatelessWidget {
                 if (switchState is MekanikTableSwitchAll) {
                   return MekanikHomeTableChild(
                     orders: state.orders,
-                    tableOrders: switchState.tableOrder,
+                    tableOrders: state.tableOrder,
                     orientation: orientation,
                   );
                 } else if (switchState is MekanikTableSwitchOpen) {
