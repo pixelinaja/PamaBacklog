@@ -3,10 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ConfirmationDialog extends StatelessWidget {
   final String content;
+  final String yes;
+  final String no;
+  final String title;
+  final IconData icons;
   final VoidCallback onConfirmTap;
   const ConfirmationDialog({
     Key key,
+    @required this.icons,
+    @required this.title,
     @required this.content,
+    @required this.yes,
+    @required this.no,
     this.onConfirmTap,
   }) : super(key: key);
 
@@ -34,7 +42,7 @@ class ConfirmationDialog extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      "Peringatan!",
+                      title,
                       style: TextStyle(
                           fontSize: 30.ssp, fontWeight: FontWeight.bold),
                     ),
@@ -75,7 +83,7 @@ class ConfirmationDialog extends StatelessWidget {
                             ),
                             alignment: Alignment.center,
                             child: Text(
-                              "Tidak",
+                              no,
                               style: TextStyle(
                                 fontSize: 16.ssp,
                                 fontWeight: FontWeight.w600,
@@ -95,7 +103,7 @@ class ConfirmationDialog extends StatelessWidget {
                             ),
                             alignment: Alignment.center,
                             child: Text(
-                              "Lanjutkan",
+                              yes,
                               style: TextStyle(
                                 fontSize: 16.ssp,
                                 fontWeight: FontWeight.w600,
@@ -120,7 +128,7 @@ class ConfirmationDialog extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  Icons.help_outline,
+                  icons,
                   color: Colors.white,
                   size: 60.w,
                 ),

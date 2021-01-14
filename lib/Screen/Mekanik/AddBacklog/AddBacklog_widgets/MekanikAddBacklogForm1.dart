@@ -44,176 +44,178 @@ class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1> {
           topLeft: Radius.circular(60),
         ),
       ),
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 38.w),
-        child: Column(
-          children: [
-            Container(
-              child: TextFormField(
-                controller: _tanggalController,
-                onTap: () async => await _selectDate(context),
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText: "Tanggal Laporan",
-                  hintText: "Pilih Tanggal",
-                  alignLabelWithHint: true,
-                  suffixIcon: Icon(Icons.calendar_today),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 8.h),
-              child: TextFormField(
-                controller: _namaMekanikController,
-                decoration: InputDecoration(
-                  labelText: "Nama Mekanik",
-                  hintText: "Input Nama Mekanik",
-                  alignLabelWithHint: true,
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 8.h),
-              child: BlocBuilder<CNBloc, CNState>(builder: (context, state) {
-                return DropdownButtonFormField(
-                  items: (state is CNCompleted)
-                      ? state.cnData
-                          .map((e) => DropdownMenuItem(
-                                child: Text(e.cnName),
-                                value: e.cnName,
-                              ))
-                          .toList()
-                      : [
-                          DropdownMenuItem(
-                            child: Text("Memuat, Mohon Tunggu"),
-                            value: "",
-                          )
-                        ],
+      child: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 38.w),
+          child: Column(
+            children: [
+              Container(
+                child: TextFormField(
+                  controller: _tanggalController,
+                  onTap: () async => await _selectDate(context),
+                  readOnly: true,
                   decoration: InputDecoration(
-                    hintText: "Pilih Section",
-                    labelText: "Section",
+                    labelText: "Tanggal Laporan",
+                    hintText: "Pilih Tanggal",
+                    alignLabelWithHint: true,
+                    suffixIcon: Icon(Icons.calendar_today),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 8.h),
+                child: TextFormField(
+                  controller: _namaMekanikController,
+                  decoration: InputDecoration(
+                    labelText: "Nama Mekanik",
+                    hintText: "Input Nama Mekanik",
                     alignLabelWithHint: true,
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedSection = value;
-                    });
-                  },
-                  value: _selectedSection,
-                );
-              }),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 8.h),
-              child: BlocBuilder<CNBloc, CNState>(builder: (context, state) {
-                return DropdownButtonFormField(
-                  items: ((_selectedSection != null) &&
-                          (_selectedSection != "") &&
-                          (state is CNCompleted))
-                      ? _populateCNUnit(state.cnData.firstWhere(
-                          (element) => element.cnName == _selectedSection))
-                      : [
-                          DropdownMenuItem(
-                            child: Text("Pilih CN Section Dulu"),
-                            value: "",
-                          ),
-                        ],
-                  decoration: InputDecoration(
-                    hintText: "Pilih CN Unit",
-                    labelText: "CN Unit",
-                    alignLabelWithHint: true,
-                  ),
-                  onChanged: (value) {
-                    _selectedCN = value;
-                  },
-                  value: _selectedCN,
-                );
-              }),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 20.h),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Trouble / Description",
-                style: TextStyle(
-                  color: Colors.grey.shade700,
                 ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 8.h),
-              alignment: Alignment.centerLeft,
-              child: TextFormField(
-                controller: _troubleController,
-                maxLines: 6,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-            ),
-
-            /// Button Section
-            SizedBox(height: 70.h),
-            Container(
-              child: Row(
-                children: [
-                  Spacer(),
-                  Container(
-                    height: 2.h,
-                    width: 40.w,
-                    color: Colors.black,
-                  ),
-                  SizedBox(width: 12.w),
-                  Container(
-                    height: 1.h,
-                    width: 40.w,
-                    color: Colors.black,
-                  ),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      context.read<MekanikSaveBacklogCubit>().savePart1(
-                            cnUnit: _selectedCN,
-                            namaMekanik: _namaMekanikController.text.trim(),
-                            tanggal: selectedDate,
-                            trouble: _troubleController.text.trim(),
-                          );
-                      if (_selectedCN != null &&
-                          _namaMekanikController.text.trim() != null &&
-                          selectedDate != null &&
-                          _troubleController.text.trim() != null) {
-                        return pageController.animateToPage(1,
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeIn);
-                      } else {
-                        Scaffold.of(context).removeCurrentSnackBar();
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                "Data Tidak Lengkap, Silahkan isi Kotak yang Kosong"),
-                          ),
-                        );
-                      }
+              Container(
+                margin: EdgeInsets.only(top: 8.h),
+                child: BlocBuilder<CNBloc, CNState>(builder: (context, state) {
+                  return DropdownButtonFormField(
+                    items: (state is CNCompleted)
+                        ? state.cnData
+                            .map((e) => DropdownMenuItem(
+                                  child: Text(e.cnName),
+                                  value: e.cnName,
+                                ))
+                            .toList()
+                        : [
+                            DropdownMenuItem(
+                              child: Text("Memuat, Mohon Tunggu"),
+                              value: "",
+                            )
+                          ],
+                    decoration: InputDecoration(
+                      hintText: "Pilih Section",
+                      labelText: "Section",
+                      alignLabelWithHint: true,
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedSection = value;
+                      });
                     },
-                    child: Container(
-                      height: 35.h,
-                      width: 35.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.grey),
-                      ),
-                      child: Icon(
-                        Icons.play_arrow,
-                        size: 30.w,
-                      ),
+                    value: _selectedSection,
+                  );
+                }),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 8.h),
+                child: BlocBuilder<CNBloc, CNState>(builder: (context, state) {
+                  return DropdownButtonFormField(
+                    items: ((_selectedSection != null) &&
+                            (_selectedSection != "") &&
+                            (state is CNCompleted))
+                        ? _populateCNUnit(state.cnData.firstWhere(
+                            (element) => element.cnName == _selectedSection))
+                        : [
+                            DropdownMenuItem(
+                              child: Text("Pilih CN Section Dulu"),
+                              value: "",
+                            ),
+                          ],
+                    decoration: InputDecoration(
+                      hintText: "Pilih CN Unit",
+                      labelText: "CN Unit",
+                      alignLabelWithHint: true,
+                    ),
+                    onChanged: (value) {
+                      _selectedCN = value;
+                    },
+                    value: _selectedCN,
+                  );
+                }),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20.h),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Trouble / Description",
+                  style: TextStyle(
+                    color: Colors.grey.shade700,
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 8.h),
+                alignment: Alignment.centerLeft,
+                child: TextFormField(
+                  controller: _troubleController,
+                  maxLines: 6,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                ],
+                ),
               ),
-            )
-          ],
+
+              /// Button Section
+              SizedBox(height: 70.h),
+              Container(
+                child: Row(
+                  children: [
+                    Spacer(),
+                    Container(
+                      height: 2.h,
+                      width: 40.w,
+                      color: Colors.black,
+                    ),
+                    SizedBox(width: 12.w),
+                    Container(
+                      height: 1.h,
+                      width: 40.w,
+                      color: Colors.black,
+                    ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        context.read<MekanikSaveBacklogCubit>().savePart1(
+                              cnUnit: _selectedCN,
+                              namaMekanik: _namaMekanikController.text.trim(),
+                              tanggal: selectedDate,
+                              trouble: _troubleController.text.trim(),
+                            );
+                        if (_selectedCN != null &&
+                            _namaMekanikController.text.trim() != null &&
+                            selectedDate != null &&
+                            _troubleController.text.trim() != null) {
+                          return pageController.animateToPage(1,
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeIn);
+                        } else {
+                          Scaffold.of(context).removeCurrentSnackBar();
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  "Data Tidak Lengkap, Silahkan isi Kotak yang Kosong"),
+                            ),
+                          );
+                        }
+                      },
+                      child: Container(
+                        height: 35.h,
+                        width: 35.w,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child: Icon(
+                          Icons.play_arrow,
+                          size: 30.w,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -29,7 +29,7 @@ class _MekanikAddBacklogState extends State<MekanikAddBacklog> {
         }
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: Container(
             height: ScreenUtil().screenHeight,
