@@ -1,8 +1,15 @@
 import 'dart:async';
 
 import 'package:PamaBacklog/Global/AppRelated/AppString.dart';
+import 'package:PamaBacklog/Global/Enums/Enums.dart';
+import 'package:PamaBacklog/Global/FirestoreConstant/FirestoreCollectionsConstant.dart';
+import 'package:PamaBacklog/Model/NotificationMsgModel.dart';
+import 'package:PamaBacklog/Model/OrderModel.dart';
 import 'package:PamaBacklog/Model/TableOrderModel.dart';
+import 'package:PamaBacklog/Service/FCMRepository.dart';
+import 'package:PamaBacklog/Service/OrderRepository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
@@ -14,7 +21,11 @@ part 'mekanikadd_state.dart';
 
 class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
   final MekanikTableBloc mekanikTableBloc;
+  final OrderRepository orderRepository;
+  final FCMRepository fcmRepository;
   MekanikAddBloc({
+    this.fcmRepository,
+    this.orderRepository,
     this.mekanikTableBloc,
   }) : super(MekanikAddInitial());
 
@@ -23,13 +34,40 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
     MekanikAddEvent event,
   ) async* {
     if (event is MekanikAddStart) {
+      /// Yield Loading
+      yield MekanikAddLoading();
+
+      /// Generate part number
+      Map<String, PartNumber> partNumber = {};
+      for (var item in event.partNumbers) {
+        partNumber[item.partNumber] = PartNumber(
+            deskripsi: item.description,
+            number: item.partNumber,
+            qty: item.qty,
+            statusAction: "APPROVAL",
+            statusPart: "");
+      }
+
+      final randomId = FirebaseFirestore.instance
+          .collection(FirestoreCollectionConstant.Orders)
+          .doc()
+          .id;
+      final order = Order(
+        approvalPengawas: 0,
+        cnNumber: event.cnUnit,
+        docId: randomId,
+        namaMekanik: event.namaMekanik,
+        noWr: "",
+        partNumber: partNumber,
+        tanggal: Timestamp.fromDate(event.tanggalLaporan),
+        tanggalEksekusi: null,
+        trouble: event.trouble,
+      );
+
       if (event.byPass == false) {
         /// Get Mekanik Table Order Data
         final mekanikTableState = mekanikTableBloc.state;
         if (mekanikTableState is MekanikTableCompleted) {
-          /// Yield Loading
-          yield MekanikAddLoading();
-
           /// Filter Order data, Hapus semua yang sudah close atau part kosong
           List<TableOrderModel> orderData = [];
           orderData.addAll(mekanikTableState.tableOrder);
@@ -44,13 +82,12 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
               for (var partNumber in event.partNumbers) {
                 if (item.number == partNumber.partNumber) {
                   yield MekanikAddFailed(
+                      code: ErrorCode.ShouldShowDialog,
                       error:
-                          "Part Number ${partNumber.partNumber} dengan CN Unit ${event.cnUnit} sudah pernah dipesan sebelumnya");
+                          "Part Number ${partNumber.partNumber} dengan CN Unit ${event.cnUnit} sudah pernah dipesan sebelumnya",
+                      prevOrderData: order);
                   break;
                 }
-
-                /// TODO: Perform firestore write
-                else {}
               }
             }
           }
@@ -58,7 +95,33 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
       }
 
       /// TODO: Perfrom firestore write
-      else {}
+      else {
+        final updateData = orderRepository.mekanikAddOrder(
+            orderData: order, docId: order.docId);
+
+        /// Topic 1 is to send the notification to GL
+        final sendNotification = fcmRepository.sendPushNotification(
+          topic: "1",
+          msg: NotificationMsgModel(
+            body:
+                "Order dengan CN Unit ${event.cnUnit} telah dibuat oleh ${event.namaMekanik}",
+            orderId: randomId,
+            orderStatus: "0",
+            title: "Order Baru",
+          ),
+        );
+
+        try {
+          /// Call all the futures
+          await Future.wait([updateData, sendNotification]);
+          yield MekanikAddCompleted();
+        } catch (e) {
+          yield MekanikAddFailed(
+              error: e.toString(),
+              code: ErrorCode.Severe,
+              prevOrderData: order);
+        }
+      }
     }
   }
 

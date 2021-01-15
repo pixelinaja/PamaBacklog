@@ -148,6 +148,7 @@ class _MekanikAddBacklogForm2State extends State<MekanikAddBacklogForm2> {
                   tanggalLaporan: state.tanggal,
                   partNumbers: partNumbers,
                   trouble: state.trouble,
+                  byPass: false,
                 ),
               );
         } else {

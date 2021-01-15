@@ -117,6 +117,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   FlutterLocalNotificationsPlugin get flutterLocalNotificationsPlugin =>
       widget.flutterLocalNotificationsPlugin;
 
+  /// Order Repository
+  OrderRepository _orderRepository = OrderService();
+
+  /// FCM Repository
+  FCMService _fcmService = FCMService();
+
   @override
   void initState() {
     super.initState();
@@ -170,18 +176,22 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider(create: (context) => authBloc),
         BlocProvider(
           create: (context) => SendNotificationBloc(
-            fcmRepository: FCMService(),
+            fcmRepository: _fcmService,
           ),
         ),
         BlocProvider(
           create: (context) => MekanikTableBloc(
-            orderRepository: OrderService(),
+            orderRepository: _orderRepository,
           ),
         ),
         BlocProvider(create: (context) => MekanikUpdateLaporanBloc()),
         BlocProvider(
-            create: (context) => MekanikAddBloc(
-                mekanikTableBloc: context.read<MekanikTableBloc>())),
+          create: (context) => MekanikAddBloc(
+            mekanikTableBloc: context.read<MekanikTableBloc>(),
+            orderRepository: _orderRepository,
+            fcmRepository: _fcmService,
+          ),
+        ),
         BlocProvider(create: (context) => OrdersBloc()),
         BlocProvider(create: (context) => CNBloc())
       ],
@@ -208,7 +218,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   /// Navigate to a screen when user tap on a notification
   void _configureSelectNotificationSubject() {
     selectNotificationSubject.stream.listen((String payload) async {
-      await _navKey.currentState.pushNamed(RouteName.loginScreen);
+      await _navKey.currentState.pushNamed(RouteName.homeScreen);
     });
   }
 

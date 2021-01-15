@@ -5,8 +5,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 abstract class OrderRepository {
-  /// Get User Data from Firestore
+  /// Get Order Data from Firestore
   Future<List<Order>> getOrderData();
+
+  /// Add Order to Firestore
+  Future<void> mekanikAddOrder({@required Order orderData, @required String docId});
 
   /// Update order
   Future<void> mekanikUpdateOrder(
@@ -58,5 +61,12 @@ class OrderService implements OrderRepository {
 
     /// Jalankan perintah update dan buat history
     await Future.wait([createHistory, updateDocument]);
+  }
+
+  @override
+  Future<void> mekanikAddOrder({Order orderData, String docId}) async {
+    await _db
+        .collection(FirestoreCollectionConstant.Orders)
+        .doc(docId).set(orderData.toJson());
   }
 }

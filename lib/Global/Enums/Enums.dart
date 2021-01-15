@@ -9,3 +9,9 @@ enum DialogStatusType {
   Success,
   Fail,
 }
+
+/// Error Code
+enum ErrorCode {
+  ShouldShowDialog,
+  Severe,
+}
