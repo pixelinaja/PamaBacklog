@@ -9,7 +9,8 @@ abstract class OrderRepository {
   Future<List<Order>> getOrderData();
 
   /// Add Order to Firestore
-  Future<void> mekanikAddOrder({@required Order orderData, @required String docId});
+  Future<void> mekanikAddOrder(
+      {@required Order orderData, @required String docId});
 
   /// Update order
   Future<void> mekanikUpdateOrder(
@@ -24,8 +25,10 @@ class OrderService implements OrderRepository {
 
   @override
   Future<List<Order>> getOrderData() async {
-    QuerySnapshot snapshot =
-        await _db.collection(FirestoreCollectionConstant.Orders).get();
+    QuerySnapshot snapshot = await _db
+        .collection(FirestoreCollectionConstant.Orders)
+        .orderBy("tanggal", descending: true)
+        .get();
 
     return snapshot.docs.map((e) {
       var order = Order.fromJson(e.data());
@@ -67,6 +70,7 @@ class OrderService implements OrderRepository {
   Future<void> mekanikAddOrder({Order orderData, String docId}) async {
     await _db
         .collection(FirestoreCollectionConstant.Orders)
-        .doc(docId).set(orderData.toJson());
+        .doc(docId)
+        .set(orderData.toJson());
   }
 }

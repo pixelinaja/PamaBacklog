@@ -18,7 +18,8 @@ class MekanikAddBacklogForm1 extends StatefulWidget {
   _MekanikAddBacklogForm1State createState() => _MekanikAddBacklogForm1State();
 }
 
-class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1> {
+class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1>
+    with AutomaticKeepAliveClientMixin {
   PageController get pageController => widget.pageController;
   DateTime selectedDate;
   String _selectedCN;
@@ -35,6 +36,7 @@ class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       height: ScreenUtil().screenHeight - 140.h,
       padding: EdgeInsets.only(top: 28.h),
@@ -115,8 +117,7 @@ class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1> {
                             (element) => element.cnName == _selectedSection))
                         : [
                             DropdownMenuItem(
-                              child: Text("Pilih CN Section Dulu"),
-                              value: "",
+                              child: Text(""),
                             ),
                           ],
                     decoration: InputDecoration(
@@ -258,4 +259,8 @@ class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1> {
     _troubleController.dispose();
     super.dispose();
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

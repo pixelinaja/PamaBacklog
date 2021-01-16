@@ -41,81 +41,83 @@ class _MekanikAddBacklogForm2State extends State<MekanikAddBacklogForm2> {
       decoration: BoxDecoration(
         color: Colors.white,
       ),
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 30.w),
-        child: Column(
-          children: [
-            /// List
-            Container(
-              height: 470.h,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: _populateTextfield(),
+      child: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 30.w),
+          child: Column(
+            children: [
+              /// List
+              Container(
+                height: 470.h,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: _populateTextfield(),
+                  ),
                 ),
               ),
-            ),
 
-            /// Button Section
-            SizedBox(height: 64.h),
-            Container(
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => pageController.animateToPage(0,
-                        duration: Duration(milliseconds: 300),
-                        curve: Curves.easeOut),
-                    child: Container(
-                        height: 35.h,
-                        width: 35.w,
+              /// Button Section
+              SizedBox(height: 64.h),
+              Container(
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => pageController.animateToPage(0,
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeOut),
+                      child: Container(
+                          height: 35.h,
+                          width: 35.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.grey),
+                          ),
+                          child: RotatedBox(
+                            quarterTurns: 90,
+                            child: Icon(
+                              Icons.play_arrow,
+                              size: 30.w,
+                            ),
+                          )),
+                    ),
+                    Spacer(),
+                    Row(
+                      children: [
+                        Container(
+                          height: 1.h,
+                          width: 40.w,
+                          color: Colors.black,
+                        ),
+                        SizedBox(width: 12.w),
+                        Container(
+                          height: 2.h,
+                          width: 40.w,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () => _performAddBacklog(),
+                      child: Container(
+                        height: 40.h,
+                        width: 40.w,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.grey),
+                          color: Colors.green.shade700,
                         ),
-                        child: RotatedBox(
-                          quarterTurns: 90,
-                          child: Icon(
-                            Icons.play_arrow,
-                            size: 30.w,
-                          ),
-                        )),
-                  ),
-                  Spacer(),
-                  Row(
-                    children: [
-                      Container(
-                        height: 1.h,
-                        width: 40.w,
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 12.w),
-                      Container(
-                        height: 2.h,
-                        width: 40.w,
-                        color: Colors.black,
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: () => _performAddBacklog(),
-                    child: Container(
-                      height: 40.h,
-                      width: 40.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.green.shade700,
-                      ),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                        size: 30.w,
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 30.w,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            )
-          ],
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -160,6 +162,8 @@ class _MekanikAddBacklogForm2State extends State<MekanikAddBacklogForm2> {
           );
         }
       }
+    } else {
+      print("Else");
     }
   }
 

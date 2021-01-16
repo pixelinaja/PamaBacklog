@@ -45,7 +45,7 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
             number: item.partNumber,
             qty: item.qty,
             statusAction: "APPROVAL",
-            statusPart: "");
+            statusPart: "-");
       }
 
       final randomId = FirebaseFirestore.instance
@@ -57,7 +57,7 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
         cnNumber: event.cnUnit,
         docId: randomId,
         namaMekanik: event.namaMekanik,
-        noWr: "",
+        noWr: "-",
         partNumber: partNumber,
         tanggal: Timestamp.fromDate(event.tanggalLaporan),
         tanggalEksekusi: null,
@@ -91,6 +91,40 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
               }
             }
           }
+
+          /// Perform Firestore Write
+          final updateData = orderRepository.mekanikAddOrder(
+              orderData: order, docId: order.docId);
+
+          /// Topic 1 is to send the notification to GL
+          final sendNotification = fcmRepository.sendPushNotification(
+            topic: "1",
+            msg: NotificationMsgModel(
+              body:
+                  "Order dengan CN Unit ${event.cnUnit} telah dibuat oleh ${event.namaMekanik}",
+              orderId: randomId,
+              orderStatus: "0",
+              title: "Order Baru",
+            ),
+          );
+
+          try {
+            /// Call all the futures
+            await Future.wait([updateData, sendNotification]);
+            yield MekanikAddCompleted();
+          } catch (e) {
+            print(e.toString());
+            yield MekanikAddFailed(
+                error: e.toString(),
+                code: ErrorCode.Severe,
+                prevOrderData: order);
+          }
+        } else {
+          yield MekanikAddFailed(
+            code: ErrorCode.Severe,
+            error: "Severe Error Happen, Please Restart the App",
+            prevOrderData: order,
+          );
         }
       }
 
@@ -116,6 +150,7 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
           await Future.wait([updateData, sendNotification]);
           yield MekanikAddCompleted();
         } catch (e) {
+          print(e.toString());
           yield MekanikAddFailed(
               error: e.toString(),
               code: ErrorCode.Severe,

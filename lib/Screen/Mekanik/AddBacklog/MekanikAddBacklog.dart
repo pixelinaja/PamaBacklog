@@ -1,6 +1,7 @@
 import 'package:PamaBacklog/Global/AppRelated/AppColor.dart';
 import 'package:PamaBacklog/Global/Enums/Enums.dart';
 import 'package:PamaBacklog/Logic/Mekanik/AddBacklog/bloc/mekanikadd_bloc.dart';
+import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
 import 'package:PamaBacklog/Model/MekanikAddPartNumber.dart';
 import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:PamaBacklog/Screen/Mekanik/AddBacklog/AddBacklog_widgets/MekanikAddBacklogForm1.dart';
@@ -89,6 +90,7 @@ class _MekanikAddBacklogState extends State<MekanikAddBacklog> {
                       content: "Order Backlog Telah Berhasil dilaporkan",
                       dialogStatusType: DialogStatusType.Success),
                 );
+                context.read<MekanikTableBloc>().add(MekanikTableFetchData());
               }
             },
             child: Container(
