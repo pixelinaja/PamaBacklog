@@ -13,7 +13,7 @@ class AdminHomeOrderList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 384.h,
+      height: 375.h,
       child: BlocBuilder<OrdersBloc, OrdersState>(
         builder: (context, state) {
           if (state is OrdersLoading) {
@@ -47,6 +47,7 @@ class AdminHomeOrderList extends StatelessWidget {
                       Divider(
                         color: Colors.black,
                         endIndent: 270.w,
+                        height: 12.h,
                       )
                     ],
                   ),
@@ -158,7 +159,7 @@ class AdminHomeOrderList extends StatelessWidget {
                                   color: AppColor.statusApproval,
                                 ),
                                 width: 80.w,
-                                height: 15.h,
+                                height: 13.h,
                                 alignment: Alignment.center,
                                 child: Text(
                                   "APPROVAL",

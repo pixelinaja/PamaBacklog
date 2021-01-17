@@ -52,6 +52,7 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
                     Divider(
                       color: Colors.black,
                       endIndent: 270.w,
+                      height: 12.h,
                     )
                   ],
                 ),
