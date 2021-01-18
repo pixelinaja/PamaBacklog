@@ -71,7 +71,8 @@ class _MekanikAddBacklogState extends State<MekanikAddBacklog> {
                                   .map((value) => MekanikAddPartNumber(
                                       value.value.number,
                                       value.value.deskripsi,
-                                      value.value.qty)),
+                                      value.value.qty))
+                                  .toList(),
                               trouble: state.prevOrderData.trouble,
                               byPass: true,
                             ),

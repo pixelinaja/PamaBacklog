@@ -77,6 +77,7 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
 
           /// Loop, cari apakah ada yang duplicate, jika tidak iya, maka kembalikan state Failed.
           /// Jika tidak, maka jalankan firestore write.
+          var duplicateFlag = false;
           for (var item in orderData) {
             if (item.cnNumber == event.cnUnit) {
               for (var partNumber in event.partNumbers) {
@@ -86,38 +87,41 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
                       error:
                           "Part Number ${partNumber.partNumber} dengan CN Unit ${event.cnUnit} sudah pernah dipesan sebelumnya",
                       prevOrderData: order);
+                  duplicateFlag = true;
                   break;
                 }
               }
             }
           }
 
-          /// Perform Firestore Write
-          final updateData = orderRepository.mekanikAddOrder(
-              orderData: order, docId: order.docId);
+          if (duplicateFlag == false) {
+            /// Perform Firestore Write
+            final updateData = orderRepository.mekanikAddOrder(
+                orderData: order, docId: order.docId);
 
-          /// Topic 1 is to send the notification to GL
-          final sendNotification = fcmRepository.sendPushNotification(
-            topic: "1",
-            msg: NotificationMsgModel(
-              body:
-                  "Order dengan CN Unit ${event.cnUnit} telah dibuat oleh ${event.namaMekanik}",
-              orderId: randomId,
-              orderStatus: "0",
-              title: "Order Baru",
-            ),
-          );
+            /// Topic 1 is to send the notification to GL
+            final sendNotification = fcmRepository.sendPushNotification(
+              topic: "1",
+              msg: NotificationMsgModel(
+                body:
+                    "Order dengan CN Unit ${event.cnUnit} telah dibuat oleh ${event.namaMekanik}",
+                orderId: randomId,
+                orderStatus: "0",
+                title: "Order Baru",
+              ),
+            );
 
-          try {
-            /// Call all the futures
-            await Future.wait([updateData, sendNotification]);
-            yield MekanikAddCompleted();
-          } catch (e) {
-            print(e.toString());
-            yield MekanikAddFailed(
-                error: e.toString(),
-                code: ErrorCode.Severe,
-                prevOrderData: order);
+            try {
+              /// Call all the futures
+              await Future.wait([updateData, sendNotification]);
+              yield MekanikAddCompleted();
+            } catch (e) {
+              print(e.toString());
+              yield MekanikAddFailed(
+                  error: e.toString(),
+                  code: ErrorCode.Severe,
+                  prevOrderData: order);
+            }
           }
         } else {
           yield MekanikAddFailed(
@@ -128,7 +132,7 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
         }
       }
 
-      /// TODO: Perfrom firestore write
+      /// Perfrom firestore write
       else {
         final updateData = orderRepository.mekanikAddOrder(
             orderData: order, docId: order.docId);
