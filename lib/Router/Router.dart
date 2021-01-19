@@ -4,6 +4,7 @@ import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:PamaBacklog/Screen/Admin/DataCN/AdminDataCN.dart';
 import 'package:PamaBacklog/Screen/Admin/Laporan/LaporanTerbuka/AdminLaporanTerbuka.dart';
 import 'package:PamaBacklog/Screen/Admin/Laporan/LogLaporan/AdminLogLaporan.dart';
+import 'package:PamaBacklog/Screen/GL/DetailLaporan/GLDetailLaporan.dart';
 import 'package:PamaBacklog/Screen/GL/Laporan/GLLaporan.dart';
 import 'package:PamaBacklog/Screen/GL/PerluPersetujuan/GLPerluPersetujuan.dart';
 import 'package:PamaBacklog/Screen/Mekanik/AddBacklog/MekanikAddBacklog.dart';
@@ -60,6 +61,11 @@ class AppRouter {
       case RouteName.glLogLaporan:
         return MaterialPageRoute(
           builder: (_) => GLLaporan(),
+          settings: settings,
+        );
+      case RouteName.glDetailLaporan:
+        return MaterialPageRoute(
+          builder: (_) => GLDetailLaporan(),
           settings: settings,
         );
       case RouteName.glPerluPersetujuan:

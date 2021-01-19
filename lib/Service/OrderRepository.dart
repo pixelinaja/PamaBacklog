@@ -18,6 +18,9 @@ abstract class OrderRepository {
       @required String status,
       @required String partNumber,
       @required TableOrderModel orderDetail});
+
+  /// GL Approve Order
+  Future<void> glApproveOrder({@required Order order});
 }
 
 class OrderService implements OrderRepository {
@@ -72,5 +75,26 @@ class OrderService implements OrderRepository {
         .collection(FirestoreCollectionConstant.Orders)
         .doc(docId)
         .set(orderData.toJson());
+  }
+
+  @override
+  Future<void> glApproveOrder({Order order}) async {
+    final orderData = order.toJson();
+
+    /// Buat history perubahan
+    final createHistory = _db
+        .collection(FirestoreCollectionConstant.Orders)
+        .doc(order.docId)
+        .collection(FirestoreCollectionConstant.History)
+        .add(orderData);
+
+    /// Update data
+    final updateDocument = _db
+        .collection(FirestoreCollectionConstant.Orders)
+        .doc(order.docId)
+        .set(orderData, SetOptions(merge: true));
+
+    /// Jalankan perintah update dan buat history
+    await Future.wait([createHistory, updateDocument]);
   }
 }

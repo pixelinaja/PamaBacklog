@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:PamaBacklog/Logic/Firestore/CN/bloc/cn_bloc.dart';
+import 'package:PamaBacklog/Logic/GL/GLSelectOrder/cubit/gl_select_order_cubit.dart';
 import 'package:PamaBacklog/Logic/Mekanik/AddBacklog/bloc/mekanikadd_bloc.dart';
 import 'package:PamaBacklog/Service/AuthRepository.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -27,6 +28,7 @@ import 'Logic/Auth/bloc/auth_bloc.dart';
 import 'Logic/Connectivity/cubit/connectivity_cubit.dart';
 import 'Logic/FCM/bloc/sendnotification_bloc.dart';
 import 'Logic/Firestore/Orders/bloc/orders_bloc.dart';
+import 'Logic/GL/GLApproveOrder/bloc/gl_approve_order_bloc.dart';
 import 'Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
 import 'Logic/Mekanik/UpdateLaporan/bloc/MekanikUpdateLaporan_bloc.dart';
 import 'Service/FCMRepository.dart';
@@ -193,7 +195,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           ),
         ),
         BlocProvider(create: (context) => OrdersBloc()),
-        BlocProvider(create: (context) => CNBloc())
+        BlocProvider(create: (context) => CNBloc()),
+        BlocProvider(create: (context) => GLSelectOrderCubit()),
+        BlocProvider(
+          create: (context) => GLApproveOrderBloc(
+            fcmRepository: _fcmService,
+            orderRepository: _orderRepository,
+          ),
+        ),
       ],
       child: ScreenUtilInit(
         allowFontScaling: true,
