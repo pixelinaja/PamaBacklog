@@ -35,4 +35,12 @@ class MekanikTableSwitchOpen extends MekanikTableSwitchState {
 
   @override
   List<Object> get props => [tableOrder];
+
+  MekanikTableSwitchOpen copyWith({
+    List<TableOrderModel> tableOrder,
+  }) {
+    return MekanikTableSwitchOpen(
+      tableOrder: tableOrder ?? this.tableOrder,
+    );
+  }
 }

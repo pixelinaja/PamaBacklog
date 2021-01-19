@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTableSwitch/cubit/mekaniktableswitch_cubit.dart';
 import 'package:PamaBacklog/Model/OrderModel.dart';
 import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:PamaBacklog/Service/OrderRepository.dart';
@@ -29,6 +28,7 @@ class MekanikTableBloc extends Bloc<MekanikTableEvent, MekanikTableState> {
           for (var part in order.partNumber.values) {
             /// Populate and create a new table order model
             TableOrderModel temp = TableOrderModel(
+              docId: order.docId,
               approvalPengawas: order.approvalPengawas,
               cnNumber: order.cnNumber,
               deskripsi: part.deskripsi,
@@ -47,13 +47,37 @@ class MekanikTableBloc extends Bloc<MekanikTableEvent, MekanikTableState> {
             tableOrder.add(temp);
           }
         }
-        yield MekanikTableCompleted(orders: orders, tableOrder: tableOrder);
+        yield MekanikTableCompleted(orders: orders, tableOrder: tableOrder)
+            .copyWith(
+          orders: orders,
+          tableOrder: tableOrder,
+        );
       } on FirebaseException catch (e) {
         yield MekanikTableFailed(e.message);
       } on Exception catch (e) {
         yield MekanikTableFailed(e.toString());
       } catch (e) {
         yield MekanikTableFailed(e.toString());
+      }
+    } else if (event is MekanikTableUpdateData) {
+      if (state is MekanikTableCompleted) {
+        var order = (state as MekanikTableCompleted).orders;
+        var orderDetail = (state as MekanikTableCompleted).tableOrder;
+        int indexDetail = orderDetail.indexWhere((element) =>
+            element.cnNumber == event.orderDetail.cnNumber &&
+            element.number == event.orderDetail.number);
+        int indexOrder = order
+            .indexWhere((element) => element.docId == event.orderDetail.docId);
+        orderDetail[indexDetail] = event.orderDetail;
+        order[indexOrder].partNumber[event.orderDetail.number].statusAction =
+            event.orderDetail.statusAction;
+
+        yield MekanikTableLoading();
+        yield MekanikTableCompleted(orders: order, tableOrder: orderDetail)
+            .copyWith(
+          orders: order,
+          tableOrder: orderDetail,
+        );
       }
     }
   }

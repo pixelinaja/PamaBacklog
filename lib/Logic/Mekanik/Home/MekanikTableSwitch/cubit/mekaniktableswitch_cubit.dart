@@ -9,15 +9,18 @@ class MekanikTableSwitchCubit extends Cubit<MekanikTableSwitchState> {
 
   /// Switch to All Cubit Function
   void switchToAll({List<TableOrderModel> tableOrder}) {
-    return emit(MekanikTableSwitchAll(tableOrder: tableOrder));
+    return emit(MekanikTableSwitchAll(tableOrder: tableOrder)
+        .copyWith(tableOrder: tableOrder));
   }
 
   /// Switch to Open Cubit Function
   void switchToOpen({List<TableOrderModel> tableOrder}) {
     List<TableOrderModel> filteredTableOrder = [];
     filteredTableOrder.addAll(tableOrder);
-    filteredTableOrder
-        .removeWhere((element) => element.statusAction == "CLOSE");
-    emit(MekanikTableSwitchOpen(tableOrder: filteredTableOrder));
+    filteredTableOrder.removeWhere((element) =>
+        element.statusAction == "CLOSE" ||
+        element.statusAction == "PART KOSONG");
+    emit(MekanikTableSwitchOpen(tableOrder: filteredTableOrder)
+        .copyWith(tableOrder: filteredTableOrder));
   }
 }

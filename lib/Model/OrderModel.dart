@@ -8,6 +8,7 @@ String orderToJson(Order data) => json.encode(data.toJson());
 
 class Order {
   Order({
+    this.docId,
     this.tanggal,
     this.cnNumber,
     this.partNumber,
@@ -18,6 +19,7 @@ class Order {
     this.trouble,
   });
 
+  String docId;
   Timestamp tanggal;
   String cnNumber;
   Map<String, PartNumber> partNumber;
@@ -28,6 +30,7 @@ class Order {
   String trouble;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
+        docId: json["docId"] ?? "",
         tanggal: json["tanggal"],
         cnNumber: json["cn_number"],
         partNumber: (json["part_number"] as Map)
@@ -40,6 +43,7 @@ class Order {
       );
 
   Map<String, dynamic> toJson() => {
+        "docId": docId ?? "",
         "tanggal": tanggal,
         "cn_number": cnNumber,
         "part_number":

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:PamaBacklog/Logic/Firestore/CN/bloc/cn_bloc.dart';
+import 'package:PamaBacklog/Logic/Mekanik/AddBacklog/bloc/mekanikadd_bloc.dart';
 import 'package:PamaBacklog/Service/AuthRepository.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -23,6 +25,12 @@ import 'package:PamaBacklog/Router/Router.dart';
 
 import 'Logic/Auth/bloc/auth_bloc.dart';
 import 'Logic/Connectivity/cubit/connectivity_cubit.dart';
+import 'Logic/FCM/bloc/sendnotification_bloc.dart';
+import 'Logic/Firestore/Orders/bloc/orders_bloc.dart';
+import 'Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
+import 'Logic/Mekanik/UpdateLaporan/bloc/MekanikUpdateLaporan_bloc.dart';
+import 'Service/FCMRepository.dart';
+import 'Service/OrderRepository.dart';
 
 /// Background message handler
 Future<Map<String, dynamic>> _firebaseMessagingBackgroundHandler(
@@ -109,6 +117,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   FlutterLocalNotificationsPlugin get flutterLocalNotificationsPlugin =>
       widget.flutterLocalNotificationsPlugin;
 
+  /// Order Repository
+  OrderRepository _orderRepository = OrderService();
+
+  /// FCM Repository
+  FCMService _fcmService = FCMService();
+
   @override
   void initState() {
     super.initState();
@@ -160,6 +174,26 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       providers: [
         BlocProvider(create: (context) => connectivityCubit),
         BlocProvider(create: (context) => authBloc),
+        BlocProvider(
+          create: (context) => SendNotificationBloc(
+            fcmRepository: _fcmService,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => MekanikTableBloc(
+            orderRepository: _orderRepository,
+          ),
+        ),
+        BlocProvider(create: (context) => MekanikUpdateLaporanBloc()),
+        BlocProvider(
+          create: (context) => MekanikAddBloc(
+            mekanikTableBloc: context.read<MekanikTableBloc>(),
+            orderRepository: _orderRepository,
+            fcmRepository: _fcmService,
+          ),
+        ),
+        BlocProvider(create: (context) => OrdersBloc()),
+        BlocProvider(create: (context) => CNBloc())
       ],
       child: ScreenUtilInit(
         allowFontScaling: true,
@@ -184,14 +218,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   /// Navigate to a screen when user tap on a notification
   void _configureSelectNotificationSubject() {
     selectNotificationSubject.stream.listen((String payload) async {
-      await _navKey.currentState.pushNamed(RouteName.loginScreen);
+      await _navKey.currentState.pushNamed(RouteName.homeScreen);
     });
   }
 
   @override
   void dispose() {
-    _appRouter.dispose();
     selectNotificationSubject.close();
+    authBloc.close();
     super.dispose();
   }
 }

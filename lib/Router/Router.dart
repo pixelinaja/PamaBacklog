@@ -1,15 +1,14 @@
-import 'package:PamaBacklog/Logic/FCM/bloc/sendnotification_bloc.dart';
-import 'package:PamaBacklog/Logic/Firestore/Orders/bloc/orders_bloc.dart';
-import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
 import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTableSwitch/cubit/mekaniktableswitch_cubit.dart';
+import 'package:PamaBacklog/Logic/Mekanik/SaveBacklog/cubit/MekanikSaveBacklog_cubit.dart';
+import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:PamaBacklog/Screen/Admin/DataCN/AdminDataCN.dart';
 import 'package:PamaBacklog/Screen/Admin/Laporan/LaporanTerbuka/AdminLaporanTerbuka.dart';
 import 'package:PamaBacklog/Screen/Admin/Laporan/LogLaporan/AdminLogLaporan.dart';
 import 'package:PamaBacklog/Screen/GL/Laporan/GLLaporan.dart';
 import 'package:PamaBacklog/Screen/GL/PerluPersetujuan/GLPerluPersetujuan.dart';
 import 'package:PamaBacklog/Screen/Mekanik/AddBacklog/MekanikAddBacklog.dart';
-import 'package:PamaBacklog/Service/FCMRepository.dart';
-import 'package:PamaBacklog/Service/OrderRepository.dart';
+import 'package:PamaBacklog/Screen/Mekanik/DetailLaporan/MekanikDetailLaporan.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'RouteName.dart';
@@ -19,33 +18,12 @@ import '../Screen/SplashScreen/SplashScreen.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
-  /// Send Notification Bloc
-  final SendNotificationBloc _sendNotificationBloc =
-      SendNotificationBloc(fcmRepository: FCMService());
-
-  /// Mekanik Table Switch Cubit
-  final MekanikTableSwitchCubit _mekanikTableSwitchCubit =
-      MekanikTableSwitchCubit();
-
-  /// Mekanik Table Bloc
-  final MekanikTableBloc _mekanikTableBloc = MekanikTableBloc(
-    orderRepository: OrderService(),
-  );
-
-  /// Order fetch bloc
-  final OrdersBloc _ordersBloc = OrdersBloc();
-
   /// Generate Screens Router
   Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.splashScreen:
         return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider.value(value: _sendNotificationBloc),
-            ],
-            child: SplashScreen(),
-          ),
+          builder: (_) => SplashScreen(),
           settings: settings,
         );
       case RouteName.loginScreen:
@@ -57,9 +35,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
-              BlocProvider.value(value: _mekanikTableSwitchCubit),
-              BlocProvider.value(value: _mekanikTableBloc),
-              BlocProvider(create: (context) => _ordersBloc),
+              BlocProvider(create: (context) => MekanikTableSwitchCubit()),
             ],
             child: HomeScreen(),
           ),
@@ -69,60 +45,41 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
-              BlocProvider.value(value: _mekanikTableBloc),
+              BlocProvider(create: (context) => MekanikSaveBacklogCubit()),
             ],
             child: MekanikAddBacklog(),
           ),
           settings: settings,
         );
+      case RouteName.mekanikDetailLaporan:
+        TableOrderModel orderData = settings.arguments as TableOrderModel;
+        return MaterialPageRoute(
+          builder: (_) => MekanikDetailLaporan(orderDetail: orderData),
+          settings: settings,
+        );
       case RouteName.glLogLaporan:
         return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider.value(value: _ordersBloc),
-            ],
-            child: GLLaporan(),
-          ),
+          builder: (_) => GLLaporan(),
           settings: settings,
         );
       case RouteName.glPerluPersetujuan:
         return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider.value(value: _ordersBloc),
-            ],
-            child: GLPerluPersetujuan(),
-          ),
+          builder: (_) => GLPerluPersetujuan(),
           settings: settings,
         );
       case RouteName.adminLogLaporan:
         return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider.value(value: _ordersBloc),
-            ],
-            child: AdminLogLaporan(),
-          ),
+          builder: (_) => AdminLogLaporan(),
           settings: settings,
         );
       case RouteName.adminLaporanTerbuka:
         return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider.value(value: _ordersBloc),
-            ],
-            child: AdminLaporanTerbuka(),
-          ),
+          builder: (_) => AdminLaporanTerbuka(),
           settings: settings,
         );
       case RouteName.adminDataCN:
         return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider.value(value: _ordersBloc),
-            ],
-            child: AdminDataCN(),
-          ),
+          builder: (_) => AdminDataCN(),
           settings: settings,
         );
       default:
@@ -134,13 +91,5 @@ class AppRouter {
           ),
         );
     }
-  }
-
-  /// Add BLoC Stream Close Here
-  void dispose() {
-    _sendNotificationBloc.close();
-    _mekanikTableSwitchCubit.close();
-    _mekanikTableBloc.close();
-    _ordersBloc.close();
   }
 }

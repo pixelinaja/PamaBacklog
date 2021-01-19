@@ -9,3 +9,13 @@ abstract class MekanikTableEvent extends Equatable {
 
 /// Fetch Order Data
 class MekanikTableFetchData extends MekanikTableEvent {}
+
+/// Update Mekanik Table Data
+class MekanikTableUpdateData extends MekanikTableEvent {
+  final TableOrderModel orderDetail;
+
+  MekanikTableUpdateData({this.orderDetail});
+
+  @override
+  List<Object> get props => [orderDetail];
+}

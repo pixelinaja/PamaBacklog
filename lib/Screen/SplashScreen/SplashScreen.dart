@@ -62,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
             return SafeArea(
               child: Image.asset(
                 arraySplash[rnd.nextInt(arraySplash.length)],
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
                 width: ScreenUtil().screenWidth,
                 height: ScreenUtil().screenHeight,
               ),

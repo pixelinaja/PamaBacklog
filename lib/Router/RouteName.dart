@@ -3,6 +3,7 @@ class RouteName {
   static const String homeScreen = "Home Screen";
   static const String loginScreen = "Login Screen";
   static const String mekanikAddBacklog = "Mekanik Add Backlog";
+  static const String mekanikDetailLaporan = "Mekanik Detail Laporan";
   static const String glLogLaporan = "GL Log Laporan";
   static const String glPerluPersetujuan = "GL Perlu Persetujuan";
   static const String adminLogLaporan = "Admin Log Laporan";
