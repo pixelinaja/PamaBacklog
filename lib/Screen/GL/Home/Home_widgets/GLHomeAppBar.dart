@@ -91,7 +91,13 @@ class GLHomeAppBar extends StatelessWidget {
 
       /// Dashboard Selected
       if (itemSelected == "1") {
-        context.read<OrdersBloc>().add(OrdersFetch());
+        var route = ModalRoute.of(context).settings.name;
+        if (route != RouteName.homeScreen) {
+          Navigator.of(context)
+              .popUntil((route) => route.settings.name == RouteName.homeScreen);
+        } else {
+          context.read<OrdersBloc>().add(OrdersFetch());
+        }
       } else if (itemSelected == "2") {
         Navigator.of(context).pushNamed(RouteName.glLogLaporan);
       } else if (itemSelected == "3") {
