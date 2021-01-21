@@ -16,7 +16,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'AddBacklog_widgets/MekanikAddBacklogHeader.dart';
 
 class MekanikAddBacklog extends StatefulWidget {
-  MekanikAddBacklog({Key key}) : super(key: key);
+  const MekanikAddBacklog({Key key}) : super(key: key);
 
   @override
   _MekanikAddBacklogState createState() => _MekanikAddBacklogState();

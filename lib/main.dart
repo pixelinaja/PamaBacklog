@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:PamaBacklog/Logic/Firestore/CN/bloc/cn_bloc.dart';
 import 'package:PamaBacklog/Logic/GL/GLSelectOrder/cubit/gl_select_order_cubit.dart';
+import 'package:PamaBacklog/Logic/GL/GLSelectTableOrder/cubit/gl_select_table_order_cubit.dart';
 import 'package:PamaBacklog/Logic/GL/GLSwitchTable/cubit/gl_switch_table_cubit.dart';
 import 'package:PamaBacklog/Logic/Mekanik/AddBacklog/bloc/mekanikadd_bloc.dart';
 import 'package:PamaBacklog/Service/AuthRepository.dart';
@@ -198,6 +199,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider(create: (context) => OrdersBloc()),
         BlocProvider(create: (context) => CNBloc()),
         BlocProvider(create: (context) => GLSelectOrderCubit()),
+        BlocProvider(create: (context) => GLSelectTableOrderCubit()),
         BlocProvider(create: (context) => GLSwitchTableCubit()),
         BlocProvider(
           create: (context) => GLApproveOrderBloc(

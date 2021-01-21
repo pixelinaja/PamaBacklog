@@ -90,8 +90,8 @@ class GLHomeAppBar extends StatelessWidget {
       if (itemSelected == null) return;
 
       /// Dashboard Selected
+      var route = ModalRoute.of(context).settings.name;
       if (itemSelected == "1") {
-        var route = ModalRoute.of(context).settings.name;
         if (route != RouteName.homeScreen) {
           Navigator.of(context)
               .popUntil((route) => route.settings.name == RouteName.homeScreen);
@@ -99,9 +99,13 @@ class GLHomeAppBar extends StatelessWidget {
           context.read<OrdersBloc>().add(OrdersFetch());
         }
       } else if (itemSelected == "2") {
-        Navigator.of(context).pushNamed(RouteName.glLogLaporan);
+        if (route != RouteName.glLogLaporan) {
+          Navigator.of(context).pushNamed(RouteName.glLogLaporan);
+        }
       } else if (itemSelected == "3") {
-        Navigator.of(context).pushNamed(RouteName.glPerluPersetujuan);
+        if (route != RouteName.glPerluPersetujuan) {
+          Navigator.of(context).pushNamed(RouteName.glPerluPersetujuan);
+        }
       } else if (itemSelected == "4") {
         context.read<AuthBloc>().add(AuthLogout());
         Navigator.of(context).pushReplacementNamed(RouteName.loginScreen);
