@@ -11,7 +11,7 @@ import 'LoginScreen_Widgets/LoginScreen_SignIn_Button.dart';
 import 'LoginScreen_Widgets/LoginScreen_Help_Button.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key key}) : super(key: key);
+  const LoginScreen({Key key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();

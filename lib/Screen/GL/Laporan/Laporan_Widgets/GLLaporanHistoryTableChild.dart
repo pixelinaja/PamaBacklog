@@ -1,21 +1,23 @@
 import 'package:PamaBacklog/Global/AppRelated/AppColor.dart';
 import 'package:PamaBacklog/Global/AppRelated/AppString.dart';
-import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
-import 'package:PamaBacklog/Router/RouteName.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:horizontal_data_table/horizontal_data_table.dart';
+import 'package:PamaBacklog/Logic/Firestore/Orders/bloc/orders_bloc.dart';
+import 'package:PamaBacklog/Logic/GL/GLSelectOrder/cubit/gl_select_order_cubit.dart';
+import 'package:PamaBacklog/Logic/GL/GLSelectTableOrder/cubit/gl_select_table_order_cubit.dart';
 import 'package:PamaBacklog/Model/OrderModel.dart';
 import 'package:PamaBacklog/Model/TableOrderModel.dart';
-import 'package:PamaBacklog/Global/Extension/AppExtensions.dart';
+import 'package:PamaBacklog/Router/RouteName.dart';
+import 'package:flutter/material.dart';
+import 'package:horizontal_data_table/horizontal_data_table.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:PamaBacklog/Global/Extension/AppExtensions.dart';
 
-class MekanikHomeTableChild extends StatelessWidget {
+class GLLaporanHistoryTableChild extends StatelessWidget {
   final HDTRefreshController _hdtRefreshController = HDTRefreshController();
   final List<Order> orders;
   final List<TableOrderModel> tableOrders;
   final Orientation orientation;
-  MekanikHomeTableChild({
+  GLLaporanHistoryTableChild({
     Key key,
     this.orders,
     this.tableOrders,
@@ -42,7 +44,7 @@ class MekanikHomeTableChild extends StatelessWidget {
       enablePullToRefresh: true,
       refreshIndicatorHeight: 60.h,
       onRefresh: () {
-        context.read<MekanikTableBloc>().add(MekanikTableFetchData());
+        context.read<OrdersBloc>().add(OrdersFetch());
         _hdtRefreshController.refreshCompleted();
       },
       refreshIndicator: const WaterDropHeader(),
@@ -110,8 +112,23 @@ class MekanikHomeTableChild extends StatelessWidget {
     /// Search Button (Detail Button)
     return GestureDetector(
       onTap: () {
-        return Navigator.of(context).pushNamed(RouteName.mekanikDetailLaporan,
-            arguments: tableOrders[index]);
+        final tableOrder = tableOrders[index];
+        final order =
+            orders.firstWhere((element) => element.docId == tableOrder.docId);
+
+        /// If order needs approval, then navigate to GL Detail Laporan.
+        if (order.approvalPengawas == 0) {
+          context.read<GLSelectOrderCubit>().selectOrder(order: order);
+          Navigator.of(context).pushNamed(RouteName.glDetailLaporan);
+        }
+
+        /// Otherwise, navigate to GL List Detail.
+        else {
+          context
+              .read<GLSelectTableOrderCubit>()
+              .selectTableOrder(tableOrder: tableOrder);
+          Navigator.of(context).pushNamed(RouteName.glListDetail);
+        }
       },
       child: Container(
         child: Container(

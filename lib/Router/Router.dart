@@ -4,7 +4,9 @@ import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:PamaBacklog/Screen/Admin/DataCN/AdminDataCN.dart';
 import 'package:PamaBacklog/Screen/Admin/Laporan/LaporanTerbuka/AdminLaporanTerbuka.dart';
 import 'package:PamaBacklog/Screen/Admin/Laporan/LogLaporan/AdminLogLaporan.dart';
+import 'package:PamaBacklog/Screen/GL/DetailLaporan/GLDetailLaporan.dart';
 import 'package:PamaBacklog/Screen/GL/Laporan/GLLaporan.dart';
+import 'package:PamaBacklog/Screen/GL/ListDetail/GLListDetail.dart';
 import 'package:PamaBacklog/Screen/GL/PerluPersetujuan/GLPerluPersetujuan.dart';
 import 'package:PamaBacklog/Screen/Mekanik/AddBacklog/MekanikAddBacklog.dart';
 import 'package:PamaBacklog/Screen/Mekanik/DetailLaporan/MekanikDetailLaporan.dart';
@@ -23,12 +25,12 @@ class AppRouter {
     switch (settings.name) {
       case RouteName.splashScreen:
         return MaterialPageRoute(
-          builder: (_) => SplashScreen(),
+          builder: (_) => const SplashScreen(),
           settings: settings,
         );
       case RouteName.loginScreen:
         return MaterialPageRoute(
-          builder: (_) => LoginScreen(),
+          builder: (_) => const LoginScreen(),
           settings: settings,
         );
       case RouteName.homeScreen:
@@ -37,7 +39,7 @@ class AppRouter {
             providers: [
               BlocProvider(create: (context) => MekanikTableSwitchCubit()),
             ],
-            child: HomeScreen(),
+            child: const HomeScreen(),
           ),
           settings: settings,
         );
@@ -47,7 +49,7 @@ class AppRouter {
             providers: [
               BlocProvider(create: (context) => MekanikSaveBacklogCubit()),
             ],
-            child: MekanikAddBacklog(),
+            child: const MekanikAddBacklog(),
           ),
           settings: settings,
         );
@@ -59,27 +61,37 @@ class AppRouter {
         );
       case RouteName.glLogLaporan:
         return MaterialPageRoute(
-          builder: (_) => GLLaporan(),
+          builder: (_) => const GLLaporan(),
+          settings: settings,
+        );
+      case RouteName.glDetailLaporan:
+        return MaterialPageRoute(
+          builder: (_) => const GLDetailLaporan(),
+          settings: settings,
+        );
+      case RouteName.glListDetail:
+        return MaterialPageRoute(
+          builder: (_) => const GLListDetail(),
           settings: settings,
         );
       case RouteName.glPerluPersetujuan:
         return MaterialPageRoute(
-          builder: (_) => GLPerluPersetujuan(),
+          builder: (_) => const GLPerluPersetujuan(),
           settings: settings,
         );
       case RouteName.adminLogLaporan:
         return MaterialPageRoute(
-          builder: (_) => AdminLogLaporan(),
+          builder: (_) => const AdminLogLaporan(),
           settings: settings,
         );
       case RouteName.adminLaporanTerbuka:
         return MaterialPageRoute(
-          builder: (_) => AdminLaporanTerbuka(),
+          builder: (_) => const AdminLaporanTerbuka(),
           settings: settings,
         );
       case RouteName.adminDataCN:
         return MaterialPageRoute(
-          builder: (_) => AdminDataCN(),
+          builder: (_) => const AdminDataCN(),
           settings: settings,
         );
       default:

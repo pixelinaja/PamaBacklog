@@ -1,5 +1,7 @@
 import 'package:PamaBacklog/Logic/Firestore/Orders/bloc/orders_bloc.dart';
+import 'package:PamaBacklog/Logic/GL/GLSelectOrder/cubit/gl_select_order_cubit.dart';
 import 'package:PamaBacklog/Model/OrderModel.dart';
+import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,6 +40,7 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
               /// Header Tahun
               groupHeaderBuilder: (element) => Container(
                 height: 35.h,
+                color: ThemeData().scaffoldBackgroundColor,
                 alignment: Alignment.centerLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,125 +63,133 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
 
               /// ListView Item
               itemBuilder: (c, element) {
-                return Container(
-                  child: Row(
-                    children: [
-                      Column(
-                        children: [
-                          /// Kotak Tanggal
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w),
-                            height: 55.h,
-                            width: 50.w,
-                            alignment: Alignment.centerLeft,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.purple,
-                            ),
-                            child: Text(
-                              element.tanggal
-                                  .toDate()
-                                  .parseDate(dateFormat: "dd MMM"),
-                              softWrap: true,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16.ssp,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          Container(
-                            width: 50.w,
-                            child: Divider(
-                              color: Colors.black,
-                              endIndent: 20.w,
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(width: 16.w),
-
-                      /// Samping kanan. (CN Unit dan Nama Mekanik)
-                      Container(
-                        height: 55.h,
-                        width: 200.w,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                return GestureDetector(
+                  onTap: () {
+                    context
+                        .read<GLSelectOrderCubit>()
+                        .selectOrder(order: element);
+                    Navigator.of(context).pushNamed(RouteName.glDetailLaporan);
+                  },
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Column(
                           children: [
-                            /// Row CN Unit
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 8,
-                                  child: Container(
-                                    child: Text(
-                                      "C/N UNIT",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.ssp,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(),
-                                ),
-                                Expanded(
-                                  flex: 8,
-                                  child: Container(
-                                    child: Text(
-                                      element.cnNumber,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.ssp,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            /// Kotak Tanggal
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 8.w),
+                              height: 55.h,
+                              width: 50.w,
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.purple,
+                              ),
+                              child: Text(
+                                element.tanggal
+                                    .toDate()
+                                    .parseDate(dateFormat: "dd MMM"),
+                                softWrap: true,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.ssp,
+                                    color: Colors.white),
+                              ),
                             ),
-                            SizedBox(height: 6.h),
-
-                            /// Row Nama Mekanik
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 8,
-                                  child: Container(
-                                    child: Text(
-                                      element.namaMekanik,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.ssp,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(flex: 1, child: Container()),
-                                Expanded(
-                                  flex: 8,
-                                  child: Container(
-                                    child: Text(
-                                      element.trouble,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.ssp,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            /// Divider Hitam
-                            Divider(
-                              color: Colors.black,
+                            Container(
+                              width: 50.w,
+                              child: Divider(
+                                color: Colors.black,
+                                endIndent: 20.w,
+                              ),
                             )
                           ],
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 16.w),
+
+                        /// Samping kanan. (CN Unit dan Nama Mekanik)
+                        Container(
+                          height: 55.h,
+                          width: 200.w,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              /// Row CN Unit
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 8,
+                                    child: Container(
+                                      child: Text(
+                                        "C/N UNIT",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.ssp,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Container(),
+                                  ),
+                                  Expanded(
+                                    flex: 8,
+                                    child: Container(
+                                      child: Text(
+                                        element.cnNumber,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.ssp,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 6.h),
+
+                              /// Row Nama Mekanik
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 8,
+                                    child: Container(
+                                      child: Text(
+                                        element.namaMekanik,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.ssp,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(flex: 1, child: Container()),
+                                  Expanded(
+                                    flex: 8,
+                                    child: Container(
+                                      child: Text(
+                                        element.trouble,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.ssp,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              /// Divider Hitam
+                              Divider(
+                                color: Colors.black,
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
