@@ -2,6 +2,7 @@ import 'package:PamaBacklog/Logic/Mekanik/Home/MekanikTableSwitch/cubit/mekanikt
 import 'package:PamaBacklog/Logic/Mekanik/SaveBacklog/cubit/MekanikSaveBacklog_cubit.dart';
 import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:PamaBacklog/Screen/Admin/DataCN/AdminDataCN.dart';
+import 'package:PamaBacklog/Screen/Admin/DetailLaporanTerbuka/AdminDetailLaporanTerbuka.dart';
 import 'package:PamaBacklog/Screen/Admin/Laporan/LaporanTerbuka/AdminLaporanTerbuka.dart';
 import 'package:PamaBacklog/Screen/Admin/Laporan/LogLaporan/AdminLogLaporan.dart';
 import 'package:PamaBacklog/Screen/GL/DetailLaporan/GLDetailLaporan.dart';
@@ -87,6 +88,11 @@ class AppRouter {
       case RouteName.adminLaporanTerbuka:
         return MaterialPageRoute(
           builder: (_) => const AdminLaporanTerbuka(),
+          settings: settings,
+        );
+      case RouteName.adminDetailLaporanTerbuka:
+        return MaterialPageRoute(
+          builder: (_) => const AdminDetailLaporanTerbuka(),
           settings: settings,
         );
       case RouteName.adminDataCN:

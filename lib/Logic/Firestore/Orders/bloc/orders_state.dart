@@ -21,6 +21,7 @@ class OrdersFetched extends OrdersState {
   final List<TableOrderModel> tableOrder;
   final List<TableOrderModel> tableOrderPerluPersetujuan;
   final List<TableOrderModel> tableOrderAdminLaporan;
+  final List<TableOrderModel> tableOrderAdminTerbuka;
 
   OrdersFetched({
     this.orders,
@@ -29,11 +30,17 @@ class OrdersFetched extends OrdersState {
     this.tableOrder,
     this.tableOrderPerluPersetujuan,
     this.tableOrderAdminLaporan,
+    this.tableOrderAdminTerbuka,
   });
 
   @override
-  List<Object> get props =>
-      [orders, orderPerluPersetujuan, adminLaporan, tableOrder];
+  List<Object> get props => [
+        orders,
+        orderPerluPersetujuan,
+        adminLaporan,
+        tableOrder,
+        tableOrderAdminTerbuka
+      ];
 
   OrdersFetched copyWith({
     List<Order> orders,
@@ -42,6 +49,7 @@ class OrdersFetched extends OrdersState {
     List<TableOrderModel> tableOrder,
     List<TableOrderModel> tableOrderPerluPersetujuan,
     List<TableOrderModel> tableOrderAdminLaporan,
+    List<TableOrderModel> tableOrderAdminTerbuka,
   }) {
     return OrdersFetched(
       orders: orders ?? this.orders,
@@ -53,6 +61,8 @@ class OrdersFetched extends OrdersState {
           tableOrderPerluPersetujuan ?? this.tableOrderPerluPersetujuan,
       tableOrderPerluPersetujuan:
           tableOrderAdminLaporan ?? this.tableOrderAdminLaporan,
+      tableOrderAdminTerbuka:
+          tableOrderAdminTerbuka ?? this.tableOrderAdminTerbuka,
     );
   }
 }

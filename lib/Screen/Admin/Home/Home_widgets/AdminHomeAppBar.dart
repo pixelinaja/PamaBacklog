@@ -94,14 +94,26 @@ class AdminHomeAppBar extends StatelessWidget {
       if (itemSelected == null) return;
 
       /// Dashboard Selected
+      var route = ModalRoute.of(context).settings.name;
       if (itemSelected == "1") {
-        context.read<OrdersBloc>().add(OrdersFetch());
+        if (route != RouteName.homeScreen) {
+          Navigator.of(context)
+              .popUntil((route) => route.settings.name == RouteName.homeScreen);
+        } else {
+          context.read<OrdersBloc>().add(OrdersFetch());
+        }
       } else if (itemSelected == "2") {
-        Navigator.of(context).pushNamed(RouteName.adminLogLaporan);
+        if (route != RouteName.adminLogLaporan) {
+          Navigator.of(context).pushNamed(RouteName.adminLogLaporan);
+        }
       } else if (itemSelected == "3") {
-        Navigator.of(context).pushNamed(RouteName.adminLaporanTerbuka);
+        if (route != RouteName.adminLaporanTerbuka) {
+          Navigator.of(context).pushNamed(RouteName.adminLaporanTerbuka);
+        }
       } else if (itemSelected == "4") {
-        Navigator.of(context).pushNamed(RouteName.adminDataCN);
+        if (route != RouteName.adminDataCN) {
+          Navigator.of(context).pushNamed(RouteName.adminDataCN);
+        }
       } else if (itemSelected == "5") {
         context.read<AuthBloc>().add(AuthLogout());
         Navigator.of(context).pushReplacementNamed(RouteName.loginScreen);

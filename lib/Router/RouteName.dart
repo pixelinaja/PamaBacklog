@@ -11,4 +11,6 @@ class RouteName {
   static const String adminLogLaporan = "Admin Log Laporan";
   static const String adminLaporanTerbuka = "Admin Laporan Terbuka";
   static const String adminDataCN = "Admin Data CN";
+  static const String adminDetailLaporanTerbuka =
+      "Admin Detail Laporan Terbuka";
 }
