@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:PamaBacklog/Logic/Admin/AdminSelectOrder/cubit/admin_select_order_cubit.dart';
 import 'package:PamaBacklog/Logic/Admin/AdminSubmitEstimasi/bloc/admin_submit_estimasi_bloc.dart';
+import 'package:PamaBacklog/Logic/Admin/AdminSubmitWR/bloc/admin_submit_wr_bloc.dart';
 import 'package:PamaBacklog/Logic/Firestore/CN/bloc/cn_bloc.dart';
 import 'package:PamaBacklog/Logic/GL/GLSelectOrder/cubit/gl_select_order_cubit.dart';
 import 'package:PamaBacklog/Logic/GL/GLSelectTableOrder/cubit/gl_select_table_order_cubit.dart';
@@ -212,6 +213,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider(create: (context) => AdminSelectOrderCubit()),
         BlocProvider(
           create: (context) => AdminSubmitEstimasiBloc(
+            fcmRepository: _fcmService,
+            orderRepository: _orderRepository,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => AdminSubmitWrBloc(
             fcmRepository: _fcmService,
             orderRepository: _orderRepository,
           ),

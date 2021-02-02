@@ -50,12 +50,57 @@ class AdminDetailLaporanContent extends StatelessWidget {
             /// Status Action
             populateStatusAction(order.statusAction.toUpperCase()),
 
+            SizedBox(height: 2.h),
+
             // Tanggal Eksekusi
             MekanikDetailLaporanContentTextRow(
-                leftSide: "Tanggal Eksekusi: " +
-                    order.tanggalEksekusi
-                        .toDate()
-                        .parseDate(dateFormat: "dd MMMM yyyy")),
+              leftSide: "Tanggal Eksekusi: " +
+                  order.tanggalEksekusi
+                      .toDate()
+                      .parseDate(dateFormat: "dd MMMM yyyy"),
+            ),
+
+            Builder(
+              builder: (context) {
+                if (order.statusPart.isNotEmpty &&
+                    order.statusPart != "-" &&
+                    (order.noWr.isEmpty || order.noWr == "-")) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /// First Divider
+                      SizedBox(height: 21.h),
+                      Divider(color: Colors.black),
+                      SizedBox(height: 11.h),
+
+                      /// Status Part
+                      MekanikDetailLaporanContentTextRow(
+                          leftSide: "Status: " + order.statusPart),
+                    ],
+                  );
+                } else if (order.noWr.isEmpty || order.noWr == "-") {
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /// First Divider
+                      SizedBox(height: 21.h),
+                      Divider(color: Colors.black),
+                      SizedBox(height: 11.h),
+
+                      /// Status Part
+                      MekanikDetailLaporanContentTextRow(
+                          leftSide: "Status: " + order.statusPart),
+
+                      /// WR Number
+                      MekanikDetailLaporanContentTextRow(
+                          leftSide: "WR Number: " + order.noWr),
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
           ],
         ),
       );

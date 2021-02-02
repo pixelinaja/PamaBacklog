@@ -20,10 +20,10 @@ abstract class OrderRepository {
       @required TableOrderModel orderDetail});
 
   /// GL Approve Order
-  Future<void> glApproveOrder({@required Order order});
+  Future<void> glApproveOrder({@required Order order, Order oldOrder});
 
   /// Update Order
-  Future<void> updateOrder({@required Order order});
+  Future<void> updateOrder({@required Order order, Order oldOrder});
 }
 
 class OrderService implements OrderRepository {
@@ -81,15 +81,16 @@ class OrderService implements OrderRepository {
   }
 
   @override
-  Future<void> glApproveOrder({Order order}) async {
+  Future<void> glApproveOrder({Order oldOrder, Order order}) async {
     final orderData = order.toJson();
+    final oldOrderData = oldOrder.toJson();
 
     /// Buat history perubahan
     final createHistory = _db
         .collection(FirestoreCollectionConstant.Orders)
         .doc(order.docId)
         .collection(FirestoreCollectionConstant.History)
-        .add(orderData);
+        .add(oldOrderData);
 
     /// Update data
     final updateDocument = _db
@@ -102,15 +103,18 @@ class OrderService implements OrderRepository {
   }
 
   @override
-  Future<void> updateOrder({Order order}) async {
+  Future<void> updateOrder({Order oldOrder, Order order}) async {
     final orderData = order.toJson();
+    final oldOrderData = oldOrder.toJson();
+
+    print(orderData);
 
     /// Buat history perubahan
     final createHistory = _db
         .collection(FirestoreCollectionConstant.Orders)
         .doc(order.docId)
         .collection(FirestoreCollectionConstant.History)
-        .add(orderData);
+        .add(oldOrderData);
 
     /// Update data
     final updateDocument = _db

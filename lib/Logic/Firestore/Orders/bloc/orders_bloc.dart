@@ -67,7 +67,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
           cnNumber: order.cnNumber,
           deskripsi: part.deskripsi,
           namaMekanik: order.namaMekanik,
-          noWr: order.noWr,
+          noWr: part.noWr ?? "-",
           number: part.number,
           qty: part.qty,
           statusAction: part.statusAction,

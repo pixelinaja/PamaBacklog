@@ -15,7 +15,6 @@ class Order {
     this.namaMekanik,
     this.approvalPengawas,
     this.tanggalEksekusi,
-    this.noWr,
     this.trouble,
   });
 
@@ -26,7 +25,6 @@ class Order {
   String namaMekanik;
   int approvalPengawas;
   Timestamp tanggalEksekusi;
-  String noWr;
   String trouble;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
@@ -38,7 +36,6 @@ class Order {
         namaMekanik: json["nama_mekanik"],
         approvalPengawas: json["approval_pengawas"],
         tanggalEksekusi: json["tanggal_eksekusi"],
-        noWr: json["no_wr"],
         trouble: json["trouble"],
       );
 
@@ -51,9 +48,30 @@ class Order {
         "nama_mekanik": namaMekanik,
         "approval_pengawas": approvalPengawas,
         "tanggal_eksekusi": tanggalEksekusi,
-        "no_wr": noWr,
         "trouble": trouble
       };
+
+  Order copyWith({
+    String docId,
+    Timestamp tanggal,
+    String cnNumber,
+    Map<String, PartNumber> partNumber,
+    String namaMekanik,
+    int approvalPengawas,
+    Timestamp tanggalEksekusi,
+    String trouble,
+  }) {
+    return Order(
+      docId: docId ?? this.docId,
+      tanggal: tanggal ?? this.tanggal,
+      cnNumber: cnNumber ?? this.cnNumber,
+      trouble: trouble ?? this.trouble,
+      partNumber: partNumber ?? this.partNumber,
+      namaMekanik: namaMekanik ?? this.namaMekanik,
+      approvalPengawas: approvalPengawas ?? this.approvalPengawas,
+      tanggalEksekusi: tanggalEksekusi ?? this.tanggalEksekusi,
+    );
+  }
 }
 
 class PartNumber {
@@ -63,6 +81,7 @@ class PartNumber {
     this.statusAction,
     this.statusPart,
     this.number,
+    this.noWr,
   });
 
   String deskripsi;
@@ -70,6 +89,7 @@ class PartNumber {
   String statusAction;
   String statusPart;
   String number;
+  String noWr;
 
   factory PartNumber.fromJson(Map<String, dynamic> json) => PartNumber(
         deskripsi: json["deskripsi"],
@@ -77,6 +97,7 @@ class PartNumber {
         statusAction: json["status_action"],
         statusPart: json["status_part"],
         number: json["number"],
+        noWr: json["noWr"] ?? "-",
       );
 
   Map<String, dynamic> toJson() => {
@@ -85,5 +106,6 @@ class PartNumber {
         "status_action": statusAction,
         "status_part": statusPart,
         "number": number,
+        "noWr": noWr,
       };
 }

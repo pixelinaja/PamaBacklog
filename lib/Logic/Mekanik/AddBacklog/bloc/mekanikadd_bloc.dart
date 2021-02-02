@@ -44,6 +44,7 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
             deskripsi: item.description,
             number: item.partNumber,
             qty: item.qty,
+            noWr: "-",
             statusAction: "APPROVAL",
             statusPart: "-");
       }
@@ -57,7 +58,6 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
         cnNumber: event.cnUnit,
         docId: randomId,
         namaMekanik: event.namaMekanik,
-        noWr: "-",
         partNumber: partNumber,
         tanggal: Timestamp.fromDate(event.tanggalLaporan),
         tanggalEksekusi: null,
