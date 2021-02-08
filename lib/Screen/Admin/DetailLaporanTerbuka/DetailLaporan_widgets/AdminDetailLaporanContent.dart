@@ -1,7 +1,6 @@
 import 'package:PamaBacklog/Global/AppRelated/AppColor.dart';
 import 'package:PamaBacklog/Global/AppRelated/AppString.dart';
 import 'package:PamaBacklog/Logic/Admin/AdminSelectOrder/cubit/admin_select_order_cubit.dart';
-import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:PamaBacklog/Screen/Mekanik/DetailLaporan/DetailLaporan_widgets/MekanikDetailLaporanContentTextRow.dart';
 import 'package:flutter/material.dart';
 import 'package:PamaBacklog/Global/Extension/AppExtensions.dart';
@@ -54,11 +53,12 @@ class AdminDetailLaporanContent extends StatelessWidget {
 
             // Tanggal Eksekusi
             MekanikDetailLaporanContentTextRow(
-              leftSide: "Tanggal Eksekusi: " +
-                  order.tanggalEksekusi
-                      .toDate()
-                      .parseDate(dateFormat: "dd MMMM yyyy"),
-            ),
+                leftSide: order.tanggalEksekusi != null
+                    ? "Tanggal Eksekusi: " +
+                        order.tanggalEksekusi
+                            .toDate()
+                            .parseDate(dateFormat: "dd MMMM yyyy")
+                    : "Tanggal Eksekusi: -"),
 
             Builder(
               builder: (context) {
@@ -78,8 +78,8 @@ class AdminDetailLaporanContent extends StatelessWidget {
                           leftSide: "Status: " + order.statusPart),
                     ],
                   );
-                } else if (order.noWr.isEmpty || order.noWr == "-") {
-                  Column(
+                } else if (order.noWr.isNotEmpty || order.noWr != "-") {
+                  return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       /// First Divider

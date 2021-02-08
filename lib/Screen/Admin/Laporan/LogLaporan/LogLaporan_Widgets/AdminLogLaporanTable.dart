@@ -1,29 +1,32 @@
 import 'package:PamaBacklog/Global/AssetsRelated/AssetsConstant.dart';
+import 'package:PamaBacklog/Logic/Admin/AdminSwitchLaporan/cubit/admin_switch_laporan_cubit.dart';
 import 'package:PamaBacklog/Logic/Firestore/Orders/bloc/orders_bloc.dart';
-import 'package:PamaBacklog/Screen/Admin/Laporan/LaporanTerbuka/LaporanTerbuka_Wdigets/AdminLaporanTerbukaTableChild.dart';
+import 'package:PamaBacklog/Screen/Admin/Laporan/LaporanTerbuka/LaporanTerbuka_Widgets/AdminLaporanTerbukaTableChild.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AdminLaporanTerbukaTable extends StatelessWidget {
+import 'AdminLogLaporanTableChild.dart';
+
+class AdminLogLaporanTable extends StatelessWidget {
   final Orientation orientation;
-  const AdminLaporanTerbukaTable({
-    Key key,
-    this.orientation,
-  }) : super(key: key);
+  const AdminLogLaporanTable({Key key, this.orientation}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final switchState = context.watch<AdminSwitchLaporanCubit>().state;
     return Container(
       width: ScreenUtil().screenWidth * 0.90,
-      height: ScreenUtil().screenHeight * 0.80,
+      height: ScreenUtil().screenHeight * 0.75,
       child: BlocBuilder<OrdersBloc, OrdersState>(builder: (context, state) {
         if (state is OrdersFetched) {
           if (state.orders.isNotEmpty) {
-            return AdminLaporanTerbukaTableChild(
+            return AdminLogLaporanTableChild(
               orders: state.adminLaporan,
               orientation: orientation,
-              tableOrders: state.tableOrderAdminTerbuka,
+              tableOrders: (switchState is AdminSwitchLaporanAll)
+                  ? state.tableOrderAdminLaporan
+                  : state.tableOrderAdminTerbuka,
             );
           } else {
             /// Return Empty Orders

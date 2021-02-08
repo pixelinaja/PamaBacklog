@@ -71,6 +71,7 @@ class SuccessOrFailDialog extends StatelessWidget {
                     child: Container(
                       width: 120.w,
                       height: 40.h,
+                      margin: EdgeInsets.only(top: 14.h),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.w),

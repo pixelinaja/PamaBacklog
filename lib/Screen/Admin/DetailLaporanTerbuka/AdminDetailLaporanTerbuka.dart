@@ -1,3 +1,4 @@
+import 'package:PamaBacklog/Global/AppRelated/AppString.dart';
 import 'package:PamaBacklog/Global/Enums/Enums.dart';
 import 'package:PamaBacklog/Logic/Admin/AdminSelectOrder/cubit/admin_select_order_cubit.dart';
 import 'package:PamaBacklog/Logic/Admin/AdminSubmitEstimasi/bloc/admin_submit_estimasi_bloc.dart';
@@ -128,10 +129,12 @@ class AdminDetailLaporanTerbuka extends StatelessWidget {
                         builder: (context) {
                           if (order.statusPart.isNotEmpty &&
                               order.statusPart != "-" &&
-                              (order.noWr.isEmpty || order.noWr == "-")) {
+                              (order.noWr.isEmpty || order.noWr == "-") &&
+                              order.statusAction == AppString.Approved) {
                             return AdminDetailLaporanWRField();
                           } else if (order.noWr.isNotEmpty &&
-                              order.noWr != "-") {
+                                  order.noWr != "-" ||
+                              order.statusAction != AppString.Approved) {
                             return Container();
                           } else {
                             /// Calendar Selector
