@@ -44,7 +44,7 @@ class AdminSubmitEstimasiBloc
 
       /// Perform Firestore call
       final updateOrder =
-          orderRepository.glApproveOrder(order: order, oldOrder: event.order);
+          orderRepository.updateOrder(order: order, oldOrder: event.order);
       final sendNotificationMekanik = fcmRepository.sendPushNotification(
         topic: "1",
         msg: NotificationMsgModel(

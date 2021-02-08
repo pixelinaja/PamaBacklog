@@ -1,5 +1,6 @@
 import 'package:PamaBacklog/Global/AppRelated/AppColor.dart';
 import 'package:PamaBacklog/Logic/Firestore/CN/bloc/cn_bloc.dart';
+import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:PamaBacklog/Screen/Admin/DataCN/DataCN_widgets/AdminDataCNListContainer.dart';
 import 'package:PamaBacklog/Screen/Admin/Home/Home_widgets/AdminHomeAppBar.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,9 @@ class _AdminDataCNState extends State<AdminDataCN> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed(RouteName.adminAddCN);
+        },
         backgroundColor: AppColor.adminColor,
         heroTag: 9,
         child: Icon(Icons.add, size: 38.ssp, color: Colors.black),

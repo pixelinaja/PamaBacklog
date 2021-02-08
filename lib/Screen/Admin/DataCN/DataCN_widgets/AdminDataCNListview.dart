@@ -1,4 +1,5 @@
 import 'package:PamaBacklog/Logic/Firestore/CN/bloc/cn_bloc.dart';
+import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -54,7 +55,10 @@ class AdminDataCNListview extends StatelessWidget {
                               Icons.edit_outlined,
                               color: Colors.black,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(RouteName.adminEditCN);
+                            },
                           ),
                         ),
                         Container(

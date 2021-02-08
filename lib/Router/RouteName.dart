@@ -13,4 +13,6 @@ class RouteName {
   static const String adminDataCN = "Admin Data CN";
   static const String adminDetailLaporanTerbuka =
       "Admin Detail Laporan Terbuka";
+  static const String adminAddCN = "Admin Add CN";
+  static const String adminEditCN = "Admin Edit CN";
 }

@@ -47,7 +47,8 @@ class GLApproveOrderBloc
       }
 
       /// Perform Firestore call
-      final updateOrder = orderRepository.glApproveOrder(order: order);
+      final updateOrder =
+          orderRepository.glApproveOrder(order: order, oldOrder: event.order);
       final sendNotificationMekanik = fcmRepository.sendPushNotification(
         topic: "2",
         msg: NotificationMsgModel(
@@ -107,7 +108,8 @@ class GLApproveOrderBloc
       }
 
       /// Perform Firestore call
-      final updateOrder = orderRepository.glApproveOrder(order: order);
+      final updateOrder =
+          orderRepository.glApproveOrder(order: order, oldOrder: event.order);
       final sendNotificationMekanik = fcmRepository.sendPushNotification(
         topic: "2",
         msg: NotificationMsgModel(

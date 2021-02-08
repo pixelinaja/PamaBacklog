@@ -27,7 +27,7 @@ class NotificationHelper {
       enableLights: true,
       icon: '@mipmap/ic_launcher',
       // TODO: Change this notification icon's color
-      color: Colors.blue,
+      color: Colors.grey,
       importance: notificationImportance,
       priority: notificationPriority,
     );

@@ -1,7 +1,6 @@
 import 'package:PamaBacklog/Global/AssetsRelated/AssetsConstant.dart';
 import 'package:PamaBacklog/Logic/Admin/AdminSwitchLaporan/cubit/admin_switch_laporan_cubit.dart';
 import 'package:PamaBacklog/Logic/Firestore/Orders/bloc/orders_bloc.dart';
-import 'package:PamaBacklog/Screen/Admin/Laporan/LaporanTerbuka/LaporanTerbuka_Widgets/AdminLaporanTerbukaTableChild.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
