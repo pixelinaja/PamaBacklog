@@ -33,6 +33,7 @@ import 'package:PamaBacklog/Router/Router.dart';
 
 import 'Logic/Admin/AdminDeleteCN/bloc/admin_delete_cn_bloc.dart';
 import 'Logic/Admin/AdminEditCN/bloc/admin_edit_cn_bloc.dart';
+import 'Logic/Admin/AdminExport/bloc/admin_export_bloc.dart';
 import 'Logic/Admin/AdminUpdateCN/bloc/admin_update_cn_bloc.dart';
 import 'Logic/Auth/bloc/auth_bloc.dart';
 import 'Logic/Connectivity/cubit/connectivity_cubit.dart';
@@ -233,6 +234,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider(create: (context) => AdminUpdateCnBloc()),
         BlocProvider(create: (context) => AdminEditCnBloc()),
         BlocProvider(create: (context) => AdminDeleteCnBloc()),
+        BlocProvider(create: (context) => AdminExportBloc()),
       ],
       child: ScreenUtilInit(
         allowFontScaling: true,

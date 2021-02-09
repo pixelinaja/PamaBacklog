@@ -26,7 +26,6 @@ class NotificationHelper {
       enableVibration: true,
       enableLights: true,
       icon: '@mipmap/ic_launcher',
-      // TODO: Change this notification icon's color
       color: Colors.grey,
       importance: notificationImportance,
       priority: notificationPriority,
