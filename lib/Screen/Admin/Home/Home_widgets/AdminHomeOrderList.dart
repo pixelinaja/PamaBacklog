@@ -1,6 +1,7 @@
-import 'package:PamaBacklog/Global/AppRelated/AppColor.dart';
+import 'package:PamaBacklog/Logic/Admin/AdminSelectOrder/cubit/admin_select_order_cubit.dart';
 import 'package:PamaBacklog/Logic/Firestore/Orders/bloc/orders_bloc.dart';
-import 'package:PamaBacklog/Model/OrderModel.dart';
+import 'package:PamaBacklog/Model/TableOrderModel.dart';
+import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,8 +24,8 @@ class AdminHomeOrderList extends StatelessWidget {
           } else if (state is OrdersFetched) {
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 45.w),
-              child: GroupedListView<Order, String>(
-                elements: state.adminLaporan,
+              child: GroupedListView<TableOrderModel, String>(
+                elements: state.tableOrderAdminTerbuka,
                 groupBy: (element) => element.tanggal.toDate().year.toString(),
                 groupComparator: (value1, value2) => value2.compareTo(value1),
                 useStickyGroupSeparators: true,
@@ -55,125 +56,136 @@ class AdminHomeOrderList extends StatelessWidget {
 
                 /// ListView Item
                 itemBuilder: (c, element) {
-                  return Container(
-                    child: Row(
-                      children: [
-                        Column(
-                          children: [
-                            /// Tanggal
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16.w),
-                              height: 68.h,
-                              width: 63.w,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.purple,
-                              ),
-                              child: Text(
-                                element.tanggal
-                                    .toDate()
-                                    .parseDate(dateFormat: "dd MMM"),
-                                softWrap: true,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.ssp,
-                                    color: Colors.white),
-                              ),
-                            ),
-                            Container(
-                              width: 50.w,
-                              child: Divider(
-                                color: Colors.black,
-                                endIndent: 20.w,
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(width: 16.w),
-
-                        /// Kotak samping kana (CN Unit dan Nama Mekanik)
-                        Container(
-                          height: 68.h,
-                          width: 200.w,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                  return GestureDetector(
+                    onTap: () {
+                      final tempOrder = state.adminLaporan
+                          .firstWhere((el) => el.docId == element.docId);
+                      context
+                          .read<AdminSelectOrderCubit>()
+                          .selectOrder(order: tempOrder, tableOrder: element);
+                      Navigator.of(context)
+                          .pushNamed(RouteName.adminDetailLaporanTerbuka);
+                    },
+                    child: Container(
+                      child: Row(
+                        children: [
+                          Column(
                             children: [
-                              /// Row CN Unit
-                              Row(
-                                children: [
-                                  Text(
-                                    "C/N UNIT",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12.ssp,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 50.w,
-                                  ),
-                                  Text(
-                                    element.cnNumber,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12.ssp,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 6.h),
-
-                              /// Row Nama Mekanik
-                              Row(
-                                children: [
-                                  Text(
-                                    "Nama Mekanik",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12.ssp,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 20.w,
-                                  ),
-                                  Text(
-                                    element.namaMekanik,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12.ssp,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              /// Divider Hitam
-                              Divider(
-                                color: Colors.black,
-                              ),
-
-                              /// Approval Status
+                              /// Tanggal
                               Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: AppColor.statusApproval,
-                                ),
-                                width: 80.w,
-                                height: 13.h,
+                                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                height: 68.h,
+                                width: 63.w,
                                 alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.purple,
+                                ),
                                 child: Text(
-                                  "APPROVAL",
-                                  textAlign: TextAlign.center,
+                                  element.tanggal
+                                      .toDate()
+                                      .parseDate(dateFormat: "dd MMM"),
+                                  softWrap: true,
+                                  textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    fontSize: 11.ssp,
-                                    color: Colors.white,
-                                  ),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.ssp,
+                                      color: Colors.white),
+                                ),
+                              ),
+                              Container(
+                                width: 50.w,
+                                child: Divider(
+                                  color: Colors.black,
+                                  endIndent: 20.w,
                                 ),
                               )
                             ],
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 16.w),
+
+                          /// Kotak samping kana (CN Unit dan Nama Mekanik)
+                          Container(
+                            height: 68.h,
+                            width: 200.w,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                /// Row CN Unit
+                                Row(
+                                  children: [
+                                    Text(
+                                      "C/N UNIT",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.ssp,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 50.w,
+                                    ),
+                                    Text(
+                                      element.cnNumber,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.ssp,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 6.h),
+
+                                /// Row Nama Mekanik
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Nama Mekanik",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.ssp,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 20.w,
+                                    ),
+                                    Text(
+                                      element.namaMekanik,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.ssp,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                /// Divider Hitam
+                                Divider(
+                                  color: Colors.black,
+                                ),
+
+                                /// Approval Status
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.green.shade700,
+                                  ),
+                                  width: 80.w,
+                                  height: 13.h,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "APPROVED",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 11.ssp,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

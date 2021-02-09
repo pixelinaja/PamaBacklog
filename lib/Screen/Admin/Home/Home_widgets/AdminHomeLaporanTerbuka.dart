@@ -30,7 +30,7 @@ class AdminHomeLaporanTerbuka extends StatelessWidget {
                 BlocBuilder<OrdersBloc, OrdersState>(builder: (context, state) {
                   if (state is OrdersFetched) {
                     return Text(
-                      state.adminLaporan.length.toString(),
+                      state.tableOrderAdminTerbuka.length.toString(),
                       style: TextStyle(
                         fontSize: 14.ssp,
                         fontWeight: FontWeight.bold,

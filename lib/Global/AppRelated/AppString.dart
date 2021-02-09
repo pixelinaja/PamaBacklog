@@ -3,4 +3,5 @@ class AppString {
   static const String Close = "CLOSE";
   static const String Approval = "APPROVAL";
   static const String NotApprove = "NOT APPROVED";
+  static const String Approved = "APPROVED";
 }

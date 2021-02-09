@@ -30,7 +30,10 @@ class GLDetailLaporan extends StatelessWidget {
           if (state is GLApproveOrderLoading) {
             Navigator.of(context).popUntil(
                 (route) => route.settings.name == RouteName.glDetailLaporan);
-            showDialog(context: context, child: LoadingDialog());
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                child: LoadingDialog());
           }
 
           /// State is Success

@@ -65,12 +65,15 @@ class MekanikDetailLaporan extends StatelessWidget {
                   MekanikDetailLaporanContent(order: orderDetail),
 
                   /// Buttons
-                  MekanikDetailLaporanContentButtons(
-                    approvalGL: orderDetail.approvalPengawas,
-                    statusAction: orderDetail.statusAction,
-                    docId: orderDetail.docId,
-                    partNumber: orderDetail.number,
-                    orderDetail: orderDetail,
+                  Visibility(
+                    visible: orderDetail.approvalPengawas == 0 ? false : true,
+                    child: MekanikDetailLaporanContentButtons(
+                      approvalGL: orderDetail.approvalPengawas,
+                      statusAction: orderDetail.statusAction,
+                      docId: orderDetail.docId,
+                      partNumber: orderDetail.number,
+                      orderDetail: orderDetail,
+                    ),
                   )
                 ],
               ),

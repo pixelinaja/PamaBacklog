@@ -45,8 +45,8 @@ class MekanikDetailLaporanContentButtons extends StatelessWidget {
                       content:
                           "Apakah anda yakin ingin menutup laporan ini sebagai Part Kosong?",
                       yes: "Lanjutkan",
-                      no: "Tidak",
-                      icons: Icons.warning_outlined,
+                      no: "Batalkan",
+                      icons: Icons.error_outline,
                       onConfirmTap: () {
                         context.read<MekanikUpdateLaporanBloc>().add(
                               MekanikUpdateLaporanMulai(
@@ -90,11 +90,11 @@ class MekanikDetailLaporanContentButtons extends StatelessWidget {
                 onTap: () => showDialog(
                   context: context,
                   child: ConfirmationDialog(
-                    title: "peringatan!",
+                    title: "Peringatan!",
                     content: "Apakah anda yakin ingin menutup laporan ini?",
                     yes: "Lanjutkan",
-                    no: "Tidak",
-                    icons: Icons.warning_outlined,
+                    no: "Batalkan",
+                    icons: Icons.error_outline,
                     onConfirmTap: () {
                       context.read<MekanikUpdateLaporanBloc>().add(
                             MekanikUpdateLaporanMulai(

@@ -13,11 +13,12 @@ class CNLoading extends CNState {}
 
 class CNCompleted extends CNState {
   final List<CNModel> cnData;
+  final List<CNListModel> cnList;
 
-  CNCompleted({@required this.cnData});
+  CNCompleted({@required this.cnData, @required this.cnList});
 
   @override
-  List<Object> get props => [cnData];
+  List<Object> get props => [cnData, cnList];
 }
 
 class CNFailed extends CNState {

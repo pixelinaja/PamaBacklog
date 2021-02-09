@@ -8,7 +8,10 @@ abstract class CNRepository {
   Future<List<CNModel>> getCNData();
 
   /// Update order
-  Future<void> updateCN({@required String cnId, @required CNModel cnData});
+  Future<void> updateCN(
+      {@required String cnId,
+      @required CNModel cnData,
+      @required CNModel oldCNData});
 }
 
 class CNService implements CNRepository {
@@ -23,5 +26,25 @@ class CNService implements CNRepository {
   }
 
   @override
-  Future<void> updateCN({String cnId, CNModel cnData}) async {}
+  Future<void> updateCN(
+      {String cnId, CNModel cnData, CNModel oldCNData}) async {
+    final newCNData = cnData.toJson();
+    final oldCN = oldCNData.toJson();
+
+    /// Buat history perubahan
+    final createHistory = _db
+        .collection(FirestoreCollectionConstant.CN)
+        .doc(oldCNData.cnName.toLowerCase())
+        .collection(FirestoreCollectionConstant.History)
+        .add(oldCN);
+
+    /// Update data
+    final updateDocument = _db
+        .collection(FirestoreCollectionConstant.CN)
+        .doc(cnData.cnName.toLowerCase())
+        .set(newCNData, SetOptions(merge: true));
+
+    /// Jalankan perintah update dan buat history
+    await Future.wait([createHistory, updateDocument]);
+  }
 }

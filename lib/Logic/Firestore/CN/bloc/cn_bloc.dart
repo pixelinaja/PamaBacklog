@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:PamaBacklog/Model/CNListModel.dart';
 import 'package:PamaBacklog/Model/CNModel.dart';
 import 'package:PamaBacklog/Service/CNRepository.dart';
 import 'package:bloc/bloc.dart';
@@ -23,7 +24,18 @@ class CNBloc extends Bloc<CNEvent, CNState> {
       yield CNLoading();
       try {
         List<CNModel> cnData = await _cnRepository.getCNData();
-        yield CNCompleted(cnData: cnData);
+        List<CNListModel> cnListModel = [];
+        cnData.forEach((element) {
+          element.cnNumbers.forEach((number) {
+            cnListModel.add(CNListModel(
+              cnName: element.cnName,
+              cnNumber: number,
+              createdAt: element.createdAt,
+              updatedAt: element.updatedAt,
+            ));
+          });
+        });
+        yield CNCompleted(cnData: cnData, cnList: cnListModel);
       } on FirebaseException catch (e) {
         yield CNFailed(error: e.message);
       } on SocketException catch (e) {

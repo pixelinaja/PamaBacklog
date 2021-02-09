@@ -1,6 +1,11 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:PamaBacklog/Logic/Admin/AdminAddCN/bloc/admin_add_cn_bloc.dart';
+import 'package:PamaBacklog/Logic/Admin/AdminSelectOrder/cubit/admin_select_order_cubit.dart';
+import 'package:PamaBacklog/Logic/Admin/AdminSubmitEstimasi/bloc/admin_submit_estimasi_bloc.dart';
+import 'package:PamaBacklog/Logic/Admin/AdminSubmitWR/bloc/admin_submit_wr_bloc.dart';
+import 'package:PamaBacklog/Logic/Admin/AdminSwitchLaporan/cubit/admin_switch_laporan_cubit.dart';
 import 'package:PamaBacklog/Logic/Firestore/CN/bloc/cn_bloc.dart';
 import 'package:PamaBacklog/Logic/GL/GLSelectOrder/cubit/gl_select_order_cubit.dart';
 import 'package:PamaBacklog/Logic/GL/GLSelectTableOrder/cubit/gl_select_table_order_cubit.dart';
@@ -26,6 +31,10 @@ import 'Global/DesignSize/DesignSize.dart';
 import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:PamaBacklog/Router/Router.dart';
 
+import 'Logic/Admin/AdminDeleteCN/bloc/admin_delete_cn_bloc.dart';
+import 'Logic/Admin/AdminEditCN/bloc/admin_edit_cn_bloc.dart';
+import 'Logic/Admin/AdminExport/bloc/admin_export_bloc.dart';
+import 'Logic/Admin/AdminUpdateCN/bloc/admin_update_cn_bloc.dart';
 import 'Logic/Auth/bloc/auth_bloc.dart';
 import 'Logic/Connectivity/cubit/connectivity_cubit.dart';
 import 'Logic/FCM/bloc/sendnotification_bloc.dart';
@@ -207,6 +216,25 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             orderRepository: _orderRepository,
           ),
         ),
+        BlocProvider(create: (context) => AdminSelectOrderCubit()),
+        BlocProvider(
+          create: (context) => AdminSubmitEstimasiBloc(
+            fcmRepository: _fcmService,
+            orderRepository: _orderRepository,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => AdminSubmitWrBloc(
+            fcmRepository: _fcmService,
+            orderRepository: _orderRepository,
+          ),
+        ),
+        BlocProvider(create: (context) => AdminSwitchLaporanCubit()),
+        BlocProvider(create: (context) => AdminAddCnBloc()),
+        BlocProvider(create: (context) => AdminUpdateCnBloc()),
+        BlocProvider(create: (context) => AdminEditCnBloc()),
+        BlocProvider(create: (context) => AdminDeleteCnBloc()),
+        BlocProvider(create: (context) => AdminExportBloc()),
       ],
       child: ScreenUtilInit(
         allowFontScaling: true,

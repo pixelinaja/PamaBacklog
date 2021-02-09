@@ -28,11 +28,13 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
             orders.where((element) => element.approvalPengawas == 0).toList();
         List<Order> adminLaporan =
             orders.where((element) => element.approvalPengawas == 1).toList();
-        List<TableOrderModel> tableOrder = _populateTableOrder(orders);
+        List<TableOrderModel> tableOrder = _populateTableOrder(orders, false);
         List<TableOrderModel> tableOrderPerluPersetujuan =
-            _populateTableOrder(orderPerluPersetujuan);
+            _populateTableOrder(orderPerluPersetujuan, false);
         List<TableOrderModel> tableOrderAdminLaporan =
-            _populateTableOrder(adminLaporan);
+            _populateTableOrder(adminLaporan, false);
+        List<TableOrderModel> tableOrderAdminTerbuka =
+            _populateTableOrder(adminLaporan, true);
 
         yield OrdersFetched(
           orders: orders,
@@ -41,6 +43,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
           tableOrder: tableOrder,
           tableOrderAdminLaporan: tableOrderAdminLaporan,
           tableOrderPerluPersetujuan: tableOrderPerluPersetujuan,
+          tableOrderAdminTerbuka: tableOrderAdminTerbuka,
         );
       } on FirebaseException catch (e) {
         yield OrdersFailed(message: e.message);
@@ -52,7 +55,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     }
   }
 
-  List<TableOrderModel> _populateTableOrder(List<Order> orders) {
+  List<TableOrderModel> _populateTableOrder(
+      List<Order> orders, bool isAdminTerbuka) {
     List<TableOrderModel> tableOrder = [];
     for (var order in orders) {
       for (var part in order.partNumber.values) {
@@ -63,7 +67,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
           cnNumber: order.cnNumber,
           deskripsi: part.deskripsi,
           namaMekanik: order.namaMekanik,
-          noWr: order.noWr,
+          noWr: part.noWr ?? "-",
           number: part.number,
           qty: part.qty,
           statusAction: part.statusAction,
@@ -74,7 +78,11 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         );
 
         /// Append to list
-        tableOrder.add(temp);
+        if (isAdminTerbuka && temp.statusAction == "APPROVED") {
+          tableOrder.add(temp);
+        } else if (isAdminTerbuka == false) {
+          tableOrder.add(temp);
+        }
       }
     }
     return tableOrder;

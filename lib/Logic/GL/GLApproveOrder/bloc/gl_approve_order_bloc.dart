@@ -34,7 +34,6 @@ class GLApproveOrderBloc
         cnNumber: event.order.cnNumber,
         docId: event.order.docId,
         namaMekanik: event.order.namaMekanik,
-        noWr: event.order.noWr,
         partNumber: event.order.partNumber,
         tanggal: event.order.tanggal,
         tanggalEksekusi: Timestamp.fromDate(event.tanggalEksekusi),
@@ -48,7 +47,8 @@ class GLApproveOrderBloc
       }
 
       /// Perform Firestore call
-      final updateOrder = orderRepository.glApproveOrder(order: order);
+      final updateOrder =
+          orderRepository.glApproveOrder(order: order, oldOrder: event.order);
       final sendNotificationMekanik = fcmRepository.sendPushNotification(
         topic: "2",
         msg: NotificationMsgModel(
@@ -95,7 +95,6 @@ class GLApproveOrderBloc
         cnNumber: event.order.cnNumber,
         docId: event.order.docId,
         namaMekanik: event.order.namaMekanik,
-        noWr: event.order.noWr,
         partNumber: event.order.partNumber,
         tanggal: event.order.tanggal,
         tanggalEksekusi: Timestamp.fromDate(event.tanggalEksekusi),
@@ -109,7 +108,8 @@ class GLApproveOrderBloc
       }
 
       /// Perform Firestore call
-      final updateOrder = orderRepository.glApproveOrder(order: order);
+      final updateOrder =
+          orderRepository.glApproveOrder(order: order, oldOrder: event.order);
       final sendNotificationMekanik = fcmRepository.sendPushNotification(
         topic: "2",
         msg: NotificationMsgModel(
