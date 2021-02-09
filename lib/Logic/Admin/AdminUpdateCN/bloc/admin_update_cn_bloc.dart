@@ -32,6 +32,7 @@ class AdminUpdateCnBloc extends Bloc<AdminUpdateCnEvent, AdminUpdateCnState> {
                   "Data C/N Baru Telah Tersedia. Silahkan Masukkan data lain.");
         } else {
           cnData.cnNumbers.add(event.cnNumber);
+          cnData.updatedAt = Timestamp.now();
           cnData.cnNumbers.sort(((a, b) {
             return a.toLowerCase().compareTo(b.toLowerCase());
           }));
@@ -55,6 +56,7 @@ class AdminUpdateCnBloc extends Bloc<AdminUpdateCnEvent, AdminUpdateCnState> {
           createdAt: Timestamp.now(),
           updatedAt: Timestamp.now(),
         );
+        cnData.updatedAt = Timestamp.now();
 
         try {
           await cnRepository.updateCN(

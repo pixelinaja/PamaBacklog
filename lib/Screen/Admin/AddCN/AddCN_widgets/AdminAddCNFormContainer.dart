@@ -6,7 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminAddCNFormContainer extends StatefulWidget {
-  const AdminAddCNFormContainer({Key key}) : super(key: key);
+  final bool isAdd;
+  const AdminAddCNFormContainer({Key key, this.isAdd}) : super(key: key);
 
   @override
   _AdminAddCNFormContainerState createState() =>
@@ -15,6 +16,17 @@ class AdminAddCNFormContainer extends StatefulWidget {
 
 class _AdminAddCNFormContainerState extends State<AdminAddCNFormContainer> {
   String _selectedSection;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.isAdd) {
+      _selectedSection = null;
+    } else {
+      _selectedSection =
+          (context.read<AdminAddCnBloc>().state as AdminAddCnInitial).cnSection;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +64,9 @@ class _AdminAddCNFormContainerState extends State<AdminAddCNFormContainer> {
             Container(
               margin: EdgeInsets.only(top: 8.h),
               child: TextFormField(
+                initialValue:
+                    (context.watch<AdminAddCnBloc>().state as AdminAddCnInitial)
+                        .cnUnit,
                 decoration: InputDecoration(
                   labelText: "Input C/N Unit",
                   hintText: "Input C/N Unit",

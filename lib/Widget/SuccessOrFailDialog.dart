@@ -6,10 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class SuccessOrFailDialog extends StatelessWidget {
   final DialogStatusType dialogStatusType;
   final String content;
+  final VoidCallback onTap;
   const SuccessOrFailDialog({
     Key key,
     @required this.content,
     @required this.dialogStatusType,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -66,8 +68,10 @@ class SuccessOrFailDialog extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: InkWell(
-                    onTap: () => Navigator.of(context).popUntil(
-                        (route) => route.settings.name == RouteName.homeScreen),
+                    onTap: onTap != null
+                        ? onTap
+                        : () => Navigator.of(context).popUntil((route) =>
+                            route.settings.name == RouteName.homeScreen),
                     child: Container(
                       width: 120.w,
                       height: 40.h,
