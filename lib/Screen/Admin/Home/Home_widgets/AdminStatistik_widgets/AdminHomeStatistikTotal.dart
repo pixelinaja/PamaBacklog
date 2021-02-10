@@ -21,7 +21,7 @@ class AdminHomeStatistikTotal extends StatelessWidget {
             BlocBuilder<OrdersBloc, OrdersState>(builder: (context, state) {
               if (state is OrdersFetched) {
                 return Text(
-                  state.orders.length.toString(),
+                  state.tableOrderAdminLaporan.length.toString(),
                   style: TextStyle(
                     color: AppColor.adminColor,
                     fontSize: 65.ssp,
