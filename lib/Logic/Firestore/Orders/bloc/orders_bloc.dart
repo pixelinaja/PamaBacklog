@@ -32,7 +32,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         List<TableOrderModel> tableOrderPerluPersetujuan =
             _populateTableOrder(orderPerluPersetujuan, false);
         List<TableOrderModel> tableOrderAdminLaporan =
-            _populateTableOrder(adminLaporan, false);
+            _populateTableOrder(orders, false);
         List<TableOrderModel> tableOrderAdminTerbuka =
             _populateTableOrder(adminLaporan, true);
 

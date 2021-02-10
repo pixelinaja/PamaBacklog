@@ -21,7 +21,7 @@ class GLHomeStatistikTotal extends StatelessWidget {
             BlocBuilder<OrdersBloc, OrdersState>(builder: (context, state) {
               if (state is OrdersFetched) {
                 return Text(
-                  state.orders.length.toString(),
+                  state.tableOrder.length.toString(),
                   style: TextStyle(
                     color: AppColor.glHomeNumberColor,
                     fontSize: 65.ssp,
