@@ -162,15 +162,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       /// App is on the background but not closed.
       onResume: (Map<String, dynamic> message) async {
         print('onResume called: $message');
-        Fluttertoast.showToast(
-            msg: message.toString(), toastLength: Toast.LENGTH_LONG);
       },
 
       /// App is killed.
       onLaunch: (Map<String, dynamic> message) async {
         print('onLaunch called: $message');
-        Fluttertoast.showToast(
-            msg: message.toString(), toastLength: Toast.LENGTH_LONG);
       },
 
       /// Handle On Background Message

@@ -12,11 +12,25 @@ import 'package:PamaBacklog/Widget/SuccessOrFailDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'LogLaporan_Widgets/AdminLogLaporanTableContainer.dart';
 
-class AdminLogLaporan extends StatelessWidget {
+class AdminLogLaporan extends StatefulWidget {
   const AdminLogLaporan({Key key}) : super(key: key);
+
+  @override
+  _AdminLogLaporanState createState() => _AdminLogLaporanState();
+}
+
+class _AdminLogLaporanState extends State<AdminLogLaporan> {
+  @override
+  void initState() {
+    super.initState();
+    checkPermission().then((value) {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,5 +124,14 @@ class AdminLogLaporan extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future checkPermission() async {
+    var status = await Permission.storage.status;
+    if (status.isUndetermined ||
+        status.isDenied ||
+        status.isPermanentlyDenied) {
+      await Permission.storage.request();
+    }
   }
 }
