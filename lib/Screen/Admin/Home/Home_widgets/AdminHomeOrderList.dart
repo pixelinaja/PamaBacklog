@@ -114,21 +114,30 @@ class AdminHomeOrderList extends StatelessWidget {
                                 /// Row CN Unit
                                 Row(
                                   children: [
-                                    Text(
-                                      "C/N UNIT",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.ssp,
+                                    Container(
+                                      width: 50.w,
+                                      child: Text(
+                                        element.cnNumber,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.ssp,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
                                       width: 50.w,
                                     ),
-                                    Text(
-                                      element.cnNumber,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.ssp,
+                                    Container(
+                                      child: Text(
+                                        element.number,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.ssp,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -138,21 +147,30 @@ class AdminHomeOrderList extends StatelessWidget {
                                 /// Row Nama Mekanik
                                 Row(
                                   children: [
-                                    Text(
-                                      "Nama Mekanik",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.ssp,
+                                    Container(
+                                      width: 50.w,
+                                      child: Text(
+                                        element.namaMekanik,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.ssp,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 20.w,
+                                      width: 50.w,
                                     ),
-                                    Text(
-                                      element.namaMekanik,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.ssp,
+                                    Container(
+                                      child: Text(
+                                        element.trouble,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.ssp,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -173,7 +191,7 @@ class AdminHomeOrderList extends StatelessWidget {
                                   height: 13.h,
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "APPROVED",
+                                    element.statusAction,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 11.ssp,
