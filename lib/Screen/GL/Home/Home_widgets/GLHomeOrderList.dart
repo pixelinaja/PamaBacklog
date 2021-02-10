@@ -1,6 +1,7 @@
+import 'package:PamaBacklog/Global/AppRelated/AppColor.dart';
 import 'package:PamaBacklog/Logic/Firestore/Orders/bloc/orders_bloc.dart';
 import 'package:PamaBacklog/Logic/GL/GLSelectOrder/cubit/gl_select_order_cubit.dart';
-import 'package:PamaBacklog/Model/TableOrderModel.dart';
+import 'package:PamaBacklog/Model/OrderModel.dart';
 import 'package:PamaBacklog/Router/RouteName.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,8 +29,8 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
           return Container(
             height: 385.h,
             padding: EdgeInsets.symmetric(horizontal: 45.w),
-            child: GroupedListView<TableOrderModel, String>(
-              elements: state.tableOrderPerluPersetujuan,
+            child: GroupedListView<Order, String>(
+              elements: state.orderPerluPersetujuan,
               groupBy: (element) => element.tanggal.toDate().year.toString(),
               groupComparator: (value1, value2) => value2.compareTo(value1),
               useStickyGroupSeparators: true,
@@ -130,17 +131,17 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 50.w,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      element.number,
-                                      softWrap: true,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.ssp,
+                                  Spacer(),
+                                  Expanded(
+                                    child: Container(
+                                      child: Text(
+                                        element.namaMekanik,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.ssp,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -149,35 +150,19 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
                               SizedBox(height: 6.h),
 
                               /// Row Nama Mekanik
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 50.w,
-                                    child: Text(
-                                      element.namaMekanik,
-                                      softWrap: true,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.ssp,
-                                      ),
+
+                              Expanded(
+                                child: Container(
+                                  child: Text(
+                                    element.trouble,
+                                    softWrap: true,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12.ssp,
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 50.w,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      element.trouble,
-                                      softWrap: true,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.ssp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
 
                               /// Divider Hitam
@@ -189,13 +174,17 @@ class _GLHomeOrderListState extends State<GLHomeOrderList> {
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: Colors.green.shade700,
+                                  color: AppColor.statusApproval,
                                 ),
                                 width: 80.w,
                                 height: 13.h,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  element.statusAction,
+                                  element.approvalPengawas == 0
+                                      ? "APPROVAL"
+                                      : element.approvalPengawas == 1
+                                          ? "APPROVED"
+                                          : "NOT APPROVED",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 11.ssp,

@@ -136,7 +136,7 @@ class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1>
                 margin: EdgeInsets.only(top: 20.h),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Trouble / Description",
+                  "Trouble",
                   style: TextStyle(
                     color: Colors.grey.shade700,
                   ),

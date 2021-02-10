@@ -21,7 +21,7 @@ class AdminLogLaporanTable extends StatelessWidget {
         if (state is OrdersFetched) {
           if (state.orders.isNotEmpty) {
             return AdminLogLaporanTableChild(
-              orders: state.adminLaporan,
+              orders: state.orders,
               orientation: orientation,
               tableOrders: (switchState is AdminSwitchLaporanAll)
                   ? state.tableOrderAdminLaporan

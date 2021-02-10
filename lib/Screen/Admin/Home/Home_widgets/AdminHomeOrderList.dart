@@ -129,14 +129,16 @@ class AdminHomeOrderList extends StatelessWidget {
                                     SizedBox(
                                       width: 50.w,
                                     ),
-                                    Container(
-                                      child: Text(
-                                        element.number,
-                                        softWrap: true,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12.ssp,
+                                    Expanded(
+                                      child: Container(
+                                        child: Text(
+                                          element.number,
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12.ssp,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -162,14 +164,16 @@ class AdminHomeOrderList extends StatelessWidget {
                                     SizedBox(
                                       width: 50.w,
                                     ),
-                                    Container(
-                                      child: Text(
-                                        element.trouble,
-                                        softWrap: true,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12.ssp,
+                                    Expanded(
+                                      child: Container(
+                                        child: Text(
+                                          element.trouble,
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12.ssp,
+                                          ),
                                         ),
                                       ),
                                     ),
