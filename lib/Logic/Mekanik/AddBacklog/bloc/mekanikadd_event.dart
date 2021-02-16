@@ -14,6 +14,8 @@ class MekanikAddStart extends MekanikAddEvent {
   final String trouble;
   final List<MekanikAddPartNumber> partNumbers;
   final bool byPass;
+  final String hmUnit;
+  final String damageLevel;
 
   MekanikAddStart({
     this.tanggalLaporan,
@@ -22,5 +24,7 @@ class MekanikAddStart extends MekanikAddEvent {
     this.trouble,
     this.partNumbers,
     this.byPass,
+    this.damageLevel,
+    this.hmUnit,
   });
 }

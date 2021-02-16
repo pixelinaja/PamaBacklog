@@ -72,10 +72,13 @@ class MekanikDetailLaporanContent extends StatelessWidget {
               /// Jika tidak di-Approve
               else {
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     MekanikDetailLaporanContentTextRow(
                         leftSide:
-                            "Laporan tidak disetujui, silahkan Mekanik melakukan perbaikan sekarang"),
+                            "Laporan tidak disetujui, silahkan Mekanik melakukan perbaikan sekarang."),
+                    MekanikDetailLaporanContentTextRow(
+                        leftSide: "Alasan : ${order.rejectNote}"),
                     SizedBox(height: 57.h),
                   ],
                 );

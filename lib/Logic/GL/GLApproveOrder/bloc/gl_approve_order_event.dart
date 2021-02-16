@@ -17,6 +17,8 @@ class GLApproveOrderApproved extends GLApproveOrderEvent {
 class GLApproveOrderNotApproved extends GLApproveOrderEvent {
   final Order order;
   final DateTime tanggalEksekusi;
+  final String rejectNote;
 
-  GLApproveOrderNotApproved({this.order, this.tanggalEksekusi});
+  GLApproveOrderNotApproved(
+      {this.order, this.tanggalEksekusi, this.rejectNote});
 }

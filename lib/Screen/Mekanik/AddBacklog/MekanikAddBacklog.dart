@@ -81,7 +81,10 @@ class _MekanikAddBacklogState extends State<MekanikAddBacklog> {
                   );
                 }
               } else if (state is MekanikAddLoading) {
-                showDialog(context: context, child: LoadingDialog());
+                showDialog(
+                    context: context,
+                    child: LoadingDialog(),
+                    barrierDismissible: false);
               } else if (state is MekanikAddCompleted) {
                 Navigator.of(context).popUntil((route) =>
                     route.settings.name == RouteName.mekanikAddBacklog);

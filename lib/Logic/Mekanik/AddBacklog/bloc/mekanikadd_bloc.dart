@@ -54,15 +54,18 @@ class MekanikAddBloc extends Bloc<MekanikAddEvent, MekanikAddState> {
           .doc()
           .id;
       final order = Order(
-        approvalPengawas: 0,
-        cnNumber: event.cnUnit,
-        docId: randomId,
-        namaMekanik: event.namaMekanik,
-        partNumber: partNumber,
-        tanggal: Timestamp.fromDate(event.tanggalLaporan),
-        tanggalEksekusi: null,
-        trouble: event.trouble,
-      );
+          approvalPengawas: 0,
+          cnNumber: event.cnUnit,
+          docId: randomId,
+          namaMekanik: event.namaMekanik,
+          partNumber: partNumber,
+          tanggal: Timestamp.fromDate(event.tanggalLaporan),
+          tanggalEksekusi: null,
+          trouble: event.trouble,
+          damageLevel: event.damageLevel,
+          hmUnit: event.hmUnit,
+          isDeleted: false,
+          rejectNote: null);
 
       if (event.byPass == false) {
         /// Get Mekanik Table Order Data

@@ -27,6 +27,8 @@ class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1>
   TextEditingController _tanggalController = TextEditingController();
   TextEditingController _namaMekanikController = TextEditingController();
   TextEditingController _troubleController = TextEditingController();
+  TextEditingController _hmUnitController = TextEditingController();
+  TextEditingController _damageLevelController = TextEditingController();
 
   @override
   void initState() {
@@ -133,6 +135,17 @@ class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1>
                 }),
               ),
               Container(
+                margin: EdgeInsets.only(top: 8.h),
+                child: TextFormField(
+                  controller: _hmUnitController,
+                  decoration: InputDecoration(
+                    labelText: "HM Unit",
+                    hintText: "Input HM Unit",
+                    alignLabelWithHint: true,
+                  ),
+                ),
+              ),
+              Container(
                 margin: EdgeInsets.only(top: 20.h),
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -147,7 +160,7 @@ class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1>
                 alignment: Alignment.centerLeft,
                 child: TextFormField(
                   controller: _troubleController,
-                  maxLines: 6,
+                  maxLines: 1,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -155,9 +168,20 @@ class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1>
                   ),
                 ),
               ),
+              Container(
+                margin: EdgeInsets.only(top: 8.h),
+                child: TextFormField(
+                  controller: _damageLevelController,
+                  decoration: InputDecoration(
+                    labelText: "Tingkat Kerusakan",
+                    hintText: "Input Tingkat Kerusakan",
+                    alignLabelWithHint: true,
+                  ),
+                ),
+              ),
 
               /// Button Section
-              SizedBox(height: 70.h),
+              SizedBox(height: 30.h),
               Container(
                 child: Row(
                   children: [
@@ -177,15 +201,18 @@ class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1>
                     GestureDetector(
                       onTap: () {
                         context.read<MekanikSaveBacklogCubit>().savePart1(
-                              cnUnit: _selectedCN,
-                              namaMekanik: _namaMekanikController.text.trim(),
-                              tanggal: selectedDate,
-                              trouble: _troubleController.text.trim(),
-                            );
+                            cnUnit: _selectedCN,
+                            namaMekanik: _namaMekanikController.text.trim(),
+                            tanggal: selectedDate,
+                            trouble: _troubleController.text.trim(),
+                            damageLevel: _damageLevelController.text.trim(),
+                            hmUnit: _hmUnitController.text.trim());
                         if (_selectedCN != null &&
-                            _namaMekanikController.text.trim() != null &&
+                            _namaMekanikController.text.trim() != "" &&
                             selectedDate != null &&
-                            _troubleController.text.trim() != null) {
+                            _troubleController.text.trim() != "" &&
+                            _hmUnitController.text.trim() != "" &&
+                            _damageLevelController.text.trim() != "") {
                           return pageController.animateToPage(1,
                               duration: Duration(milliseconds: 300),
                               curve: Curves.easeIn);
@@ -257,6 +284,8 @@ class _MekanikAddBacklogForm1State extends State<MekanikAddBacklogForm1>
     _tanggalController.dispose();
     _namaMekanikController.dispose();
     _troubleController.dispose();
+    _hmUnitController.dispose();
+    _damageLevelController.dispose();
     super.dispose();
   }
 
