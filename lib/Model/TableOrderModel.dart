@@ -55,8 +55,8 @@ class TableOrderModel {
       'approvalPengawas': approvalPengawas,
       'tanggalEksekusi': tanggalEksekusi,
       'noWr': noWr,
-      'damageLevel': damageLevel,
-      'hmUnit': hmUnit,
+      'damageLevel': damageLevel ?? "-",
+      'hmUnit': hmUnit ?? "-",
       'isDeleted': isDeleted,
       'rejectNote': rejectNote
     };
@@ -79,8 +79,8 @@ class TableOrderModel {
         approvalPengawas: map['approvalPengawas'],
         tanggalEksekusi: map['tanggalEksekusi'],
         noWr: map['noWr'],
-        damageLevel: map['damageLevel'],
-        hmUnit: map['hmUnit'],
+        damageLevel: map['damageLevel'] ?? "-",
+        hmUnit: map['hmUnit'] ?? "-",
         isDeleted: map['isDeleted'],
         rejectNote: map['rejectNote']);
   }

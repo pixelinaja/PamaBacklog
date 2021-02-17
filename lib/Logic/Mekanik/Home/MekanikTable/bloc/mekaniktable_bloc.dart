@@ -41,8 +41,8 @@ class MekanikTableBloc extends Bloc<MekanikTableEvent, MekanikTableState> {
                 tanggal: order.tanggal,
                 tanggalEksekusi: order.tanggalEksekusi,
                 trouble: order.trouble,
-                damageLevel: order.damageLevel,
-                hmUnit: order.hmUnit,
+                damageLevel: order.damageLevel ?? "-",
+                hmUnit: order.hmUnit ?? "-",
                 isDeleted: order.isDeleted ?? false,
                 rejectNote: order.rejectNote);
 

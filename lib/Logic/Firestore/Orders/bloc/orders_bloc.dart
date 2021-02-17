@@ -82,8 +82,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
               tanggal: order.tanggal,
               tanggalEksekusi: order.tanggalEksekusi,
               trouble: order.trouble,
-              damageLevel: order.damageLevel,
-              hmUnit: order.hmUnit,
+              damageLevel: order.damageLevel ?? "-",
+              hmUnit: order.hmUnit ?? "-",
               isDeleted: order.isDeleted,
               rejectNote: order.rejectNote);
 

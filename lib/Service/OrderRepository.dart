@@ -84,6 +84,7 @@ class OrderService implements OrderRepository {
   Future<void> glApproveOrder({Order oldOrder, Order order}) async {
     final orderData = order.toJson();
     final oldOrderData = oldOrder.toJson();
+    oldOrderData.addAll({'updated_at': Timestamp.now()});
 
     /// Buat history perubahan
     final createHistory = _db
@@ -106,8 +107,7 @@ class OrderService implements OrderRepository {
   Future<void> updateOrder({Order oldOrder, Order order}) async {
     final orderData = order.toJson();
     final oldOrderData = oldOrder.toJson();
-
-    print(orderData);
+    oldOrderData.addAll({'updated_at': Timestamp.now()});
 
     /// Buat history perubahan
     final createHistory = _db

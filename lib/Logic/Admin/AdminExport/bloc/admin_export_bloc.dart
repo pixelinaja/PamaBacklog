@@ -33,8 +33,10 @@ class AdminExportBloc extends Bloc<AdminExportEvent, AdminExportState> {
             'Doc Id',
             'Tanggal',
             'Status Action',
-            'CN Number',
+            'CN Unit',
+            'HM Unit',
             'Trouble',
+            'Tingkat Kerusakan',
             'Deskripsi',
             'Quantity',
             'Status Part',
@@ -69,44 +71,45 @@ class AdminExportBloc extends Bloc<AdminExportEvent, AdminExportState> {
                 data.cnNumber);
             sheetObject.updateCell(
                 CellIndex.indexByColumnRow(columnIndex: 4, rowIndex: i + 1),
-                data.trouble);
+                data.hmUnit ?? "-");
             sheetObject.updateCell(
                 CellIndex.indexByColumnRow(columnIndex: 5, rowIndex: i + 1),
-                data.deskripsi);
+                data.trouble);
             sheetObject.updateCell(
                 CellIndex.indexByColumnRow(columnIndex: 6, rowIndex: i + 1),
-                data.qty);
+                data.damageLevel ?? "-");
             sheetObject.updateCell(
                 CellIndex.indexByColumnRow(columnIndex: 7, rowIndex: i + 1),
-                data.statusPart);
+                data.deskripsi);
             sheetObject.updateCell(
                 CellIndex.indexByColumnRow(columnIndex: 8, rowIndex: i + 1),
-                data.number);
+                data.qty);
             sheetObject.updateCell(
                 CellIndex.indexByColumnRow(columnIndex: 9, rowIndex: i + 1),
-                data.namaMekanik);
+                data.statusPart);
             sheetObject.updateCell(
                 CellIndex.indexByColumnRow(columnIndex: 10, rowIndex: i + 1),
+                data.number);
+            sheetObject.updateCell(
+                CellIndex.indexByColumnRow(columnIndex: 11, rowIndex: i + 1),
+                data.namaMekanik);
+            sheetObject.updateCell(
+                CellIndex.indexByColumnRow(columnIndex: 12, rowIndex: i + 1),
                 data.approvalPengawas == 0
                     ? "Belum di-Approve"
                     : data.approvalPengawas == 1
                         ? "Approved"
                         : "Not Approved");
             sheetObject.updateCell(
-                CellIndex.indexByColumnRow(columnIndex: 11, rowIndex: i + 1),
+                CellIndex.indexByColumnRow(columnIndex: 13, rowIndex: i + 1),
                 data.tanggalEksekusi == null
                     ? "-"
                     : data.tanggalEksekusi
                         .toDate()
                         .parseDate(dateFormat: "dd/MMMM/yyyy"));
             sheetObject.updateCell(
-                CellIndex.indexByColumnRow(columnIndex: 12, rowIndex: i + 1),
+                CellIndex.indexByColumnRow(columnIndex: 14, rowIndex: i + 1),
                 data.noWr);
-
-            print(sheetObject
-                .cell(
-                    CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: i + 1))
-                .value);
           }
 
           final encoded = await excel.encode();
