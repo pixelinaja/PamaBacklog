@@ -27,6 +27,11 @@ class MekanikDetailLaporanContent extends StatelessWidget {
           MekanikDetailLaporanContentTextRow(
               leftSide: order.cnNumber, rightSide: order.number),
 
+          /// HM Unit dan Tingkat Kerusakan
+          MekanikDetailLaporanContentTextRow(
+              leftSide: order.hmUnit ?? "-",
+              rightSide: order.damageLevel ?? "-"),
+
           /// QTY
           MekanikDetailLaporanContentTextRow(
               leftSide: order.qty.toString(),
