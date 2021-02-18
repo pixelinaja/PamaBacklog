@@ -47,7 +47,9 @@ class MekanikTableBloc extends Bloc<MekanikTableEvent, MekanikTableState> {
                 rejectNote: order.rejectNote);
 
             /// Append to list
-            tableOrder.add(temp);
+            if (order.isDeleted == false || order.isDeleted == null) {
+              tableOrder.add(temp);
+            }
           }
         }
         yield MekanikTableCompleted(orders: orders, tableOrder: tableOrder)
