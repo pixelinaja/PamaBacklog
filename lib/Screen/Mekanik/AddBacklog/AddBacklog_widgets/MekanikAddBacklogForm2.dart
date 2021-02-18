@@ -26,7 +26,7 @@ class _MekanikAddBacklogForm2State extends State<MekanikAddBacklogForm2> {
   @override
   void initState() {
     super.initState();
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 10; i++) {
       _partNumbers.add(TextEditingController());
       _deskripsi.add(TextEditingController());
       _qty.add(TextEditingController());
@@ -132,7 +132,7 @@ class _MekanikAddBacklogForm2State extends State<MekanikAddBacklogForm2> {
           state.tanggal != null &&
           state.trouble.isNotEmpty) {
         List<MekanikAddPartNumber> partNumbers = [];
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 10; i++) {
           final partNumber = _partNumbers[i].text.trim();
           final deskripsi = _deskripsi[i].text.trim();
           final qty = _qty[i].text.trim();
@@ -151,6 +151,8 @@ class _MekanikAddBacklogForm2State extends State<MekanikAddBacklogForm2> {
                   partNumbers: partNumbers,
                   trouble: state.trouble,
                   byPass: false,
+                  damageLevel: state.damageLevel,
+                  hmUnit: state.hmUnit,
                 ),
               );
         } else {
@@ -170,7 +172,7 @@ class _MekanikAddBacklogForm2State extends State<MekanikAddBacklogForm2> {
   /// Populate 5 Textfield
   List<Widget> _populateTextfield() {
     List<Widget> widgets = [];
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 10; i++) {
       widgets.addAll([
         MekanikAddBacklogForm2Text(
           deskripsiController: _deskripsi[i],
@@ -187,7 +189,7 @@ class _MekanikAddBacklogForm2State extends State<MekanikAddBacklogForm2> {
 
   @override
   void dispose() {
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 10; i++) {
       _partNumbers[i].dispose();
       _deskripsi[i].dispose();
       _qty[i].dispose();

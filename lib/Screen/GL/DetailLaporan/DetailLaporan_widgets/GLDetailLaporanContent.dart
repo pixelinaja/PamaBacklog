@@ -30,6 +30,11 @@ class GLDetailLaporanContent extends StatelessWidget {
             /// C/N Number dan Part Number
             MekanikDetailLaporanContentTextRow(leftSide: order.cnNumber),
 
+            /// HM Unit dan Tingkat Kerusakan
+            MekanikDetailLaporanContentTextRow(
+                leftSide: order.hmUnit ?? "-",
+                rightSide: order.damageLevel ?? "-"),
+
             /// Padding
             SizedBox(height: 20.h),
 

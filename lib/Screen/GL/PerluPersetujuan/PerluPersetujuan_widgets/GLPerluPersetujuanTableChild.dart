@@ -62,31 +62,37 @@ class GLPerluPersetujuanTableChild extends StatelessWidget {
       /// 3. CN Unit
       _buildTitle("C/N Unit", 100.w),
 
-      /// 4. Trouble
+      /// 4. CN Unit
+      _buildTitle("HM Unit", 100.w),
+
+      /// 5. Trouble
       _buildTitle("Trouble", 100.w),
 
-      /// 5. Part Number
+      /// 6. Tingkat Kerusakan
+      _buildTitle("Tingkat Kerusakan", 100.w),
+
+      /// 7. Part Number
       _buildTitle("Part Number", 100.w),
 
-      /// 6. Deskripsi
+      /// 8. Deskripsi
       _buildTitle("Deskripsi", 100.w),
 
-      /// 7. Qty
+      /// 9. Qty
       _buildTitle("Qty", 50.w),
 
-      /// 8. Nama Mekanik
+      /// 10. Nama Mekanik
       _buildTitle("Nama Mekanik", 100.w),
 
-      /// 9. Tanggal Laporan
+      /// 11. Tanggal Laporan
       _buildTitle("Tanggal Laporan", 100.w),
 
-      /// 10. Tanggal Eksekusi
+      /// 12. Tanggal Eksekusi
       _buildTitle("Tanggal Eksekusi", 100.w),
 
-      /// 11. Status Part
+      /// 13. Status Part
       _buildTitle("Status Part", 150.w),
 
-      /// 12. No. WR
+      /// 14. No. WR
       _buildTitle("No. WR", 100.w),
     ];
   }
@@ -146,6 +152,7 @@ class GLPerluPersetujuanTableChild extends StatelessWidget {
         /// Status Action
         Container(
           child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 2),
             height: isPotrait ? 25.h : 50.h,
             alignment: Alignment.center,
             decoration: BoxDecoration(
@@ -169,6 +176,7 @@ class GLPerluPersetujuanTableChild extends StatelessWidget {
 
         /// CN Unit
         Container(
+          padding: EdgeInsets.symmetric(horizontal: 2),
           child: Text(
             "${order.cnNumber}",
             textAlign: TextAlign.center,
@@ -181,8 +189,24 @@ class GLPerluPersetujuanTableChild extends StatelessWidget {
           alignment: Alignment.center,
         ),
 
+        /// HM Unit
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 2),
+          child: Text(
+            "${order.hmUnit}",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          width: 100.w,
+          height: isPotrait ? 50.h : 100.h,
+          alignment: Alignment.center,
+        ),
+
         /// Trouble
         Container(
+          padding: EdgeInsets.symmetric(horizontal: 2),
           child: Text(
             "${order.trouble}",
             textAlign: TextAlign.center,
@@ -195,8 +219,24 @@ class GLPerluPersetujuanTableChild extends StatelessWidget {
           alignment: Alignment.center,
         ),
 
+        /// Trouble
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 2),
+          child: Text(
+            "${order.damageLevel}",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          width: 100.w,
+          height: isPotrait ? 50.h : 100.h,
+          alignment: Alignment.center,
+        ),
+
         /// Part Number
         Container(
+          padding: EdgeInsets.symmetric(horizontal: 2),
           child: Text(
             "${order.number}",
             textAlign: TextAlign.center,
@@ -211,6 +251,7 @@ class GLPerluPersetujuanTableChild extends StatelessWidget {
 
         /// Deskripsi
         Container(
+          padding: EdgeInsets.symmetric(horizontal: 2),
           child: Text(
             "${order.deskripsi}",
             textAlign: TextAlign.center,
@@ -225,6 +266,7 @@ class GLPerluPersetujuanTableChild extends StatelessWidget {
 
         /// Qty
         Container(
+          padding: EdgeInsets.symmetric(horizontal: 2),
           child: Text(
             "${order.qty}",
             textAlign: TextAlign.center,
@@ -239,6 +281,7 @@ class GLPerluPersetujuanTableChild extends StatelessWidget {
 
         /// Nama Mekanik
         Container(
+          padding: EdgeInsets.symmetric(horizontal: 2),
           child: Text(
             "${order.namaMekanik}",
             textAlign: TextAlign.center,
@@ -253,6 +296,7 @@ class GLPerluPersetujuanTableChild extends StatelessWidget {
 
         /// Tanggal Laporan
         Container(
+          padding: EdgeInsets.symmetric(horizontal: 2),
           child: Text(
             order.tanggal.toDate().parseDate(dateFormat: "dd-MM-yyyy"),
             textAlign: TextAlign.center,
@@ -267,6 +311,7 @@ class GLPerluPersetujuanTableChild extends StatelessWidget {
 
         /// Tanggal Eksekusi
         Container(
+          padding: EdgeInsets.symmetric(horizontal: 2),
           child: Text(
             order.tanggalEksekusi
                     ?.toDate()
@@ -284,6 +329,7 @@ class GLPerluPersetujuanTableChild extends StatelessWidget {
 
         /// Status Part
         Container(
+          padding: EdgeInsets.symmetric(horizontal: 2),
           child: Container(
             height: isPotrait ? 25.h : 50.h,
             width: 120.w,
@@ -310,6 +356,7 @@ class GLPerluPersetujuanTableChild extends StatelessWidget {
 
         /// No. WR
         Container(
+          padding: EdgeInsets.symmetric(horizontal: 2),
           child: Text(
             "${order.noWr}",
             textAlign: TextAlign.center,

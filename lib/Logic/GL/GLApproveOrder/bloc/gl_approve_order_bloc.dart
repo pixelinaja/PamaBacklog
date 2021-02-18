@@ -30,15 +30,18 @@ class GLApproveOrderBloc
 
       /// Create a copy of order
       Order order = Order(
-        approvalPengawas: 1,
-        cnNumber: event.order.cnNumber,
-        docId: event.order.docId,
-        namaMekanik: event.order.namaMekanik,
-        partNumber: event.order.partNumber,
-        tanggal: event.order.tanggal,
-        tanggalEksekusi: Timestamp.fromDate(event.tanggalEksekusi),
-        trouble: event.order.trouble,
-      );
+          approvalPengawas: 1,
+          cnNumber: event.order.cnNumber,
+          docId: event.order.docId,
+          namaMekanik: event.order.namaMekanik,
+          partNumber: event.order.partNumber,
+          tanggal: event.order.tanggal,
+          tanggalEksekusi: Timestamp.fromDate(event.tanggalEksekusi),
+          trouble: event.order.trouble,
+          damageLevel: event.order.damageLevel,
+          hmUnit: event.order.hmUnit,
+          isDeleted: event.order.isDeleted ?? false,
+          rejectNote: event.order.rejectNote);
 
       /// Change each part number status action
       for (var i = 0; i < order.partNumber.keys.length; i++) {
@@ -59,21 +62,10 @@ class GLApproveOrderBloc
           title: "Order Disetujui",
         ),
       );
-      final sendNotificationAdmin = fcmRepository.sendPushNotification(
-        topic: "0",
-        msg: NotificationMsgModel(
-          body:
-              "Order dengan CN Unit ${order.cnNumber} telah disetujui oleh pengawas",
-          orderId: order.docId,
-          orderStatus: "1",
-          title: "Order Baru",
-        ),
-      );
 
       try {
         /// Call all the futures
-        await Future.wait(
-            [updateOrder, sendNotificationMekanik, sendNotificationAdmin]);
+        await Future.wait([updateOrder, sendNotificationMekanik]);
         yield GLApproveOrderSuccess(
             approvalPengawas: order.approvalPengawas,
             tanggal: order.tanggalEksekusi
@@ -91,15 +83,18 @@ class GLApproveOrderBloc
 
       /// Create a copy of order
       Order order = Order(
-        approvalPengawas: 2,
-        cnNumber: event.order.cnNumber,
-        docId: event.order.docId,
-        namaMekanik: event.order.namaMekanik,
-        partNumber: event.order.partNumber,
-        tanggal: event.order.tanggal,
-        tanggalEksekusi: Timestamp.fromDate(event.tanggalEksekusi),
-        trouble: event.order.trouble,
-      );
+          approvalPengawas: 2,
+          cnNumber: event.order.cnNumber,
+          docId: event.order.docId,
+          namaMekanik: event.order.namaMekanik,
+          partNumber: event.order.partNumber,
+          tanggal: event.order.tanggal,
+          tanggalEksekusi: Timestamp.fromDate(event.tanggalEksekusi),
+          trouble: event.order.trouble,
+          damageLevel: event.order.damageLevel,
+          hmUnit: event.order.hmUnit,
+          isDeleted: event.order.isDeleted ?? false,
+          rejectNote: event.rejectNote);
 
       /// Change each part number status action
       for (var i = 0; i < order.partNumber.keys.length; i++) {

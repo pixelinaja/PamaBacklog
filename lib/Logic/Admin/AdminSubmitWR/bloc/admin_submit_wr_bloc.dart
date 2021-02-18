@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:PamaBacklog/Model/NotificationMsgModel.dart';
 import 'package:PamaBacklog/Model/OrderModel.dart';
 import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:PamaBacklog/Service/FCMRepository.dart';
@@ -37,31 +36,10 @@ class AdminSubmitWrBloc extends Bloc<AdminSubmitWrEvent, AdminSubmitWrState> {
       /// Perform Firestore call
       final updateOrder =
           orderRepository.updateOrder(order: order, oldOrder: event.order);
-      final sendNotificationMekanik = fcmRepository.sendPushNotification(
-        topic: "1",
-        msg: NotificationMsgModel(
-          body:
-              "Order dengan CN Unit ${order.cnNumber} dan Part Number ${event.tableOrder.number} telah datang dan sudah ready",
-          orderId: order.docId,
-          orderStatus: "1",
-          title: "Order Ready",
-        ),
-      );
-      final sendNotificationAdmin = fcmRepository.sendPushNotification(
-        topic: "2",
-        msg: NotificationMsgModel(
-          body:
-              "Order dengan CN Unit ${order.cnNumber} dan Part Number ${event.tableOrder.number} telah datang dan sudah ready",
-          orderId: order.docId,
-          orderStatus: "1",
-          title: "Order Ready",
-        ),
-      );
 
       try {
         /// Call all the futures
-        await Future.wait(
-            [updateOrder, sendNotificationMekanik, sendNotificationAdmin]);
+        await Future.wait([updateOrder]);
         yield AdminSubmitWrSuccess(
             msg: "Laporan Telah berhasil di update, dan barang telah Ready.");
       } catch (e) {

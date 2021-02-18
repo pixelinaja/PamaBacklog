@@ -24,10 +24,16 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       yield OrdersLoading();
       try {
         List<Order> orders = await _orderRepository.getOrderData();
-        List<Order> orderPerluPersetujuan =
-            orders.where((element) => element.approvalPengawas == 0).toList();
-        List<Order> adminLaporan =
-            orders.where((element) => element.approvalPengawas == 1).toList();
+        List<Order> orderPerluPersetujuan = orders
+            .where((element) =>
+                element.approvalPengawas == 0 &&
+                (element.isDeleted == false || element.isDeleted == null))
+            .toList();
+        List<Order> adminLaporan = orders
+            .where((element) =>
+                element.approvalPengawas == 1 && element.isDeleted == false ||
+                element.isDeleted == null)
+            .toList();
         List<TableOrderModel> tableOrder = _populateTableOrder(orders, false);
         List<TableOrderModel> tableOrderPerluPersetujuan =
             _populateTableOrder(orderPerluPersetujuan, false);
@@ -59,29 +65,34 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       List<Order> orders, bool isAdminTerbuka) {
     List<TableOrderModel> tableOrder = [];
     for (var order in orders) {
-      for (var part in order.partNumber.values) {
-        /// Populate and create a new table order model
-        TableOrderModel temp = TableOrderModel(
-          docId: order.docId,
-          approvalPengawas: order.approvalPengawas,
-          cnNumber: order.cnNumber,
-          deskripsi: part.deskripsi,
-          namaMekanik: order.namaMekanik,
-          noWr: part.noWr ?? "-",
-          number: part.number,
-          qty: part.qty,
-          statusAction: part.statusAction,
-          statusPart: part.statusPart,
-          tanggal: order.tanggal,
-          tanggalEksekusi: order.tanggalEksekusi,
-          trouble: order.trouble,
-        );
+      if (order.isDeleted == false || order.isDeleted == null) {
+        for (var part in order.partNumber.values) {
+          /// Populate and create a new table order model
+          TableOrderModel temp = TableOrderModel(
+              docId: order.docId,
+              approvalPengawas: order.approvalPengawas,
+              cnNumber: order.cnNumber,
+              deskripsi: part.deskripsi,
+              namaMekanik: order.namaMekanik,
+              noWr: part.noWr ?? "-",
+              number: part.number,
+              qty: part.qty,
+              statusAction: part.statusAction,
+              statusPart: part.statusPart,
+              tanggal: order.tanggal,
+              tanggalEksekusi: order.tanggalEksekusi,
+              trouble: order.trouble,
+              damageLevel: order.damageLevel ?? "-",
+              hmUnit: order.hmUnit ?? "-",
+              isDeleted: order.isDeleted,
+              rejectNote: order.rejectNote);
 
-        /// Append to list
-        if (isAdminTerbuka && temp.statusAction == "APPROVED") {
-          tableOrder.add(temp);
-        } else if (isAdminTerbuka == false) {
-          tableOrder.add(temp);
+          /// Append to list
+          if (isAdminTerbuka && temp.statusAction == "APPROVED") {
+            tableOrder.add(temp);
+          } else if (isAdminTerbuka == false) {
+            tableOrder.add(temp);
+          }
         }
       }
     }

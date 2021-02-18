@@ -28,23 +28,28 @@ class MekanikTableBloc extends Bloc<MekanikTableEvent, MekanikTableState> {
           for (var part in order.partNumber.values) {
             /// Populate and create a new table order model
             TableOrderModel temp = TableOrderModel(
-              docId: order.docId,
-              approvalPengawas: order.approvalPengawas,
-              cnNumber: order.cnNumber,
-              deskripsi: part.deskripsi,
-              namaMekanik: order.namaMekanik,
-              number: part.number,
-              noWr: part.noWr,
-              qty: part.qty,
-              statusAction: part.statusAction,
-              statusPart: part.statusPart,
-              tanggal: order.tanggal,
-              tanggalEksekusi: order.tanggalEksekusi,
-              trouble: order.trouble,
-            );
+                docId: order.docId,
+                approvalPengawas: order.approvalPengawas,
+                cnNumber: order.cnNumber,
+                deskripsi: part.deskripsi,
+                namaMekanik: order.namaMekanik,
+                number: part.number,
+                noWr: part.noWr,
+                qty: part.qty,
+                statusAction: part.statusAction,
+                statusPart: part.statusPart,
+                tanggal: order.tanggal,
+                tanggalEksekusi: order.tanggalEksekusi,
+                trouble: order.trouble,
+                damageLevel: order.damageLevel ?? "-",
+                hmUnit: order.hmUnit ?? "-",
+                isDeleted: order.isDeleted ?? false,
+                rejectNote: order.rejectNote);
 
             /// Append to list
-            tableOrder.add(temp);
+            if (order.isDeleted == false || order.isDeleted == null) {
+              tableOrder.add(temp);
+            }
           }
         }
         yield MekanikTableCompleted(orders: orders, tableOrder: tableOrder)

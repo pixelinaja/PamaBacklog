@@ -19,6 +19,7 @@ class GLDetailLaporanDateField extends StatefulWidget {
 
 class _GLDetailLaporanDateFieldState extends State<GLDetailLaporanDateField> {
   TextEditingController _dateFieldController = TextEditingController();
+  TextEditingController _rejectNoteController = TextEditingController();
   DateTime _selectedDate;
 
   @override
@@ -30,15 +31,30 @@ class _GLDetailLaporanDateFieldState extends State<GLDetailLaporanDateField> {
       children: [
         Container(
           width: 235.w,
-          child: TextFormField(
-            controller: _dateFieldController,
-            readOnly: true,
-            onTap: () async => await _selectDate(context),
-            decoration: InputDecoration(
-              alignLabelWithHint: true,
-              suffixIcon: Icon(Icons.calendar_today),
-              hintText: "Pilih Tanggal Eksekusi",
-              errorText: "*pilih tanggal untuk eksekusi (approval)",
+          child: Form(
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _rejectNoteController,
+                  decoration: InputDecoration(
+                    alignLabelWithHint: true,
+                    hintText: "Isi jika tidak menyetujui orderan",
+                    labelText: "Alasan Penolakan",
+                  ),
+                ),
+                SizedBox(height: 17.h),
+                TextFormField(
+                  controller: _dateFieldController,
+                  readOnly: true,
+                  onTap: () async => await _selectDate(context),
+                  decoration: InputDecoration(
+                    alignLabelWithHint: true,
+                    suffixIcon: Icon(Icons.calendar_today),
+                    hintText: "Pilih Tanggal Eksekusi",
+                    errorText: "*pilih tanggal untuk eksekusi (approval)",
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -62,14 +78,23 @@ class _GLDetailLaporanDateFieldState extends State<GLDetailLaporanDateField> {
             }
           },
           notApproveCallback: () {
-            if (_selectedDate != null) {
+            if (_selectedDate != null &&
+                _rejectNoteController.text.trim() != "") {
               return _showConfirmationDialog("2", order);
-            } else {
+            } else if (_selectedDate == null) {
               Scaffold.of(context).removeCurrentSnackBar();
               return Scaffold.of(context).showSnackBar(
                 SnackBar(
                   content:
                       Text("Silihkan pilih tanggal eksekusi terlebih dahulu."),
+                ),
+              );
+            } else {
+              Scaffold.of(context).removeCurrentSnackBar();
+              return Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content:
+                      Text("Silihkan isi alasan penolakan terlebih dahulu."),
                 ),
               );
             }
@@ -97,7 +122,9 @@ class _GLDetailLaporanDateFieldState extends State<GLDetailLaporanDateField> {
                     order: order, tanggalEksekusi: _selectedDate))
             : () => context.read<GLApproveOrderBloc>().add(
                 GLApproveOrderNotApproved(
-                    order: order, tanggalEksekusi: _selectedDate)),
+                    order: order,
+                    tanggalEksekusi: _selectedDate,
+                    rejectNote: this._rejectNoteController.text.trim())),
       ),
     );
   }
@@ -122,5 +149,12 @@ class _GLDetailLaporanDateFieldState extends State<GLDetailLaporanDateField> {
               affinity: TextAffinity.upstream),
         );
     }
+  }
+
+  @override
+  void dispose() {
+    _rejectNoteController.dispose();
+    _dateFieldController.dispose();
+    super.dispose();
   }
 }

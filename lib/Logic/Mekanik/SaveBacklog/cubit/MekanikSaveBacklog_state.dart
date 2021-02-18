@@ -14,6 +14,8 @@ class MekanikSavedBacklog extends MekanikSaveBacklogState {
   final String namaMekanik;
   final String cnUnit;
   final String trouble;
+  final String hmUnit;
+  final String damageLevel;
   final List<MekanikAddPartNumber> partNumbers;
 
   MekanikSavedBacklog(
@@ -21,25 +23,30 @@ class MekanikSavedBacklog extends MekanikSaveBacklogState {
       this.namaMekanik,
       this.cnUnit,
       this.trouble,
-      this.partNumbers});
+      this.partNumbers,
+      this.damageLevel,
+      this.hmUnit});
 
   @override
   List<Object> get props =>
-      [tanggal, namaMekanik, cnUnit, trouble, partNumbers];
+      [tanggal, namaMekanik, cnUnit, trouble, partNumbers, hmUnit, damageLevel];
 
   MekanikSavedBacklog copyWith({
     DateTime tanggal,
     String namaMekanik,
     String cnUnit,
     String trouble,
+    String hmUnit,
+    String damageLevel,
     List<MekanikAddPartNumber> partNumbers,
   }) {
     return MekanikSavedBacklog(
-      cnUnit: cnUnit ?? this.cnUnit,
-      namaMekanik: namaMekanik ?? this.namaMekanik,
-      partNumbers: partNumbers ?? this.partNumbers,
-      tanggal: tanggal ?? this.tanggal,
-      trouble: trouble ?? this.trouble,
-    );
+        cnUnit: cnUnit ?? this.cnUnit,
+        namaMekanik: namaMekanik ?? this.namaMekanik,
+        partNumbers: partNumbers ?? this.partNumbers,
+        tanggal: tanggal ?? this.tanggal,
+        trouble: trouble ?? this.trouble,
+        damageLevel: damageLevel ?? this.damageLevel,
+        hmUnit: hmUnit ?? this.hmUnit);
   }
 }

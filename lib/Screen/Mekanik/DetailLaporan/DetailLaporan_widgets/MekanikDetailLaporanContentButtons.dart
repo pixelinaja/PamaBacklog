@@ -91,7 +91,7 @@ class MekanikDetailLaporanContentButtons extends StatelessWidget {
                   context: context,
                   child: ConfirmationDialog(
                     title: "Peringatan!",
-                    content: "Apakah anda yakin ingin menutup laporan ini?",
+                    content: "Apakah anda yakin part tersebut sudah terpasang?",
                     yes: "Lanjutkan",
                     no: "Batalkan",
                     icons: Icons.error_outline,

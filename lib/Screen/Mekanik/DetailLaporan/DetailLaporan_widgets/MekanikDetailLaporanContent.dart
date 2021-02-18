@@ -27,6 +27,11 @@ class MekanikDetailLaporanContent extends StatelessWidget {
           MekanikDetailLaporanContentTextRow(
               leftSide: order.cnNumber, rightSide: order.number),
 
+          /// HM Unit dan Tingkat Kerusakan
+          MekanikDetailLaporanContentTextRow(
+              leftSide: order.hmUnit ?? "-",
+              rightSide: order.damageLevel ?? "-"),
+
           /// QTY
           MekanikDetailLaporanContentTextRow(
               leftSide: order.qty.toString(),
@@ -72,10 +77,13 @@ class MekanikDetailLaporanContent extends StatelessWidget {
               /// Jika tidak di-Approve
               else {
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     MekanikDetailLaporanContentTextRow(
                         leftSide:
-                            "Laporan tidak disetujui, silahkan Mekanik melakukan perbaikan sekarang"),
+                            "Laporan tidak disetujui, silahkan Mekanik melakukan perbaikan sekarang."),
+                    MekanikDetailLaporanContentTextRow(
+                        leftSide: "Alasan : ${order.rejectNote}"),
                     SizedBox(height: 57.h),
                   ],
                 );

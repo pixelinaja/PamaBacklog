@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:PamaBacklog/Model/NotificationMsgModel.dart';
 import 'package:PamaBacklog/Model/OrderModel.dart';
 import 'package:PamaBacklog/Model/TableOrderModel.dart';
 import 'package:PamaBacklog/Service/FCMRepository.dart';
@@ -36,6 +35,10 @@ class AdminSubmitEstimasiBloc
         tanggal: event.order.tanggal,
         tanggalEksekusi: event.order.tanggalEksekusi,
         trouble: event.order.trouble,
+        damageLevel: event.order.damageLevel,
+        hmUnit: event.order.hmUnit,
+        isDeleted: event.order.isDeleted ?? false,
+        rejectNote: event.order.rejectNote,
       );
 
       /// Change each part number status action
@@ -45,31 +48,10 @@ class AdminSubmitEstimasiBloc
       /// Perform Firestore call
       final updateOrder =
           orderRepository.updateOrder(order: order, oldOrder: event.order);
-      final sendNotificationMekanik = fcmRepository.sendPushNotification(
-        topic: "1",
-        msg: NotificationMsgModel(
-          body:
-              "Order dengan CN Unit ${order.cnNumber} dan Part Number ${event.tableOrder.number} telah dipesan oleh admin",
-          orderId: order.docId,
-          orderStatus: "1",
-          title: "Order telah Dipesan",
-        ),
-      );
-      final sendNotificationAdmin = fcmRepository.sendPushNotification(
-        topic: "2",
-        msg: NotificationMsgModel(
-          body:
-              "Order dengan CN Unit ${order.cnNumber} dan Part Number ${event.tableOrder.number} telah dipesan oleh admin",
-          orderId: order.docId,
-          orderStatus: "1",
-          title: "Order telah Dipesan",
-        ),
-      );
 
       try {
         /// Call all the futures
-        await Future.wait(
-            [updateOrder, sendNotificationMekanik, sendNotificationAdmin]);
+        await Future.wait([updateOrder]);
         yield AdminSubmitEstimasiSuccess(
             msg:
                 "Terima kasih atas konfirmasi yang dilakukan. Dan jangan lupa update status jika part telah tersedia.");

@@ -39,6 +39,7 @@ import 'Logic/Connectivity/cubit/connectivity_cubit.dart';
 import 'Logic/FCM/bloc/sendnotification_bloc.dart';
 import 'Logic/Firestore/Orders/bloc/orders_bloc.dart';
 import 'Logic/GL/GLApproveOrder/bloc/gl_approve_order_bloc.dart';
+import 'Logic/GL/GLDeleteOrder/bloc/gl_delete_order_bloc.dart';
 import 'Logic/Mekanik/Home/MekanikTable/bloc/mekaniktable_bloc.dart';
 import 'Logic/Mekanik/UpdateLaporan/bloc/MekanikUpdateLaporan_bloc.dart';
 import 'Service/FCMRepository.dart';
@@ -230,6 +231,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider(create: (context) => AdminEditCnBloc()),
         BlocProvider(create: (context) => AdminDeleteCnBloc()),
         BlocProvider(create: (context) => AdminExportBloc()),
+        BlocProvider(create: (context) => GlDeleteOrderBloc()),
       ],
       child: ScreenUtilInit(
         allowFontScaling: true,

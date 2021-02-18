@@ -16,6 +16,10 @@ class Order {
     this.approvalPengawas,
     this.tanggalEksekusi,
     this.trouble,
+    this.damageLevel,
+    this.hmUnit,
+    this.rejectNote,
+    this.isDeleted,
   });
 
   String docId;
@@ -26,6 +30,10 @@ class Order {
   int approvalPengawas;
   Timestamp tanggalEksekusi;
   String trouble;
+  String hmUnit;
+  String damageLevel;
+  String rejectNote;
+  bool isDeleted;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
         docId: json["docId"] ?? "",
@@ -37,6 +45,10 @@ class Order {
         approvalPengawas: json["approval_pengawas"],
         tanggalEksekusi: json["tanggal_eksekusi"],
         trouble: json["trouble"],
+        damageLevel: json["damageLevel"],
+        hmUnit: json['hmUnit'],
+        rejectNote: json['rejectNote'],
+        isDeleted: json['isDeleted'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,29 +60,39 @@ class Order {
         "nama_mekanik": namaMekanik,
         "approval_pengawas": approvalPengawas,
         "tanggal_eksekusi": tanggalEksekusi,
-        "trouble": trouble
+        "trouble": trouble,
+        "hmUnit": hmUnit,
+        "damageLevel": damageLevel,
+        "rejectNote": rejectNote,
+        "isDeleted": isDeleted ?? false,
       };
 
-  Order copyWith({
-    String docId,
-    Timestamp tanggal,
-    String cnNumber,
-    Map<String, PartNumber> partNumber,
-    String namaMekanik,
-    int approvalPengawas,
-    Timestamp tanggalEksekusi,
-    String trouble,
-  }) {
+  Order copyWith(
+      {String docId,
+      Timestamp tanggal,
+      String cnNumber,
+      Map<String, PartNumber> partNumber,
+      String namaMekanik,
+      int approvalPengawas,
+      Timestamp tanggalEksekusi,
+      String trouble,
+      String hmUnit,
+      String damageLevel,
+      String rejectNote,
+      String isDeleted}) {
     return Order(
-      docId: docId ?? this.docId,
-      tanggal: tanggal ?? this.tanggal,
-      cnNumber: cnNumber ?? this.cnNumber,
-      trouble: trouble ?? this.trouble,
-      partNumber: partNumber ?? this.partNumber,
-      namaMekanik: namaMekanik ?? this.namaMekanik,
-      approvalPengawas: approvalPengawas ?? this.approvalPengawas,
-      tanggalEksekusi: tanggalEksekusi ?? this.tanggalEksekusi,
-    );
+        docId: docId ?? this.docId,
+        tanggal: tanggal ?? this.tanggal,
+        cnNumber: cnNumber ?? this.cnNumber,
+        trouble: trouble ?? this.trouble,
+        partNumber: partNumber ?? this.partNumber,
+        namaMekanik: namaMekanik ?? this.namaMekanik,
+        approvalPengawas: approvalPengawas ?? this.approvalPengawas,
+        tanggalEksekusi: tanggalEksekusi ?? this.tanggalEksekusi,
+        damageLevel: damageLevel ?? this.damageLevel,
+        hmUnit: hmUnit ?? this.hmUnit,
+        rejectNote: rejectNote ?? this.rejectNote,
+        isDeleted: isDeleted ?? this.isDeleted);
   }
 }
 
